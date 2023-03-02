@@ -1,17 +1,17 @@
 const OpType = {
-	register,
+	register: "register",
 	// immediate
-	immediate,
+	immediate: "immediate",
 	// direct memory
-	dmemory,
+	dmemory: "dmemory",
 	//indirect memroy
-	imemory,
+	imemory: "imemory",
 	// one operand
-	jump,
+	jump: "jump",
 	// tags
-	tag,
+	tag: "tag",
 	// default
-	unknown,
+	unknown: "unknown",
 };
 
 function get_op_code(text_command, type) {

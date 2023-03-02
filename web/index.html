@@ -8,29 +8,28 @@
 		<meta name="description" content="SMS32 Sim" />
 		<meta name="author" content="Luka Bergant" />
 
-		<link rel="icon" href="img/virus.ico" type="image/icon type" />
+		<link rel="icon" href="img/CPU.ico" type="image/icon type" />
 
-		<!-- <link rel="stylesheet" href="index.css" />
-		<script src="./jquery-3.6.1.min.js"></script>
-		<script src="./sysDynamics.js"></script>
-		<script src="./graph.js"></script>
-		<script src="./agent.js"></script>
-		<script src="./index.js"></script> -->
+		<link rel="stylesheet" href="css/index.css" />
+		<script src="js/jquery-3.6.1.min.js"></script>
+		<script src="js/index.js"></script>
+		<script src="js/sim/Assembler.js"></script>
+		<script src="js/sim/Commands.js"></script>
 
 		<meta http-equiv="ScreenOrientation" content="autoRotate:disabled" />
 	</head>
 
 	<body>
-		<div>
+		<div id="dASM">
 			<h3>ASM</h3>
-			<textarea rows="10" cols="80" id="ASM"> </textarea>
+			<textarea rows="10" cols="80" id="taASM"> </textarea>
 		</div>
 		<div>
 			<h3>Out</h3>
-			<textarea rows="10" cols="80" id="Output"> </textarea>
+			<textarea rows="10" cols="80" id="taOutput"> </textarea>
 		</div>
 		<div>
-			<button>Run</button>
+			<button onclick="assemble()">Run</button>
 		</div>
 		<div>
 			Check out instructions at
