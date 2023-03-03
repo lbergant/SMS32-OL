@@ -7,38 +7,35 @@ class Tag {
 
 class Operand {
 	constructor(op) {
+		console.group("Operand: " + op);
 		this.type = OperandType.unknown;
 		this.value = -1;
 
 		this.parse_operand(op);
+		console.groupEnd();
 	}
 
 	parse_operand(op) {
-		let operand = new Operand();
-		// let op = line.split(" ")[1].split(",")[pos];
-		console.group("Operand: " + op);
 		op = op.trim();
 
 		if (op.includes("[")) {
 			let is_register = operand.search(/[A-D]L/);
 			if (is_register) {
-				operand.type = OperandType.imemory;
+				this.type = OperandType.imemory;
 			} else {
-				operand.type = OperandType.dmemory;
+				this.type = OperandType.dmemory;
 			}
 		} else if (op.search(/^[A-D]L$/i) == 0) {
-			operand.type = OperandType.register;
+			this.type = OperandType.register;
 		} else if (op.search(/^[A-F0-9]+$/i) == 0) {
-			operand.type = OperandType.immediate;
+			this.type = OperandType.immediate;
 		} else if (op.search(/^[a-z]+[a-z0-9]*/i) == 0) {
-			operand.type = OperandType.tag;
+			this.type = OperandType.tag;
 		} else {
-			operand.type = OperandType.unknown;
+			this.type = OperandType.unknown;
 		}
 
-		console.log(operand.type);
-		console.groupEnd();
-		return operand;
+		console.log(this.type);
 	}
 }
 
@@ -53,9 +50,7 @@ class Command {
 		if (comment_positon == 0) {
 			// line is comment
 			line = "";
-			this.tag = CommandType.comment;
-			console.log("line is a comment");
-			console.groupEnd();
+			this.type = CommandType.comment;
 			return true;
 		} else if (comment_positon > 0) {
 			// line has comment - remove it
@@ -71,7 +66,7 @@ class Command {
 	 */
 	check_if_tag(line) {
 		let is_tag = line.search("\t") == -1; // check if line starts with \t
-		if (is_tag) this.type = command_types.tag;
+		if (is_tag) this.type = CommandType.tag;
 		return is_tag;
 	}
 
@@ -81,16 +76,14 @@ class Command {
 	 */
 	parse_command(line) {
 		line = line.trim(); // clean line
-		this.type = OpType.unidentified; // upgrade a type to command type
+		this.type = CommandType.unidentified; // upgrade a type to command type
 		let com_ops = line.split(" "); // devide command and operands
 
-		if (com_ops.length > 0) {
+		if (com_ops.length > 1) {
 			this.parse_operands(com_ops);
 		} else {
-			this.type = OpType.end;
+			this.type = CommandType.end;
 		}
-
-		console.log("Command type: " + this.type);
 
 		this.byte_len = 0;
 	}
@@ -108,6 +101,8 @@ class Command {
 				this.parse_command(line);
 			}
 		}
+
+		console.log("Command type: " + this.type);
 		console.groupEnd();
 	}
 
