@@ -85,6 +85,8 @@ class Command {
 			this.type = CommandType.end;
 		}
 
+		this.op_code = get_op_code(com_ops[0], this.type);
+
 		this.byte_len = 0;
 	}
 
@@ -103,6 +105,7 @@ class Command {
 		}
 
 		console.log("Command type: " + this.type);
+		console.log("Hex: " + this.op_code);
 		console.groupEnd();
 	}
 
@@ -121,7 +124,7 @@ class Command {
 		}
 
 		if (command_types.length == 1 && command_types[0] == OperandType.tag) {
-			this.type = CommandType.jump;
+			this.type = CommandType.jump_forw; // TODO_L if label unknown then forward else backward
 		} else {
 			this.type = command_types[0] + "_" + command_types[1];
 		}
