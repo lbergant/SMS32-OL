@@ -1,7 +1,10 @@
 class Tag {
-	constructor() {
-		this.name = "";
-		this.address = -1;
+	constructor(line, address) {
+		line = line.replace(":", "");
+		console.group("Tag: " + line + " @ " + address);
+		this.name = line;
+		this.address = address;
+		console.groupEnd();
 	}
 }
 
@@ -36,6 +39,13 @@ class Operand {
 			this.value = Number.parseInt(op);
 		} else if (op.search(/^[a-z]+[a-z0-9]*/i) == 0) {
 			this.type = OperandType.tag;
+			let value = -1;
+			tags.find(function (value) {
+				if (value.name == op) {
+					this.value = value.address;
+				}
+			}, this);
+			// this.value = value;
 		} else {
 			this.type = OperandType.unknown;
 		}
@@ -47,55 +57,22 @@ class Command {
 	 * Command constructor
 	 * @param line An instruction line to be parsed
 	 */
-	constructor(line) {
+	constructor(line, address) {
 		console.group("Command: " + line);
+		this.address = address;
 		this.line = line;
 		this.byte_len = 0;
-		this.ops = new Array();
+		this.operands = new Array();
 
-		let only_comment = this.remove_comment(line);
-		if (!only_comment) {
-			let is_tag = this.check_if_tag(line);
-
-			if (!is_tag) {
-				this.parse_command(line);
-			}
-		}
+		this.parse_command(line);
 
 		console.log("Command type: " + this.type);
 		console.log("Hex: " + this.op_code);
+		for (let i = 0; i < this.operands.length; i++) {
+			console.log("OP" + i + ": " + this.operands[i].value);
+		}
 		console.log("Len: " + this.byte_len);
 		console.groupEnd();
-	}
-
-	/***
-	 * Removes comment from line, if line is just a comment true is returned else false
-	 * @param line Line to be evaluated and comment removed
-	 */
-	remove_comment(line) {
-		let comment_positon = line.search(";"); // search for comment
-
-		if (comment_positon == 0) {
-			// line is comment
-			line = "";
-			this.type = CommandType.comment;
-			return true;
-		} else if (comment_positon > 0) {
-			// line has comment - remove it
-			line = line.split(";")[0];
-		}
-
-		return false;
-	}
-
-	/***
-	 * Checks if line is a tag (no starting tab)
-	 * @param line Line to be evaluated
-	 */
-	check_if_tag(line) {
-		let is_tag = line.search("\t") == -1; // check if line starts with \t
-		if (is_tag) this.type = CommandType.tag;
-		return is_tag;
 	}
 
 	/***
@@ -131,12 +108,17 @@ class Command {
 		for (let i = 0; i < ops.length; i++) {
 			let tmp_operand = new Operand(ops[i]); // skip if tag type
 			command_types.push(tmp_operand.type);
-			this.ops.push(tmp_operand);
+			this.operands.push(tmp_operand);
 			num_of_operands++;
 		}
 
 		if (command_types.length == 1 && command_types[0] == OperandType.tag) {
-			this.type = CommandType.jump_forw; // TODO_L if label unknown then forward else backward
+			if (this.operands[0].value >= 0) {
+				this.type = CommandType.jump_back;
+				this.operands[0].value -= this.address; // calculate how far back to jump
+			} else {
+				this.type = CommandType.jump_forw; // TODO_L if label unknown then forward else backward
+			}
 		} else {
 			this.type = command_types[0] + "_" + command_types[1];
 		}
@@ -144,14 +126,12 @@ class Command {
 		return num_of_operands;
 	}
 
-	add_address(address) {
-		this.address = address;
-	}
-
 	get_byte_length() {
 		return this.byte_len;
 	}
 }
+
+let tags = new Array();
 
 class Assembler {
 	constructor() {
@@ -164,19 +144,57 @@ class Assembler {
 		console.group("ASM Main");
 		console.log(lines);
 		this.parse_lines(lines);
-
-		// resolve_tags(); // check all jump and call? instructions for tags and resolve them
 		console.groupEnd();
 	}
 
 	parse_lines(lines) {
 		for (let cnt = 0; cnt < lines.length; cnt++) {
 			console.log("Addr: " + this.address);
-			let tmp_command = new Command(lines[cnt]);
-			tmp_command.add_address(this.address);
-			this.address += tmp_command.get_byte_length();
-			this.commands.push(tmp_command);
+
+			let only_comment = this.remove_comment(lines[cnt]);
+			if (!only_comment) {
+				let is_tag = this.check_if_tag(lines[cnt]);
+
+				if (!is_tag) {
+					let tmp_command = new Command(lines[cnt], this.address);
+					this.address += tmp_command.get_byte_length();
+					this.commands.push(tmp_command);
+				} else {
+					// if tag then save as tag
+					tags.push(new Tag(lines[cnt], this.address));
+				}
+			}
 		}
+	}
+
+	/***
+	 * Removes comment from line, if line is just a comment true is returned else false
+	 * @param line Line to be evaluated and comment removed
+	 */
+	remove_comment(line) {
+		let comment_positon = line.search(";"); // search for comment
+
+		if (comment_positon == 0) {
+			// line is comment
+			line = "";
+			this.type = CommandType.comment;
+			return true;
+		} else if (comment_positon > 0) {
+			// line has comment - remove it
+			line = line.split(";")[0];
+		}
+
+		return false;
+	}
+
+	/***
+	 * Checks if line is a tag (no starting tab)
+	 * @param line Line to be evaluated
+	 */
+	check_if_tag(line) {
+		let is_tag = line.search("\t") == -1; // check if line starts with \t
+		if (is_tag) this.type = CommandType.tag;
+		return is_tag;
 	}
 
 	resolve_tags() {}
