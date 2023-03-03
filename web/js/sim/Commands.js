@@ -37,6 +37,19 @@ const CommandType = {
 	default: "default",
 };
 
+function get_register(text_register) {
+	switch (text_register) {
+		case "AL":
+			return 0x00;
+		case "BL":
+			return 0x01;
+		case "CL":
+			return 0x02;
+		case "DL":
+			return 0x03;
+	}
+}
+
 function get_op_code(text_command, type) {
 	switch (text_command.toUpperCase()) {
 		case "ADD":

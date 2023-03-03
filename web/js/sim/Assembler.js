@@ -12,6 +12,9 @@ class Operand {
 		this.value = -1;
 
 		this.parse_operand(op);
+
+		console.log(this.type);
+		console.log(this.value);
 		console.groupEnd();
 	}
 
@@ -27,15 +30,15 @@ class Operand {
 			}
 		} else if (op.search(/^[A-D]L$/i) == 0) {
 			this.type = OperandType.register;
+			this.value = get_register(op);
 		} else if (op.search(/^[A-F0-9]+$/i) == 0) {
 			this.type = OperandType.immediate;
+			this.value = Number.parseInt(op);
 		} else if (op.search(/^[a-z]+[a-z0-9]*/i) == 0) {
 			this.type = OperandType.tag;
 		} else {
 			this.type = OperandType.unknown;
 		}
-
-		console.log(this.type);
 	}
 }
 
