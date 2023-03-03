@@ -2,4 +2,11 @@ textarea {
 	width: 98%;
 	height: 15 0px;
 	tab-size: 4;
+	color: white;
+	background-color: #1f1f1f;
+}
+
+body {
+	background-color: #1f1f1f;
+	color: white;
 }
