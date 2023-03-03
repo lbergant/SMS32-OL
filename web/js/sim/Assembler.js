@@ -44,6 +44,31 @@ class Operand {
 
 class Command {
 	/***
+	 * Command constructor
+	 * @param line An instruction line to be parsed
+	 */
+	constructor(line) {
+		console.group("Command: " + line);
+		this.line = line;
+		this.byte_len = 0;
+		this.ops = new Array();
+
+		let only_comment = this.remove_comment(line);
+		if (!only_comment) {
+			let is_tag = this.check_if_tag(line);
+
+			if (!is_tag) {
+				this.parse_command(line);
+			}
+		}
+
+		console.log("Command type: " + this.type);
+		console.log("Hex: " + this.op_code);
+		console.log("Len: " + this.byte_len);
+		console.groupEnd();
+	}
+
+	/***
 	 * Removes comment from line, if line is just a comment true is returned else false
 	 * @param line Line to be evaluated and comment removed
 	 */
@@ -81,35 +106,17 @@ class Command {
 		line = line.trim(); // clean line
 		this.type = CommandType.unidentified; // upgrade a type to command type
 		let com_ops = line.split(" "); // devide command and operands
+		let byte_len = 1;
 
 		if (com_ops.length > 1) {
-			this.parse_operands(com_ops);
+			byte_len += this.parse_operands(com_ops);
 		} else {
 			this.type = CommandType.end;
 		}
 
 		this.op_code = get_op_code(com_ops[0], this.type);
 
-		this.byte_len = 0;
-	}
-
-	constructor(line) {
-		console.group("Command: " + line);
-		this.line = line;
-		this.ops = new Array();
-
-		let only_comment = this.remove_comment(line);
-		if (!only_comment) {
-			let is_tag = this.check_if_tag(line);
-
-			if (!is_tag) {
-				this.parse_command(line);
-			}
-		}
-
-		console.log("Command type: " + this.type);
-		console.log("Hex: " + this.op_code);
-		console.groupEnd();
+		this.byte_len = byte_len;
 	}
 
 	/***
@@ -119,11 +126,13 @@ class Command {
 	parse_operands(com_ops) {
 		let ops = com_ops[1].split(","); // split operands by ,
 		let command_types = new Array();
+		let num_of_operands = 0;
 
 		for (let i = 0; i < ops.length; i++) {
 			let tmp_operand = new Operand(ops[i]); // skip if tag type
 			command_types.push(tmp_operand.type);
 			this.ops.push(tmp_operand);
+			num_of_operands++;
 		}
 
 		if (command_types.length == 1 && command_types[0] == OperandType.tag) {
@@ -131,10 +140,16 @@ class Command {
 		} else {
 			this.type = command_types[0] + "_" + command_types[1];
 		}
+
+		return num_of_operands;
 	}
 
 	add_address(address) {
 		this.address = address;
+	}
+
+	get_byte_length() {
+		return this.byte_len;
 	}
 }
 
@@ -156,9 +171,10 @@ class Assembler {
 
 	parse_lines(lines) {
 		for (let cnt = 0; cnt < lines.length; cnt++) {
+			console.log("Addr: " + this.address);
 			let tmp_command = new Command(lines[cnt]);
-			// tmp_command.add_address(address);
-			// address += tmp_command.get_length();
+			tmp_command.add_address(this.address);
+			this.address += tmp_command.get_byte_length();
 			this.commands.push(tmp_command);
 		}
 	}
