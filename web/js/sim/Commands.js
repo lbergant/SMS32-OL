@@ -1,4 +1,4 @@
-const OpType = {
+const OperandType = {
 	register: "register",
 	// immediate
 	immediate: "immediate",
@@ -6,12 +6,32 @@ const OpType = {
 	dmemory: "dmemory",
 	//indirect memroy
 	imemory: "imemory",
-	// one operand
-	jump: "jump",
-	// tags
+	// tag
 	tag: "tag",
 	// default
-	unknown: "unknown",
+	default: "default",
+};
+
+const CommandType = {
+	// common types
+	register_register: "register_register",
+	register_dmemory: "register_dmemory",
+	dmemory_register: "dmemory_register",
+	register_imemory: "register_imemory",
+	imemory_register: "imemory_register",
+
+	// one operand
+	jump: "jump",
+	// no operands,
+	end: "end",
+	// tags
+	tag: "tag",
+	// command
+	comment: "comment",
+	// unidentified
+	unidentified: "unidentified",
+	// default
+	default: "default",
 };
 
 function get_op_code(text_command, type) {
