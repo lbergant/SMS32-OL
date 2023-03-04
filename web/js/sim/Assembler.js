@@ -43,13 +43,7 @@ class Operand {
 			this.value = Number.parseInt(op);
 		} else if (op.search(/^[a-z]+[a-z0-9]*/i) == 0) {
 			this.type = OperandType.tag;
-			let value = -1;
-			tags.find(function (value) {
-				if (value.name == op) {
-					this.value = value.address;
-				}
-			}, this);
-			// this.value = value;
+			this.value = -1;
 		} else {
 			this.type = OperandType.unknown;
 		}
@@ -117,12 +111,8 @@ class Command {
 		}
 
 		if (command_types.length == 1 && command_types[0] == OperandType.tag) {
-			if (this.operands[0].value >= 0) {
-				this.type = CommandType.jump_back;
-				this.operands[0].value = this.address - this.operands[0].value; // calculate how far back to jump
-			} else {
-				this.type = CommandType.jump_forw; // TODO_L if label unknown then forward else backward
-			}
+			this.type = CommandType.jump;
+			// resolve on pass 2
 		} else {
 			this.type = command_types[0] + "_" + command_types[1];
 		}

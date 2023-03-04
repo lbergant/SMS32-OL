@@ -13,7 +13,7 @@ const OperandType = {
 };
 
 const CommandType = {
-	// common types
+	// two operands
 	register_register: "register_register",
 	register_immediate: "register_immediate",
 	immediate_register: "immediate_register",
@@ -23,8 +23,8 @@ const CommandType = {
 	imemory_register: "imemory_register",
 
 	// one operand
-	jump_forw: "jump_forw",
-	jump_back: "jump_back",
+	tag: "tag",
+	immediate: "immediate",
 	// no operands,
 	end: "end",
 	// tags
@@ -77,17 +77,24 @@ function get_op_code(text_command, type) {
 
 		case "JMP":
 			switch (type) {
-				case CommandType.jump_back:
-					return 0xfe;
-				case CommandType.jump_forw:
+				case CommandType.jump:
 					return 0xc0;
 			}
 			break;
 		case "END":
+		case "HALT":
 			switch (type) {
 				case CommandType.end:
 					return 0x00;
 			}
 			break;
+		case "DB":
+			switch (type) {
+				case CommandType.immediate:
+					return -1;
+			}
+			break;
 	}
+
+	return -2;
 }
