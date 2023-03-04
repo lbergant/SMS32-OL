@@ -91,7 +91,15 @@ class Command {
 
 		this.op_code = get_op_code(com_ops[0], this.type);
 
-		this.byte_len = byte_len;
+		if (this.op_code == -1) {
+			//DB command specific code
+			this.byte_len = 1;
+			this.type = CommandType.data_byte;
+			this.op_code = this.operands[0].value;
+			this.operands = new Array();
+		} else {
+			this.byte_len = byte_len;
+		}
 	}
 
 	/***
@@ -113,6 +121,11 @@ class Command {
 		if (command_types.length == 1 && command_types[0] == OperandType.tag) {
 			this.type = CommandType.jump;
 			// resolve on pass 2
+		} else if (
+			command_types.length == 1 &&
+			command_types[0] == OperandType.immediate
+		) {
+			this.type = CommandType.immediate;
 		} else {
 			this.type = command_types[0] + "_" + command_types[1];
 		}

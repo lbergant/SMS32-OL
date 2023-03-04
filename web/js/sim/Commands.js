@@ -25,6 +25,7 @@ const CommandType = {
 	// one operand
 	tag: "tag",
 	immediate: "immediate",
+	data_byte: "data_byte",
 	// no operands,
 	end: "end",
 	// tags
