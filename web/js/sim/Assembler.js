@@ -11,6 +11,7 @@ class Tag {
 class Operand {
 	constructor(op) {
 		console.group("Operand: " + op);
+		this.op = op;
 		this.type = OperandType.unknown;
 		this.value = -1;
 
@@ -146,11 +147,17 @@ class Assembler {
 	main(lines) {
 		console.group("ASM Main");
 		console.log(lines);
-		this.parse_lines(lines);
+		this.parse_lines_pass1(lines);
+		this.parse_lines_pass2();
 		console.groupEnd();
 	}
 
-	parse_lines(lines) {
+	/***
+	 * Process all lines and extract commands, operands.
+	 * This method only resolves some tags (backward tags)
+	 * @param lines Lines to process
+	 */
+	parse_lines_pass1(lines) {
 		for (let cnt = 0; cnt < lines.length; cnt++) {
 			console.log("Addr: " + this.address);
 
@@ -165,6 +172,22 @@ class Assembler {
 				} else {
 					// if tag then save as tag
 					tags.push(new Tag(lines[cnt], this.address));
+				}
+			}
+		}
+	}
+
+	parse_lines_pass2() {
+		for (let i = 0; i < this.commands.length; i++) {
+			let tmp_command = this.commands[i];
+			for (let j = 0; j < tmp_command.operands.length; j++) {
+				let tmp_operand = tmp_command.operands[j];
+				if (tmp_operand.type == OperandType.tag && tmp_operand.value == -1) {
+					tags.find(function (value) {
+						if (value.name == this.op) {
+							this.value = value.address - tmp_command.address;
+						}
+					}, tmp_operand);
 				}
 			}
 		}
