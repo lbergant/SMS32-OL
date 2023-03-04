@@ -25,11 +25,14 @@ class Operand {
 		op = op.trim();
 
 		if (op.includes("[")) {
-			let is_register = operand.search(/[A-D]L/);
+			let mem_location = op.substring(1, op.length - 1);
+			let is_register = mem_location.search(/^[A-D]L$/) != -1;
 			if (is_register) {
 				this.type = OperandType.imemory;
+				this.value = get_register(mem_location);
 			} else {
 				this.type = OperandType.dmemory;
+				this.value = Number.parseInt(mem_location);
 			}
 		} else if (op.search(/^[A-D]L$/i) == 0) {
 			this.type = OperandType.register;
@@ -115,7 +118,7 @@ class Command {
 		if (command_types.length == 1 && command_types[0] == OperandType.tag) {
 			if (this.operands[0].value >= 0) {
 				this.type = CommandType.jump_back;
-				this.operands[0].value -= this.address; // calculate how far back to jump
+				this.operands[0].value = this.address - this.operands[0].value; // calculate how far back to jump
 			} else {
 				this.type = CommandType.jump_forw; // TODO_L if label unknown then forward else backward
 			}
