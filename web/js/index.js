@@ -24,6 +24,11 @@ function assemble() {
 	let ram = asm.commands_to_ram();
 	print_ram(ram, 16);
 	// print_tags();
+
+	// Simulator
+	let sim = new Simulator();
+	sim.load_program(ram);
+	sim.run();
 }
 
 function print_tags() {
