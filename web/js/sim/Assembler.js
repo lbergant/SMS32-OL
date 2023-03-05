@@ -44,6 +44,9 @@ class Operand {
 		} else if (op.search(/^[a-z]+[a-z0-9]*/i) == 0) {
 			this.type = OperandType.tag;
 			this.value = -1;
+		} else if (op.search(/^"[A-Z0-9]*"$/i) == 0) {
+			this.type = OperandType.data_bytes;
+			this.value = op.substring(1, op.length - 1);
 		} else {
 			this.type = OperandType.unknown;
 		}
@@ -97,6 +100,16 @@ class Command {
 			this.type = CommandType.data_byte;
 			this.op_code = this.operands[0].value;
 			this.operands = new Array();
+		} else if (this.op_code == -2) {
+			this.byte_len = this.operands[0].value.length;
+			this.type = CommandType.data_bytes;
+			this.op_code = "";
+			for (let i = 0; i < this.operands[0].value.length; i++) {
+				this.op_code =
+					this.op_code +
+					this.operands[0].value.charCodeAt(i).toString(16).padStart(2);
+			}
+			this.operands = new Array();
 		} else {
 			this.byte_len = byte_len;
 		}
@@ -121,11 +134,8 @@ class Command {
 		if (command_types.length == 1 && command_types[0] == OperandType.tag) {
 			this.type = CommandType.jump;
 			// resolve on pass 2
-		} else if (
-			command_types.length == 1 &&
-			command_types[0] == OperandType.immediate
-		) {
-			this.type = CommandType.immediate;
+		} else if (command_types.length == 1) {
+			this.type = command_types[0];
 		} else {
 			this.type = command_types[0] + "_" + command_types[1];
 		}
@@ -145,6 +155,7 @@ class Assembler {
 		// Intrnal variables init
 		this.address = 0;
 		this.commands = new Array();
+		tags = new Array();
 	}
 
 	main(lines) {

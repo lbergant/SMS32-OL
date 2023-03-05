@@ -8,6 +8,8 @@ const OperandType = {
 	imemory: "imemory",
 	// tag
 	tag: "tag",
+	// string
+	data_bytes: "data_bytes",
 	// default
 	default: "default",
 };
@@ -26,6 +28,7 @@ const CommandType = {
 	tag: "tag",
 	immediate: "immediate",
 	data_byte: "data_byte",
+	data_bytes: "data_bytes",
 	// no operands,
 	end: "end",
 	// tags
@@ -93,9 +96,16 @@ function get_op_code(text_command, type) {
 			switch (type) {
 				case CommandType.immediate:
 					return -1;
+				case CommandType.data_bytes:
+					return -2;
 			}
 			break;
+		case "ORG":
+			switch (type) {
+				case CommandType.immediate:
+					return -127;
+			}
 	}
 
-	return -2;
+	return -128;
 }
