@@ -110,6 +110,10 @@ class Command {
 					this.operands[0].value.charCodeAt(i).toString(16).padStart(2);
 			}
 			this.operands = new Array();
+		} else if (this.op_code == -127) {
+			this.byte_len = this.operands[0].value - this.address;
+			this.operands = new Array();
+			this.op_code = "  ";
 		} else {
 			this.byte_len = byte_len;
 		}

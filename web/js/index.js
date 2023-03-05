@@ -14,6 +14,7 @@ $(document).ready(function () {
 function assemble() {
 	let lines = $("#taASM").val().split("\n");
 
+	console.clear();
 	console.log(lines);
 
 	let asm = new Assembler();
