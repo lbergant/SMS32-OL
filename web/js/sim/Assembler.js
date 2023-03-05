@@ -30,14 +30,14 @@ class Operand {
 			let is_register = mem_location.search(/^[A-D]L$/) != -1;
 			if (is_register) {
 				this.type = OperandType.imemory;
-				this.value = get_register(mem_location);
+				this.value = get_register_index(mem_location);
 			} else {
 				this.type = OperandType.dmemory;
 				this.value = Number.parseInt(mem_location);
 			}
 		} else if (op.search(/^[A-D]L$/i) == 0) {
 			this.type = OperandType.register;
-			this.value = get_register(op);
+			this.value = get_register_index(op);
 		} else if (op.search(/^[A-F0-9]+$/i) == 0) {
 			this.type = OperandType.immediate;
 			this.value = Number.parseInt(op);

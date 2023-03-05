@@ -25,7 +25,7 @@ const CommandType = {
 	imemory_register: "imemory_register",
 
 	// one operand
-	tag: "tag",
+	jump: "jump",
 	immediate: "immediate",
 	data_byte: "data_byte",
 	data_bytes: "data_bytes",
@@ -41,7 +41,7 @@ const CommandType = {
 	default: "default",
 };
 
-function get_register(text_register) {
+function get_register_index(text_register) {
 	switch (text_register) {
 		case "AL":
 			return 0x00;
@@ -54,6 +54,33 @@ function get_register(text_register) {
 	}
 }
 
+/***
+ * [SIM] Gets command type from op_code. Reverse of ```get_op_code```.
+ * @returns CommandType - type of command
+ */
+function get_op_type(op_code) {
+	switch (op_code) {
+		case 0xa0: // ADD
+			return CommandType.register_register;
+		case 0xb0: // ADD
+		case 0xd0: // MOV
+			return CommandType.register_immediate;
+		case 0xd1: // MOV
+			return CommandType.register_dmemory;
+		case 0xd2: // MOV
+			return CommandType.dmemory_register;
+		case 0xd3: // MOV
+			return CommandType.register_imemory;
+		case 0xd4: // MOV
+			return CommandType.imemory_register;
+	}
+
+	return CommandType.unidentified;
+}
+
+/***
+ * [ASM] Gets op code from command and its type. Reverse of ```get_type```.
+ */
 function get_op_code(text_command, type) {
 	switch (text_command.toUpperCase()) {
 		case "ADD":
@@ -108,4 +135,27 @@ function get_op_code(text_command, type) {
 	}
 
 	return -128;
+}
+
+function get_command_len(op_code) {
+	switch (op_code) {
+		// END, HALT
+		case 0x00:
+			return 0;
+		// JMP
+		case 0xc0:
+			return 1;
+		// ADD
+		case 0xa0:
+		case 0xb0:
+		// MOV
+		case 0xd0:
+		case 0xd1:
+		case 0xd2:
+		case 0xd3:
+		case 0xd4:
+			return 2;
+	}
+
+	return 10;
 }
