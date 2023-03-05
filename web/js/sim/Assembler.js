@@ -98,22 +98,22 @@ class Command {
 			//DB command specific code
 			this.byte_len = 1;
 			this.type = CommandType.data_byte;
-			this.op_code = this.operands[0].value;
-			this.operands = new Array();
+			this.op_code = "";
 		} else if (this.op_code == -2) {
 			this.byte_len = this.operands[0].value.length;
 			this.type = CommandType.data_bytes;
 			this.op_code = "";
-			for (let i = 0; i < this.operands[0].value.length; i++) {
-				this.op_code =
-					this.op_code +
-					this.operands[0].value.charCodeAt(i).toString(16).padStart(2);
-			}
+			let tmp_operand = this.operands[0];
 			this.operands = new Array();
+			for (let i = 0; i < tmp_operand.value.length; i++) {
+				this.operands.push(
+					new Operand(tmp_operand.value.charCodeAt(i).toString(10))
+				);
+			}
 		} else if (this.op_code == -127) {
 			this.byte_len = this.operands[0].value - this.address;
 			this.operands = new Array();
-			this.op_code = "  ";
+			this.op_code = "";
 		} else {
 			this.byte_len = byte_len;
 		}
@@ -241,5 +241,28 @@ class Assembler {
 		return is_tag;
 	}
 
-	resolve_tags() {}
+	/***
+	 * Returns RAM as array generated from all the parsed commands
+	 */
+	commands_to_ram() {
+		const ram_array = new Array(256).fill(0);
+
+		for (let i = 0; i < this.commands.length; i++) {
+			let index = this.commands[i].address;
+
+			if (
+				this.commands[i].op_code != "" &&
+				this.commands[i].op_code >= 0 &&
+				this.commands[i].op_code <= 256
+			) {
+				ram_array[index++] = this.commands[i].op_code;
+			}
+
+			for (let j = 0; j < this.commands[i].operands.length; j++) {
+				ram_array[index++] = this.commands[i].operands[j].value;
+			}
+		}
+
+		return ram_array;
+	}
 }
