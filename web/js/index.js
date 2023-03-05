@@ -21,7 +21,8 @@ function assemble() {
 	asm.main(lines);
 
 	print_assembler_result(asm);
-	print_tags();
+	let ram = asm.commands_to_ram();
+	// print_tags();
 }
 
 function print_tags() {
@@ -40,10 +41,15 @@ function print_assembler_result(asm) {
 
 	for (let i = 0; i < asm.commands.length; i++) {
 		// add address and command to line
+		let opCode = asm.commands[i].op_code;
+		if (opCode != "") {
+			opCode = opCode.toString(16).toUpperCase().padStart(2, "0");
+		}
+
 		ram_text +=
 			asm.commands[i].address.toString(16).toUpperCase().padStart(4, "0") +
 			": " +
-			asm.commands[i].op_code.toString(16).toUpperCase().padStart(2, "0");
+			opCode;
 
 		// add operands to line
 		for (let j = 0; j < asm.commands[i].operands.length; j++) {
