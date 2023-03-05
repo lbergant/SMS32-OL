@@ -22,18 +22,18 @@ function assemble() {
 
 	print_assembler_result(asm);
 	let ram = asm.commands_to_ram();
+	print_ram(ram, 16);
 	// print_tags();
 }
 
 function print_tags() {
 	let tag_text = "";
-	let tag_pad = "          ";
 
 	for (let i = 0; i < tags.length; i++) {
 		tag_text += tags[i].name.padEnd(10) + " @ " + tags[i].address + "\n";
 	}
 
-	$("#taTag").val(tag_text);
+	$("#taRam").val(tag_text);
 }
 
 function print_assembler_result(asm) {
@@ -68,5 +68,26 @@ function print_assembler_result(asm) {
 
 		ram_text += "\t" + asm.commands[i].line + "\n";
 	}
-	$("#taMem").val(ram_text);
+	$("#taDisAsm").val(ram_text);
+}
+
+function print_ram(ram, base) {
+	let ram_text = "    ";
+	let pad = 4;
+
+	for (let i = 0; i < 16; i++)
+		ram_text += i.toString(16).toUpperCase().padStart(2, "0").padEnd(pad);
+
+	for (let i = 0; i < ram.length; i++) {
+		if (i % 16 == 0) ram_text += "\n" + i.toString(16).padStart(2) + ": ";
+		if (base == 10 || base == 16)
+			ram_text += ram[i]
+				.toString(base)
+				.toUpperCase()
+				.padStart(2, "0")
+				.padEnd(pad);
+		else ram_text += String.fromCharCode(ram[i]).toUpperCase().padEnd(pad);
+	}
+
+	$("#taRam").val(ram_text);
 }
