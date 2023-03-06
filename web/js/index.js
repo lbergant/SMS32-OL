@@ -11,6 +11,8 @@ $(document).ready(function () {
 	});
 });
 
+let ram;
+
 function assemble() {
 	let lines = $("#taASM").val().split("\n");
 
@@ -21,10 +23,12 @@ function assemble() {
 	asm.main(lines);
 
 	print_assembler_result(asm);
-	let ram = asm.commands_to_ram();
+	ram = asm.commands_to_ram();
 	print_ram(ram, 16);
 	// print_tags();
+}
 
+function run() {
 	// Simulator
 	let sim = new Simulator();
 	sim.load_program(ram);
