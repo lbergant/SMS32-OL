@@ -16,6 +16,9 @@ $(document).ready(function () {
 		}
 	});
 
+	$("#taDisAsm").val("");
+	$("#taRam").val("");
+
 	init_base_radio_buttons();
 });
 
