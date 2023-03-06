@@ -1,16 +1,15 @@
 class Register {
 	value;
+	reg_name;
 
-	constructor(value = 0) {
-		this.init(value);
-	}
-
-	init(value = 0) {
-		this.value = value;
+	constructor(name = "", value = 0) {
+		this.reg_name = name;
+		this.set(value);
 	}
 
 	set(value) {
 		this.value = value;
+		update_register("td" + this.reg_name, value);
 	}
 
 	get() {
@@ -76,6 +75,8 @@ class StatusRegister extends Register {
 				this.value |= 1 << bitIndex;
 			}
 		}
+
+		update_register("taSR", this.value);
 	}
 
 	getBit(bitIndex) {
@@ -88,7 +89,7 @@ class StatusRegister extends Register {
 
 class InstructionPointer extends Register {
 	increment(value = 1) {
-		this.value += value;
+		this.set(this.value + 1);
 	}
 }
 
@@ -110,16 +111,20 @@ class RAM {
 
 	set(address, value) {
 		this.#ram[address] = value;
-		print_ram(this.#ram, 16); // TODO_L do this nicer
+		print_ram(this.#ram, default_base); // TODO_L do this nicer
+	}
+
+	copy() {
+		return this.#ram.slice();
 	}
 }
 
 class Simulator {
 	init_registers() {
-		this.AL = new Register();
-		this.BL = new Register();
-		this.CL = new Register();
-		this.DL = new Register();
+		this.AL = new Register("AL");
+		this.BL = new Register("BL");
+		this.CL = new Register("CL");
+		this.DL = new Register("DL");
 
 		this.SR = new StatusRegister();
 
