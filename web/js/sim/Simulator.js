@@ -110,6 +110,7 @@ class RAM {
 
 	set(address, value) {
 		this.#ram[address] = value;
+		print_ram(this.#ram, 16); // TODO_L do this nicer
 	}
 }
 
@@ -189,22 +190,20 @@ class Simulator {
 			let value = 0;
 
 			switch (op_type[i]) {
+				case OperandType.imemory: // return memory address to read/write
 				case OperandType.register:
 					if (i == 0) {
 						res_register = this.get_register(operand_token);
 					}
 					value = this.get_register_value(operand_token);
 					break;
+				case OperandType.dmemory: // return memory addres to read/write
 				case OperandType.immediate:
 					value = operand_token;
 					break;
-				case OperandType.dmemory:
-					value = this.ram.get(operand_token);
-					break;
-				case OperandType.imemory:
-					value = this.ram.get(this.get_register_value(operand_token));
-					break;
 				case OperandType.tag:
+				case "jump":
+					value = operand_token - 2; //offset jump length TODO_L is this ok?
 					res_register = this.IP; // jump
 					break;
 				case OperandType.data_bytes:
@@ -220,13 +219,35 @@ class Simulator {
 	}
 
 	execute(command, operands, target_register) {
+		// ADD COMMAND
 		switch (command) {
 			//ADD
 			case 0xa0:
 			case 0xb0:
 				target_register.set(operands[0] + operands[1]);
-				return target_register.get();
+				break;
+			// MOV
+			//      immediate to register
+			case 0xd0:
+				target_register.set(operands[1]);
+				break;
+			//      mem to register
+			case 0xd1:
+			case 0xd3:
+				target_register.set(this.ram.get(operands[1]));
+				break;
+			//      register to mem
+			case 0xd2:
+			case 0xd4:
+				this.ram.set(operands[0], operands[1]);
+				break;
+			// JMP
+			case 0xc0:
+				target_register.set(this.IP.get() + operands[0]);
+				break;
 		}
+
+		return target_register.get();
 	}
 
 	get_register_value(index) {

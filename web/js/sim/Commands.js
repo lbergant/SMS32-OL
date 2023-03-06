@@ -59,6 +59,7 @@ function get_register_index(text_register) {
  * @returns CommandType - type of command
  */
 function get_op_type(op_code) {
+	// ADD COMMAND
 	switch (op_code) {
 		case 0xa0: // ADD
 			return CommandType.register_register;
@@ -73,6 +74,8 @@ function get_op_type(op_code) {
 			return CommandType.register_imemory;
 		case 0xd4: // MOV
 			return CommandType.imemory_register;
+		case 0xc0:
+			return CommandType.jump;
 	}
 
 	return CommandType.unidentified;
@@ -82,6 +85,7 @@ function get_op_type(op_code) {
  * [ASM] Gets op code from command and its type. Reverse of ```get_type```.
  */
 function get_op_code(text_command, type) {
+	// ADD COMMAND
 	switch (text_command.toUpperCase()) {
 		case "ADD":
 			switch (type) {
@@ -138,6 +142,7 @@ function get_op_code(text_command, type) {
 }
 
 function get_command_len(op_code) {
+	// ADD COMMAND
 	switch (op_code) {
 		// END, HALT
 		case 0x00:
