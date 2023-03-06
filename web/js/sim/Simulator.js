@@ -1,12 +1,12 @@
 class Register {
 	value;
 
-	constructor() {
-		this.init();
+	constructor(value = 0) {
+		this.init(value);
 	}
 
-	init() {
-		this.value = 0;
+	init(value = 0) {
+		this.value = value;
 	}
 
 	set(value) {
@@ -92,6 +92,27 @@ class InstructionPointer extends Register {
 	}
 }
 
+class RAM {
+	#ram;
+
+	constructor() {
+		this.#ram = new Array(256);
+	}
+
+	flash(ram) {
+		// TODO_L enable smaller input ram size
+		this.#ram = ram;
+	}
+
+	get(address) {
+		return this.#ram[address];
+	}
+
+	set(address, value) {
+		this.#ram[address] = value;
+	}
+}
+
 class Simulator {
 	init_registers() {
 		this.AL = new Register();
@@ -108,7 +129,7 @@ class Simulator {
 	}
 
 	init_memory() {
-		this.memory = new Array(256);
+		this.ram = new RAM();
 	}
 
 	init() {
@@ -123,7 +144,7 @@ class Simulator {
 	}
 
 	load_program(ram) {
-		this.ram = ram;
+		this.ram.flash(ram);
 	}
 
 	run() {
@@ -135,9 +156,10 @@ class Simulator {
 			//
 			op_code = this.fetch();
 
-			let operands = this.decode(op_code);
+			let res = this.decode(op_code);
+			let target_register = res.register;
+			let operands = res.ops;
 
-			let target_register = new Register();
 			let result = this.execute(op_code, operands, target_register);
 
 			console.log(
@@ -152,16 +174,17 @@ class Simulator {
 	}
 
 	fetch() {
-		return this.ram[this.IP.get()];
+		return this.ram.get(this.IP.get());
 	}
 
-	decode(op_code, res_register) {
+	decode(op_code) {
 		let num_operands = get_command_len(op_code);
 		let operands = new Array();
 		let op_type = get_op_type(op_code).split("_");
+		let res_register = new Register();
 
 		for (let i = 0; i < num_operands; i++) {
-			let operand_token = this.ram[this.IP.get() + i + 1];
+			let operand_token = this.ram.get(this.IP.get() + i + 1);
 
 			let value = 0;
 
@@ -173,10 +196,13 @@ class Simulator {
 					value = this.get_register_value(operand_token);
 					break;
 				case OperandType.immediate:
+					value = operand_token;
 					break;
 				case OperandType.dmemory:
+					value = this.ram.get(operand_token);
 					break;
 				case OperandType.imemory:
+					value = this.ram.get(this.get_register_value(operand_token));
 					break;
 				case OperandType.tag:
 					res_register = this.IP; // jump
@@ -190,7 +216,7 @@ class Simulator {
 			operands.push(value);
 		}
 
-		return operands;
+		return { ops: operands, register: res_register };
 	}
 
 	execute(command, operands, target_register) {
@@ -203,8 +229,8 @@ class Simulator {
 		}
 	}
 
-	get_register_value(register_num) {
-		switch (register_num) {
+	get_register_value(index) {
+		switch (index) {
 			case 0:
 				return this.AL.get();
 			case 1:
