@@ -157,14 +157,19 @@ let tags = new Array();
 class Assembler {
 	constructor() {
 		// Intrnal variables init
-		this.address = 0;
-		this.commands = new Array();
+		this.init();
+	}
+
+	init() {
 		tags = new Array();
+		this.commands = new Array();
+		this.address = 0;
 	}
 
 	main(lines) {
 		console.group("ASM Main");
 		console.log(lines);
+		this.init();
 		this.parse_lines_pass1(lines);
 		this.parse_lines_pass2();
 		console.groupEnd();
