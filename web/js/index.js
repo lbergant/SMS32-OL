@@ -63,7 +63,6 @@ function assemble() {
 	let lines = $("#taASM").val().split("\n");
 
 	console.clear();
-	console.log(lines);
 
 	asm.main(lines);
 
@@ -81,6 +80,17 @@ function run() {
 	// Simulator
 	sim.run();
 }
+
+function step() {
+	sim.step();
+}
+
+function reset() {
+	sim.init_registers();
+	print_ram(sim.ram.copy(), sim.IP.get());
+}
+
+function stop() {}
 
 function print_tags() {
 	let tag_text = "";
@@ -150,14 +160,25 @@ function print_ram(ram, IP) {
 			}
 			cell.text(tmp_cell_text.toUpperCase());
 
-			// Color cell
+			// // Color cell
+			// if (ram_idx == IP) {
+			// 	cell.css("color", "#00FF00");
+			// } else {
+			// 	cell.css("color", "#FFFFFF");
+			// }
+			let color = "#FFFFFF";
 			if (ram_idx == IP) {
-				cell.css("color", "#00FF00");
-			} else {
-				cell.css("color", "#FFFFFF");
+				color = "#00FF00";
 			}
+			color_ram(ram_idx, color);
 		}
 	}
+}
+
+function color_ram(cell_idx, color) {
+	// Color cell
+	let cell = $("#cell-" + Math.floor(cell_idx / 16) + "-" + (cell_idx % 16));
+	cell.css("color", color);
 }
 
 function update_register(reg, value) {
@@ -166,7 +187,7 @@ function update_register(reg, value) {
 	}
 }
 
-// Test radio
+// Add radion buttons
 function init_base_radio_buttons(parent, options, name, on_click) {
 	const $radioContainer = $("#" + parent);
 

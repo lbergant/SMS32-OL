@@ -89,7 +89,7 @@ class StatusRegister extends Register {
 
 class InstructionPointer extends Register {
 	increment(value = 1) {
-		this.set(this.value + 1);
+		this.set(this.value + value);
 	}
 }
 
@@ -131,7 +131,7 @@ class Simulator {
 		// SP
 		this.SP = 0;
 		// IP
-		this.IP = new InstructionPointer();
+		this.IP = new InstructionPointer("IP");
 	}
 
 	init_memory() {
@@ -159,20 +159,27 @@ class Simulator {
 		let op_code = 0;
 
 		do {
-			//
-			op_code = this.fetch();
-
-			let res = this.decode(op_code);
-			let target_register = res.register;
-			let operands = res.ops;
-
-			let result = this.execute(op_code, operands, target_register);
-
-			console.log(
-				"Executing: " + op_code + " | " + operands + " Result : " + result
-			);
-			this.IP.increment(operands.length + 1);
+			op_code = this.step();
 		} while (op_code != 0);
+	}
+
+	step() {
+		color_ram(this.IP.get(), "#FFFFFF");
+
+		let op_code = this.fetch();
+
+		let res = this.decode(op_code);
+		let target_register = res.register;
+		let operands = res.ops;
+
+		let result = this.execute(op_code, operands, target_register);
+
+		console.log(
+			"Executing: " + op_code + " | " + operands + " Result : " + result
+		);
+		this.IP.increment(operands.length + 1);
+		color_ram(this.IP.get(), "#00FF00");
+		return op_code;
 	}
 
 	reset() {
