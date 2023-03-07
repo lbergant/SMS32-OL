@@ -12,16 +12,30 @@ body {
 	font-family: monospace;
 }
 
-table {
+.ram_table {
 	border-collapse: collapse;
 	width: 90%;
 	/* height: 400px; */
 	margin: 0 auto;
 }
 
-td {
+.dis_asm_table {
+	margin: 0 auto;
+}
+
+.tDisAsm_td_class {
+	width: 120px;
+}
+
+.tRAM_td_class {
 	width: 25px;
 	height: 25px;
-	/* border: 1px solid #ccc; */
 	padding: 0;
 }
+
+/* td {
+	width: 25px;
+	height: 25px;
+	border: 1px solid #ccc; 
+	padding: 0;
+} */

@@ -179,6 +179,7 @@ class Simulator {
 		);
 		this.IP.increment(operands.length + 1);
 		color_ram(this.IP.get(), "#00FF00");
+		color_dis_asm(this.IP.get(), "#00FF00");
 		return op_code;
 	}
 
