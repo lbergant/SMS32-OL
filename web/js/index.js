@@ -1,5 +1,6 @@
 let default_base = 16;
-let default_pad = 3;
+let default_pad = 2;
+let ignore_zero = true;
 
 let asm = new Assembler();
 let sim = new Simulator();
@@ -19,7 +20,43 @@ $(document).ready(function () {
 	$("#taDisAsm").val("");
 	$("#taRam").val("");
 
-	init_base_radio_buttons();
+	const base_options = [
+		{ label: "Binary", value: 2, pad: 8 },
+		{ label: "Decimal", value: 10, pad: 3 },
+		{ label: "Hexadecimal", value: 16, pad: 2 },
+		// { label: "ASCII", value: 0, pad: 1 },
+	];
+	init_base_radio_buttons(
+		"dRadioBaseContainer",
+		base_options,
+		"base",
+		function (option) {
+			console.log("Selected base:", option.value);
+			default_base = option.value;
+			default_pad = option.pad;
+
+			let local_ram = sim.ram.copy();
+			print_ram(local_ram, sim.IP.get());
+			print_assembler_result(asm);
+		}
+	);
+
+	const zero_options = [
+		{ label: "OFF", value: false },
+		{ label: "ON", value: true },
+	];
+	init_base_radio_buttons(
+		"dRadioZeroContainer",
+		zero_options,
+		"zero",
+		function (option) {
+			ignore_zero = option.value;
+
+			let local_ram = sim.ram.copy();
+			print_ram(local_ram, sim.IP.get());
+			print_assembler_result(asm);
+		}
+	);
 });
 
 function assemble() {
@@ -32,11 +69,12 @@ function assemble() {
 
 	print_assembler_result(asm);
 	let ram = asm.commands_to_ram();
-	print_ram(ram, default_base);
-	// print_tags();
 
 	// load compiled program to sim
+	sim.init();
 	sim.load_program(ram);
+	print_ram(ram, sim.IP.get());
+	// print_tags();
 }
 
 function run() {
@@ -95,33 +133,31 @@ function print_assembler_result(asm) {
 	$("#taDisAsm").val(ram_text);
 }
 
-function print_ram(ram, base, IP) {
-	let ram_text = " ".repeat(default_pad + 2);
+function print_ram(ram, IP) {
+	for (let i = 0; i < 16; i++) {
+		for (let j = 0; j < 16; j++) {
+			const ram_idx = i * 16 + j;
+			const cell = $("#cell-" + i + "-" + j);
+			let tmp_cell_text = ram[ram_idx];
 
-	for (let i = 0; i < 16; i++)
-		ram_text += i
-			.toString(default_base)
-			.toUpperCase()
-			.padStart(default_pad, "0")
-			.padEnd(default_pad + 1);
+			if (ignore_zero && tmp_cell_text == 0) {
+				tmp_cell_text = ".";
+			} else {
+				tmp_cell_text = tmp_cell_text
+					.toString(default_base)
+					.padStart(default_pad, "0")
+					.padEnd(default_pad + 1, " ");
+			}
+			cell.text(tmp_cell_text.toUpperCase());
 
-	for (let i = 0; i < ram.length; i++) {
-		if (i == IP) {
-		}
-		if (i % 16 == 0)
-			ram_text += "\n" + i.toString(default_base).padStart(default_pad) + ": ";
-		if (base == 0) {
-			ram_text += String.fromCharCode(ram[i]).toUpperCase().padEnd(2);
-		} else {
-			ram_text += ram[i]
-				.toString(base)
-				.toUpperCase()
-				.padStart(default_pad, "0")
-				.padEnd(default_pad + 1);
+			// Color cell
+			if (ram_idx == IP) {
+				cell.css("color", "#00FF00");
+			} else {
+				cell.css("color", "#FFFFFF");
+			}
 		}
 	}
-
-	$("#taRam").val(ram_text);
 }
 
 function update_register(reg, value) {
@@ -131,21 +167,14 @@ function update_register(reg, value) {
 }
 
 // Test radio
-function init_base_radio_buttons() {
-	const baseOptions = [
-		{ label: "Binary", value: 2, pad: 8 },
-		{ label: "Decimal", value: 10, pad: 3 },
-		{ label: "Hexadecimal", value: 16, pad: 2 },
-		// { label: "ASCII", value: 0, pad: 1 },
-	];
+function init_base_radio_buttons(parent, options, name, on_click) {
+	const $radioContainer = $("#" + parent);
 
-	const $radioContainer = $("#dRadioContainer");
-
-	$.each(baseOptions, function (index, option) {
+	$.each(options, function (index, option) {
 		// Create the radio button element and its label
 		const $radioBtn = $("<input>", {
 			type: "radio",
-			name: "base",
+			name: name,
 			value: option.value,
 		});
 		const $label = $("<label>", { text: option.label });
@@ -153,17 +182,9 @@ function init_base_radio_buttons() {
 		// Add the radio button and label to the container element
 		$radioContainer.append($radioBtn).append($label);
 
-		// $("#")
-
 		// Attach an onclick event handler to the radio button
 		$radioBtn.on("click", function () {
-			console.log("Selected base:", option.value);
-			default_base = option.value;
-			default_pad = option.pad;
-
-			let local_ram = sim.ram.copy();
-			print_ram(local_ram, default_base);
-			print_assembler_result(asm);
+			on_click(option);
 		});
 	});
 }

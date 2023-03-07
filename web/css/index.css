@@ -11,3 +11,17 @@ body {
 	color: white;
 	font-family: monospace;
 }
+
+table {
+	border-collapse: collapse;
+	width: 90%;
+	/* height: 400px; */
+	margin: 0 auto;
+}
+
+td {
+	width: 25px;
+	height: 25px;
+	/* border: 1px solid #ccc; */
+	padding: 0;
+}
