@@ -1,6 +1,7 @@
 let default_base = 16;
 let default_pad = 2;
 let ignore_zero = true;
+let default_highlight = "#34712f";
 
 let asm = new Assembler();
 let sim = new Simulator();
@@ -12,7 +13,6 @@ $(document).ready(function () {
 
 		if (keyCode == 9) {
 			e.preventDefault();
-			// call custom function here
 			document.execCommand("insertText", false, "\t");
 		}
 	});
@@ -35,8 +35,7 @@ $(document).ready(function () {
 			let local_ram = sim.ram.copy();
 			print_assembler_result(asm);
 			print_ram(local_ram);
-			let color = "#FFFFFF";
-			color_ram(ram_idx, color);
+			color_ram(0, default_highlight);
 			change_register_base();
 		}
 	);
@@ -54,7 +53,7 @@ $(document).ready(function () {
 
 			let local_ram = sim.ram.copy();
 			print_ram(local_ram);
-			color_ram(sim.IP.get(), "#00FF00");
+			color_ram(sim.IP.get(), default_highlight);
 			print_assembler_result(asm);
 			color_dis_asm();
 		}
@@ -111,9 +110,9 @@ function assemble() {
 	sim.load_program(ram);
 
 	print_ram(ram);
-	color_ram(sim.IP.get(), "#00FF00");
+	color_ram(sim.IP.get(), default_highlight);
 	print_assembler_result(asm);
-	color_dis_asm(0, "#00FF00");
+	color_dis_asm(0, default_highlight);
 	// print_tags();
 }
 
@@ -128,8 +127,8 @@ function step() {
 
 function reset() {
 	sim.init_registers();
-	color_ram(sim.IP.get(), "#00FF00");
-	color_dis_asm(0, "#00ff00");
+	color_ram(sim.IP.get(), default_highlight);
+	color_dis_asm(0, default_highlight);
 }
 
 function stop() {}
@@ -239,7 +238,7 @@ function color_dis_asm(idx, color) {
 function update_register(reg, value) {
 	if (reg != "td") {
 		$("#" + reg).html(value.toString(default_base).toUpperCase());
-		$("#" + reg).css("color", "#00FF00");
+		$("#" + reg).css("color", default_highlight);
 	}
 }
 

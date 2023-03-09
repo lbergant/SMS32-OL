@@ -180,8 +180,8 @@ class Simulator {
 			"Executing: " + op_code + " | " + operands + " Result : " + result
 		);
 		this.IP.increment(operands.length + 1);
-		color_ram(this.IP.get(), "#00FF00");
-		color_dis_asm(this.IP.get(), "#00FF00");
+		color_ram(this.IP.get(), default_highlight);
+		color_dis_asm(this.IP.get(), default_highlight);
 		return op_code;
 	}
 
