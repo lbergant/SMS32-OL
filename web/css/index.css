@@ -65,3 +65,14 @@ header {
 	left: 0;
 	position: absolute;
 }
+
+/* button, */
+select {
+	color: #ffffff;
+	background-color: #1f1f1f;
+	border: solid 2px;
+	width: 92px;
+	height: 32px;
+	border-color: #34712f;
+	cursor: pointer;
+}
