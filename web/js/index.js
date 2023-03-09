@@ -17,9 +17,6 @@ $(document).ready(function () {
 		}
 	});
 
-	// $("#taDisAsm").val("");
-	// $("#taRam").val("");
-
 	const base_options = [
 		// { label: "Binary", value: 2, pad: 8 },
 		{ label: "Decimal", value: 10, pad: 3 },
@@ -37,14 +34,16 @@ $(document).ready(function () {
 
 			let local_ram = sim.ram.copy();
 			print_assembler_result(asm);
-			print_ram(local_ram, sim.IP.get());
+			print_ram(local_ram);
+			let color = "#FFFFFF";
+			color_ram(ram_idx, color);
 			change_register_base();
 		}
 	);
 
 	const zero_options = [
-		{ label: "OFF", value: false },
-		{ label: "ON", value: true },
+		{ label: "ON", value: false },
+		{ label: "OFF", value: true },
 	];
 	init_base_radio_buttons(
 		"dRadioZeroContainer",
@@ -54,12 +53,14 @@ $(document).ready(function () {
 			ignore_zero = option.value;
 
 			let local_ram = sim.ram.copy();
-			print_ram(local_ram, sim.IP.get());
+			print_ram(local_ram);
+			color_ram(sim.IP.get(), "#00FF00");
 			print_assembler_result(asm);
+			color_dis_asm();
 		}
 	);
 
-	draw_table("tRAM", 16, 16);
+	draw_table("tRAM", 17, 16);
 });
 
 function draw_table(table_name, x_size, y_size) {
@@ -77,7 +78,7 @@ function draw_table(table_name, x_size, y_size) {
 				i +
 				"-" +
 				j +
-				'">*</td>';
+				'">.</td>';
 		}
 		table_txt += "</tr>";
 	}
@@ -103,13 +104,15 @@ function assemble() {
 
 	asm.main(lines);
 
-	print_assembler_result(asm);
 	let ram = asm.commands_to_ram();
 
 	// load compiled program to sim
 	sim.init();
 	sim.load_program(ram);
-	print_ram(ram, sim.IP.get());
+
+	print_ram(ram);
+	color_ram(sim.IP.get(), "#00FF00");
+	print_assembler_result(asm);
 	color_dis_asm(0, "#00FF00");
 	// print_tags();
 }
@@ -125,7 +128,7 @@ function step() {
 
 function reset() {
 	sim.init_registers();
-	print_ram(sim.ram.copy(), sim.IP.get());
+	color_ram(sim.IP.get(), "#00FF00");
 	color_dis_asm(0, "#00ff00");
 }
 
@@ -150,8 +153,9 @@ function print_assembler_result(asm) {
 			asm.commands[i].address
 				.toString(default_base)
 				.toUpperCase()
-				.padStart(default_pad, "0")
+				.padStart(default_pad, "0") + ":"
 		);
+		cell.css("width", 40);
 
 		// address to string
 		let op_code = asm.commands[i].op_code;
@@ -182,36 +186,38 @@ function print_assembler_result(asm) {
 	// $("#taDisAsm").val(ram_text);
 }
 
-function print_ram(ram, IP) {
+function print_ram(ram) {
 	for (let i = 0; i < 16; i++) {
-		for (let j = 0; j < 16; j++) {
-			const ram_idx = i * 16 + j;
+		for (let j = 0; j < 17; j++) {
 			const cell = $("#tRAM_cell-" + i + "-" + j);
-			let tmp_cell_text = ram[ram_idx];
+			let tmp_cell_text = "";
 
-			if (ignore_zero && tmp_cell_text == 0) {
-				tmp_cell_text = ".";
+			if (j == 0) {
+				tmp_cell_text = (i * 16).toString(default_base) + ":";
 			} else {
-				tmp_cell_text = tmp_cell_text
-					.toString(default_base)
-					.padStart(default_pad, "0")
-					.padEnd(default_pad + 1, " ");
+				const ram_idx = i * 16 + (j - 1);
+				tmp_cell_text = ram[ram_idx];
+				if (ignore_zero && tmp_cell_text == 0) {
+					tmp_cell_text = ".";
+				} else {
+					tmp_cell_text = tmp_cell_text
+						.toString(default_base)
+						.padStart(default_pad, "0")
+						.padEnd(default_pad + 1, " ");
+				}
 			}
 			cell.text(tmp_cell_text.toUpperCase());
-
-			let color = "#FFFFFF";
-			if (ram_idx == IP) {
-				color = "#00FF00";
-			}
-			color_ram(ram_idx, color);
 		}
 	}
 }
 
 function color_ram(cell_idx, color) {
+	// Clear all
+	$(".tRAM_td_class").css("color", "");
+
 	// Color cell
 	let cell = $(
-		"#tRAM_cell-" + Math.floor(cell_idx / 16) + "-" + (cell_idx % 16)
+		"#tRAM_cell-" + Math.floor(cell_idx / 16) + "-" + ((cell_idx % 16) + 1)
 	);
 	cell.css("color", color);
 }

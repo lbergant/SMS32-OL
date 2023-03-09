@@ -32,6 +32,8 @@ table {
 
 .dis_asm_table {
 	margin: 0 auto;
+	margin-left: 45px;
+	text-align: left;
 }
 
 .tDisAsm_td_class {

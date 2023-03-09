@@ -166,7 +166,6 @@ class Simulator {
 	}
 
 	step() {
-		color_ram(this.IP.get(), "#FFFFFF");
 		clear_register_color();
 
 		let op_code = this.fetch();

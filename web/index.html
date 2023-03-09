@@ -25,6 +25,9 @@
 			<div class="inline" id="dASM">
 				<h3>ASM</h3>
 				<textarea rows="30" id="taASM"></textarea>
+				<div>
+					<button onclick="assemble()">Assemble</button>
+				</div>
 			</div>
 			<div class="inline">
 				<div>
@@ -59,9 +62,6 @@
 				<div>
 					<h3>Assembler</h3>
 					<table class="dis_asm_table" id="tDisAsm"></table>
-					<div>
-						<button onclick="assemble()">Assemble</button>
-					</div>
 				</div>
 			</div>
 			<div style="width: 40%" class="inline">
@@ -72,9 +72,11 @@
 					<table class="ram_table" id="tRAM"></table>
 				</div>
 			</div>
-			<div style="position: absolute; bottom: 0">
-				Check out instructions at
-				https://ininet.org/microprocessor-simulator-0-help-v2.html?page=76
+			<div style="position: absolute; bottom: 0; width: 98%">
+				<label>
+					Check out instructions at
+					https://ininet.org/microprocessor-simulator-0-help-v2.html?page=76
+				</label>
 			</div>
 		</div>
 	</body>
