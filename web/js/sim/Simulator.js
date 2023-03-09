@@ -132,6 +132,8 @@ class Simulator {
 		this.SP = 0;
 		// IP
 		this.IP = new InstructionPointer("IP");
+
+		clear_register_color();
 	}
 
 	init_memory() {
@@ -165,6 +167,7 @@ class Simulator {
 
 	step() {
 		color_ram(this.IP.get(), "#FFFFFF");
+		clear_register_color();
 
 		let op_code = this.fetch();
 

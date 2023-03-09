@@ -233,7 +233,12 @@ function color_dis_asm(idx, color) {
 function update_register(reg, value) {
 	if (reg != "td") {
 		$("#" + reg).html(value.toString(default_base).toUpperCase());
+		$("#" + reg).css("color", "#00FF00");
 	}
+}
+
+function clear_register_color() {
+	$(".register").css("color", "#FFFFFF");
 }
 
 // Add radion buttons
