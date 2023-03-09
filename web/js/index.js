@@ -60,6 +60,23 @@ $(document).ready(function () {
 	);
 
 	draw_table("tRAM", 17, 16);
+
+	// File selection
+	$("#sFileSelect").change(function () {
+		const selectedFile = $(this).val();
+
+		if (!selectedFile) {
+			$("#taASM").val("");
+		} else {
+			$.ajax({
+				url: selectedFile,
+				dataType: "text",
+				success: function (data) {
+					$("#taASM").val(data);
+				},
+			});
+		}
+	});
 });
 
 function draw_table(table_name, x_size, y_size) {
