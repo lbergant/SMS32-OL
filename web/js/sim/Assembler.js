@@ -40,7 +40,7 @@ class Operand {
 			this.value = get_register_index(op);
 		} else if (op.search(/^[A-F0-9]+$/i) == 0) {
 			this.type = OperandType.immediate;
-			this.value = Number.parseInt(op);
+			this.value = Number.parseInt(op, 16);
 		} else if (op.search(/^[a-z]+[a-z0-9]*/i) == 0) {
 			this.type = OperandType.tag;
 			this.value = -1;
@@ -58,10 +58,10 @@ class Command {
 	 * Command constructor
 	 * @param line An instruction line to be parsed
 	 */
-	constructor(line, address) {
+	constructor(line, address, raw_line) {
 		console.group("Command: " + line);
 		this.address = address;
-		this.line = line;
+		this.line = raw_line;
 		this.byte_len = 0;
 		this.operands = new Array();
 
@@ -183,18 +183,21 @@ class Assembler {
 	parse_lines_pass1(lines) {
 		for (let cnt = 0; cnt < lines.length; cnt++) {
 			console.log("Addr: " + this.address);
+			let line = lines[cnt];
+			let res = this.remove_comment(line);
+			let only_comment = res.only_comment;
+			line = res.line;
 
-			let only_comment = this.remove_comment(lines[cnt]);
 			if (!only_comment) {
-				let is_tag = this.check_if_tag(lines[cnt]);
+				let is_tag = this.check_if_tag(line);
 
 				if (!is_tag) {
-					let tmp_command = new Command(lines[cnt], this.address);
+					let tmp_command = new Command(line, this.address, lines[cnt]);
 					this.address += tmp_command.get_byte_length();
 					this.commands.push(tmp_command);
 				} else {
 					// if tag then save as tag
-					tags.push(new Tag(lines[cnt], this.address));
+					tags.push(new Tag(line, this.address));
 				}
 			}
 		}
@@ -222,18 +225,19 @@ class Assembler {
 	 */
 	remove_comment(line) {
 		let comment_positon = line.search(";"); // search for comment
+		let only_comment = false;
 
 		if (comment_positon == 0) {
 			// line is comment
 			line = "";
 			this.type = CommandType.comment;
-			return true;
+			only_comment = true;
 		} else if (comment_positon > 0) {
 			// line has comment - remove it
 			line = line.split(";")[0];
 		}
 
-		return false;
+		return { only_comment: false, line: line };
 	}
 
 	/***
