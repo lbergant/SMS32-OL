@@ -108,4 +108,5 @@ dist
 .DS_Store
 
 # Always changing test
-web/Samples/test.asm
+web/Samples/*
+!web/Samples/test.asm
