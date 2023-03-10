@@ -3,8 +3,9 @@ class Register {
 	reg_name;
 
 	constructor(name = "", value = 0) {
+		this.asm = asm;
 		this.reg_name = name;
-		this.set(value);
+		this.value = value;
 	}
 
 	set(value) {
@@ -17,9 +18,49 @@ class Register {
 	}
 }
 
+class GeneralRegister extends Register {
+	constructor(asm, name = "", value = 0) {
+		super(name, value);
+		this.asm = asm;
+	}
+
+	set(value) {
+		if (value > 127) {
+			value -= 256;
+			if (this.asm) this.asm.SR.set_O();
+		} else if (value < -128) {
+			value += 256;
+			if (this.asm) this.asm.SR.set_O();
+		} else {
+			if (this.asm) this.asm.SR.clear_O();
+		}
+
+		if (value == 0) {
+			if (this.asm) this.asm.SR.set_Z();
+		} else {
+			if (this.asm) this.asm.SR.clear_Z();
+		}
+
+		if (value < 0) {
+			if (this.asm) this.asm.SR.set_S();
+		} else {
+			if (this.asm) this.asm.SR.clear_S();
+		}
+
+		// set(value);
+		this.value = value;
+		update_register("td" + this.reg_name, value);
+	}
+}
+
 class StatusRegister extends Register {
 	constructor() {
 		super();
+		this.clear();
+		// this.value = 0;
+	}
+
+	clear() {
 		this.clear_Z();
 		this.clear_S();
 		this.clear_O();
@@ -76,7 +117,7 @@ class StatusRegister extends Register {
 			}
 		}
 
-		update_register("taSR", this.value);
+		update_register("tdSR", this.value);
 	}
 
 	getBit(bitIndex) {
@@ -121,17 +162,19 @@ class RAM {
 
 class Simulator {
 	init_registers() {
-		this.AL = new Register("AL");
-		this.BL = new Register("BL");
-		this.CL = new Register("CL");
-		this.DL = new Register("DL");
-
+		// Status register
 		this.SR = new StatusRegister();
+
+		// Instruction pointer
+		this.IP = new InstructionPointer("IP");
+
+		this.AL = new GeneralRegister(this, "AL");
+		this.BL = new GeneralRegister(this, "BL");
+		this.CL = new GeneralRegister(this, "CL");
+		this.DL = new GeneralRegister(this, "DL");
 
 		// SP
 		this.SP = 0;
-		// IP
-		this.IP = new InstructionPointer("IP");
 
 		clear_register_color();
 	}
@@ -167,6 +210,7 @@ class Simulator {
 
 	step() {
 		clear_register_color();
+		// this.SR.clear();
 
 		let op_code = this.fetch();
 
