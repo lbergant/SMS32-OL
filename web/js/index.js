@@ -288,3 +288,17 @@ function init_base_radio_buttons(parent, options, name, on_click) {
 		});
 	});
 }
+
+function print_asm_error(error_lines) {
+	if (error_lines.length == 0) {
+		$("#error").text("");
+	} else {
+		let err_txt = "Errors on lines: ";
+		error_lines.forEach(function (value, idx) {
+			err_txt += value + ", ";
+		});
+
+		$("#error").text(err_txt.slice(0, err_txt.length - 2));
+		$("#error").css("color", "red");
+	}
+}

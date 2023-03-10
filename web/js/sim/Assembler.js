@@ -107,13 +107,15 @@ class Command {
 			this.operands = new Array();
 			for (let i = 0; i < tmp_operand.value.length; i++) {
 				this.operands.push(
-					new Operand(tmp_operand.value.charCodeAt(i).toString(10))
+					new Operand(tmp_operand.value.charCodeAt(i).toString(16))
 				);
 			}
 		} else if (this.op_code == -127) {
 			this.byte_len = this.operands[0].value - this.address;
 			this.operands = new Array();
 			this.op_code = "";
+		} else if (this.op_code == -128) {
+			this.byte_len = 0;
 		} else {
 			this.byte_len = byte_len;
 		}
@@ -181,26 +183,35 @@ class Assembler {
 	 * @param lines Lines to process
 	 */
 	parse_lines_pass1(lines) {
+		let error_lines = new Array();
 		for (let cnt = 0; cnt < lines.length; cnt++) {
 			console.log("Addr: " + this.address);
 			let line = lines[cnt];
-			let res = this.remove_comment(line);
-			let only_comment = res.only_comment;
-			line = res.line;
+			if (line.trim() != "") {
+				let res = this.remove_comment(line);
+				let only_comment = res.only_comment;
+				line = res.line;
 
-			if (!only_comment) {
-				let is_tag = this.check_if_tag(line);
+				if (!only_comment) {
+					let is_tag = this.check_if_tag(line);
 
-				if (!is_tag) {
-					let tmp_command = new Command(line, this.address, lines[cnt]);
-					this.address += tmp_command.get_byte_length();
-					this.commands.push(tmp_command);
-				} else {
-					// if tag then save as tag
-					tags.push(new Tag(line, this.address));
+					if (!is_tag) {
+						let tmp_command = new Command(line, this.address, lines[cnt]);
+						if (tmp_command.op_code != -128) {
+							this.address += tmp_command.get_byte_length();
+							this.commands.push(tmp_command);
+						} else {
+							error_lines.push(cnt);
+						}
+					} else {
+						// if tag then save as tag
+						tags.push(new Tag(line, this.address));
+					}
 				}
 			}
 		}
+
+		print_asm_error(error_lines);
 	}
 
 	parse_lines_pass2() {
@@ -237,7 +248,7 @@ class Assembler {
 			line = line.split(";")[0];
 		}
 
-		return { only_comment: false, line: line };
+		return { only_comment: only_comment, line: line };
 	}
 
 	/***
@@ -246,7 +257,6 @@ class Assembler {
 	 */
 	check_if_tag(line) {
 		let is_tag = line.search("\t") == -1; // check if line starts with \t
-		if (is_tag) this.type = CommandType.tag;
 		return is_tag;
 	}
 
