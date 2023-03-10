@@ -7,7 +7,7 @@ button {
 .button_slide {
 	text-align: center;
 	border: 2px solid;
-	border-color: #34712f;
+	border-color: var(--primary);
 	border-radius: 0px;
 	padding: 5px 10px;
 	display: inline-block;
@@ -17,25 +17,25 @@ button {
 	-webkit-transition: ease-out 0.3s;
 	-moz-transition: ease-out 0.3s;
 	transition: ease-out 0.3s;
-	box-shadow: inset 0 100px 0 0 #1f1f1f;
-	background-color: #34712f;
-	color: white;
+	box-shadow: inset 0 100px 0 0 var(--background);
+	background-color: var(--primary);
+	color: var(--text);
 }
 
 .slide_down:hover {
-	box-shadow: inset 0 0 0 0 #1f1f1f;
+	box-shadow: inset 0 0 0 0 var(--background);
 }
 
 .slide_right:hover {
-	box-shadow: inset 400px 0 0 0 #34712f;
+	box-shadow: inset 400px 0 0 0 var(--primary);
 }
 
 .slide_left:hover {
-	box-shadow: inset 0 0 0 50px #34712f;
+	box-shadow: inset 0 0 0 50px var(--primary);
 }
 
 .slide_diagonal:hover {
-	box-shadow: inset 400px 50px 0 0 #34712f;
+	box-shadow: inset 400px 50px 0 0 var(--primary);
 }
 
 #outer {

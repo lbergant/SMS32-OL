@@ -1,7 +1,9 @@
 let default_base = 16;
 let default_pad = 2;
 let ignore_zero = true;
-let default_highlight = "#34712f";
+let default_highlight = getComputedStyle(
+	document.documentElement
+).getPropertyValue("--primary");
 
 let asm = new Assembler();
 let sim = new Simulator();
