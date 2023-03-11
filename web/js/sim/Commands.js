@@ -88,6 +88,10 @@ function get_op_type(op_code) {
 			return CommandType.jump;
 		case 0xc1: //JZ
 			return CommandType.jump;
+		case 0xca: // CALL
+			return CommandType.jump;
+		case 0xcb: // RET
+			return CommandType.jump;
 	}
 
 	return CommandType.unidentified;
@@ -160,6 +164,10 @@ function get_op_code(text_command, type) {
 			return 0xc3;
 		case "JZ":
 			return 0xc1;
+		case "CALL":
+			return 0xca;
+		case "RET":
+			return 0xcb;
 	}
 
 	return -128;
@@ -170,6 +178,8 @@ function get_command_len(op_code) {
 	switch (op_code) {
 		// END, HALT
 		case 0x00:
+		// RET
+		case 0xcb:
 			return 0;
 		// JMP
 		case 0xc0:
@@ -179,6 +189,8 @@ function get_command_len(op_code) {
 		case 0xc4:
 		case 0xc5:
 		case 0xc6:
+		// Call
+		case 0xca:
 			return 1;
 		// ADD
 		case 0xa0:

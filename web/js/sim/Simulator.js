@@ -129,6 +129,7 @@ class StatusRegister extends Register {
 }
 
 class InstructionPointer extends Register {
+	// this should be Register so flags are not updated
 	increment(value = 1) {
 		this.set(this.value + value);
 	}
@@ -174,7 +175,7 @@ class Simulator {
 		this.DL = new GeneralRegister(this, "DL");
 
 		// SP
-		this.SP = 0;
+		this.SP = new InstructionPointer("SP", 255);
 
 		clear_register_color();
 	}
@@ -243,35 +244,40 @@ class Simulator {
 		let op_type = get_op_type(op_code).split("_");
 		let res_register = new Register();
 
-		for (let i = 0; i < num_operands; i++) {
-			let operand_token = this.ram.get(this.IP.get() + i + 1);
+		if (num_operands < 1) {
+			// RET special case
+			res_register = this.IP;
+		} else {
+			for (let i = 0; i < num_operands; i++) {
+				let operand_token = this.ram.get(this.IP.get() + i + 1);
 
-			let value = 0;
+				let value = 0;
 
-			switch (op_type[i]) {
-				case OperandType.imemory: // return memory address to read/write
-				case OperandType.register:
-					if (i == 0) {
-						res_register = this.get_register(operand_token);
-					}
-					value = this.get_register_value(operand_token);
-					break;
-				case OperandType.dmemory: // return memory addres to read/write
-				case OperandType.immediate:
-					value = operand_token;
-					break;
-				case OperandType.tag:
-				case "jump":
-					value = operand_token - 2; //offset jump length TODO_L is this ok?
-					res_register = this.IP; // jump
-					break;
-				case OperandType.data_bytes:
-					break;
-				default:
-					break;
+				switch (op_type[i]) {
+					case OperandType.imemory: // return memory address to read/write
+					case OperandType.register:
+						if (i == 0) {
+							res_register = this.get_register(operand_token);
+						}
+						value = this.get_register_value(operand_token);
+						break;
+					case OperandType.dmemory: // return memory addres to read/write
+					case OperandType.immediate:
+						value = operand_token;
+						break;
+					case OperandType.tag:
+					case "jump":
+						value = operand_token - 2; //offset jump length TODO_L is this ok?
+						res_register = this.IP; // jump
+						break;
+					case OperandType.data_bytes:
+						break;
+					default:
+						break;
+				}
+
+				operands.push(value);
 			}
-
-			operands.push(value);
 		}
 
 		return { ops: operands, register: res_register };
@@ -377,6 +383,16 @@ class Simulator {
 			case 0xc5:
 			case 0xc6:
 				this.execute_jump(command, operands, target_register);
+				break;
+			// CALL
+			case 0xca:
+				this.ram.set(this.SP.get(), this.IP.get() + 2);
+				this.SP.increment(-1);
+				target_register.set(operands[0]);
+				break;
+			case 0xcb:
+				this.SP.increment();
+				target_register.set(this.ram.get(this.SP.get()) - 1);
 				break;
 		}
 
