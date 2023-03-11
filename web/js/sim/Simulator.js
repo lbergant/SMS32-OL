@@ -94,16 +94,16 @@ class StatusRegister extends Register {
 	}
 
 	get_Z() {
-		this.getBit(0);
+		return this.getBit(0);
 	}
 	get_S() {
-		this.getBit(1);
+		return this.getBit(1);
 	}
 	get_O() {
-		this.getBit(2);
+		return this.getBit(2);
 	}
 	get_I() {
-		this.getBit(3);
+		return this.getBit(3);
 	}
 
 	setBit(bitIndex, value) {
@@ -278,6 +278,8 @@ class Simulator {
 	}
 
 	execute(command, operands, target_register) {
+		let tmp;
+
 		// ADD COMMAND
 		switch (command) {
 			//ADD
@@ -303,6 +305,20 @@ class Simulator {
 			// JMP
 			case 0xc0:
 				target_register.set(this.IP.get() + operands[0]);
+				break;
+			case 0xc1:
+				tmp = operands[0];
+				if (!this.SR.get_Z()) {
+					tmp = 0;
+				}
+				target_register.set(this.IP.get() + tmp);
+				break;
+			case 0xc2:
+				tmp = operands[0];
+				if (this.SR.get_Z()) {
+					tmp = 0;
+				}
+				target_register.set(this.IP.get() + tmp);
 				break;
 		}
 

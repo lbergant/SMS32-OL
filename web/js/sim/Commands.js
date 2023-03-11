@@ -74,7 +74,19 @@ function get_op_type(op_code) {
 			return CommandType.register_imemory;
 		case 0xd4: // MOV
 			return CommandType.imemory_register;
-		case 0xc0:
+		case 0xc0: // JMP
+			return CommandType.jump;
+		case 0xc6: //JNO
+			return CommandType.jump;
+		case 0xc4: //JNS
+			return CommandType.jump;
+		case 0xc2: //JNZ
+			return CommandType.jump;
+		case 0xc5: //JO
+			return CommandType.jump;
+		case 0xc3: //JS
+			return CommandType.jump;
+		case 0xc1: //JZ
 			return CommandType.jump;
 	}
 
@@ -136,6 +148,18 @@ function get_op_code(text_command, type) {
 				case CommandType.immediate:
 					return -127;
 			}
+		case "JNO":
+			return 0xc6;
+		case "JNS":
+			return 0xc4;
+		case "JNZ":
+			return 0xc2;
+		case "JO":
+			return 0xc5;
+		case "JS":
+			return 0xc3;
+		case "JZ":
+			return 0xc1;
 	}
 
 	return -128;
@@ -149,6 +173,12 @@ function get_command_len(op_code) {
 			return 0;
 		// JMP
 		case 0xc0:
+		case 0xc1:
+		case 0xc2:
+		case 0xc3:
+		case 0xc4:
+		case 0xc5:
+		case 0xc6:
 			return 1;
 		// ADD
 		case 0xa0:
