@@ -113,7 +113,6 @@ class Command {
 		} else if (this.op_code == -127) {
 			this.byte_len = this.operands[0].value - this.address;
 			this.operands = new Array();
-			this.op_code = "";
 		} else if (this.op_code == -128) {
 			this.byte_len = 0;
 		} else {
@@ -199,7 +198,10 @@ class Assembler {
 						let tmp_command = new Command(line, this.address, lines[cnt]);
 						if (tmp_command.op_code != -128) {
 							this.address += tmp_command.get_byte_length();
-							this.commands.push(tmp_command);
+							if (tmp_command.op_code != -127) {
+								// push command if not ORG(-127) (Only ORG has length but no opcode)
+								this.commands.push(tmp_command);
+							}
 						} else {
 							error_lines.push(cnt);
 						}
@@ -228,6 +230,15 @@ class Assembler {
 				}
 			}
 		}
+
+		let error_lines = new Array();
+		for (let i = 0; i < this.commands.length; i++) {
+			for (let j = 0; j < this.commands[i].operands.length; j++) {
+				if (this.commands[i].operands[j].value == -1) error_lines.push(i);
+			}
+		}
+
+		print_asm_error(error_lines);
 	}
 
 	/***
