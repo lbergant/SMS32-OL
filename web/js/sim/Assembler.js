@@ -267,7 +267,8 @@ class Assembler {
 	 * @param line Line to be evaluated
 	 */
 	check_if_tag(line) {
-		let is_tag = line.search("\t") == -1; // check if line starts with \t
+		let is_tag = !line.search("\t") == 0; // check if line starts with \t
+		if (is_tag) is_tag = !line.search("    ") == 0;
 		return is_tag;
 	}
 

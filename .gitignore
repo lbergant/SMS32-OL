@@ -110,3 +110,6 @@ dist
 # Always changing test
 web/Samples/*
 !web/Samples/test.asm
+!web/Samples/foo.asm
+!web/Samples/function_call.asm
+!web/Samples/first.asm
