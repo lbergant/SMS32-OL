@@ -277,31 +277,10 @@ class Simulator {
 		return { ops: operands, register: res_register };
 	}
 
-	execute(command, operands, target_register) {
+	execute_jump(command, operands, target_register) {
 		let tmp;
 
-		// ADD COMMAND
 		switch (command) {
-			//ADD
-			case 0xa0:
-			case 0xb0:
-				target_register.set(operands[0] + operands[1]);
-				break;
-			// MOV
-			//      immediate to register
-			case 0xd0:
-				target_register.set(operands[1]);
-				break;
-			//      mem to register
-			case 0xd1:
-			case 0xd3:
-				target_register.set(this.ram.get(operands[1]));
-				break;
-			//      register to mem
-			case 0xd2:
-			case 0xd4:
-				this.ram.set(operands[0], operands[1]);
-				break;
 			// JMP
 			case 0xc0:
 				target_register.set(this.IP.get() + operands[0]);
@@ -319,6 +298,85 @@ class Simulator {
 					tmp = 0;
 				}
 				target_register.set(this.IP.get() + tmp);
+				break;
+			case 0xc3:
+				tmp = operands[0];
+				if (!this.SR.get_S()) {
+					tmp = 0;
+				}
+				target_register.set(this.IP.get() + tmp);
+				break;
+			case 0xc4:
+				tmp = operands[0];
+				if (this.SR.get_S()) {
+					tmp = 0;
+				}
+				target_register.set(this.IP.get() + tmp);
+				break;
+			case 0xc5:
+				tmp = operands[0];
+				if (!this.SR.get_O()) {
+					tmp = 0;
+				}
+				target_register.set(this.IP.get() + tmp);
+				break;
+			case 0xc6:
+				tmp = operands[0];
+				if (this.SR.get_O()) {
+					tmp = 0;
+				}
+				target_register.set(this.IP.get() + tmp);
+				break;
+		}
+	}
+
+	execute_move(command, operands, target_register) {
+		switch (command) {
+			// MOV
+			//      immediate to register
+			case 0xd0:
+				target_register.set(operands[1]);
+				break;
+			//      mem to register
+			case 0xd1:
+			case 0xd3:
+				target_register.set(this.ram.get(operands[1]));
+				break;
+			//      register to mem
+			case 0xd2:
+			case 0xd4:
+				this.ram.set(operands[0], operands[1]);
+				break;
+		}
+	}
+
+	execute(command, operands, target_register) {
+		let tmp;
+
+		// ADD COMMAND
+		switch (command) {
+			//ADD
+			case 0xa0:
+			case 0xb0:
+				target_register.set(operands[0] + operands[1]);
+				break;
+			// MOV
+			case 0xd0:
+			case 0xd1:
+			case 0xd3:
+			case 0xd2:
+			case 0xd4:
+				this.execute_move(command, operands, target_register);
+				break;
+			// JMP
+			case 0xc0:
+			case 0xc1:
+			case 0xc2:
+			case 0xc3:
+			case 0xc4:
+			case 0xc5:
+			case 0xc6:
+				this.execute_jump(command, operands, target_register);
 				break;
 		}
 
