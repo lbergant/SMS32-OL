@@ -82,9 +82,14 @@ $(document).ready(function () {
 
 	$("#iColorPicker").val(default_highlight);
 	$("#iColorPicker").on("input", function () {
-		var color_value = $(this).val();
+		let color_value = $(this).val();
+
+		let complimentary_color = get_complimentary_color(color_value);
+
 		default_highlight = color_value;
 		$(":root").css("--primary", color_value);
+		$(":root").css("--secondary", complimentary_color);
+
 		color_ram(sim.IP.get(), color_value);
 		color_dis_asm(sim.IP.get(), color_value);
 	});

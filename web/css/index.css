@@ -1,6 +1,6 @@
 :root {
 	--primary: #1b839d;
-	/* --primary: #1b9d35; */
+	--secondary: #ef8e2c;
 	--background: #1f1f1f;
 	--text: #ffffff;
 }
@@ -89,4 +89,13 @@ select {
 	margin: 20px;
 	float: left;
 	padding: 1px;
+}
+
+#dLinks {
+	float: right;
+	margin: 25px 10px;
+}
+
+a {
+	color: var(--secondary);
 }
