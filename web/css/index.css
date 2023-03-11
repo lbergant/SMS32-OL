@@ -80,7 +80,7 @@ select {
 	color: var(--text);
 	background-color: inherit;
 	border: solid 2px;
-	width: 92px;
+	width: 150px;
 	height: 32px;
 	border-color: var(--primary);
 	cursor: pointer;
@@ -89,14 +89,25 @@ select {
 #iColorPicker {
 	margin: 20px;
 	float: left;
-	padding: 1px;
+	padding: 0px;
+	border: solid 2px var(--secondary);
 }
 
 #dLinks {
 	float: right;
-	margin: 25px 10px;
+	margin: 25px 20px;
 }
 
 a {
 	color: var(--secondary);
+	font-weight: bold;
+	font-size: x-large;
+}
+
+#iHeader {
+	vertical-align: middle;
+}
+h1 {
+	display: inline-block;
+	vertical-align: middle;
 }
