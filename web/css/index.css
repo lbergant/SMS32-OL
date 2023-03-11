@@ -84,3 +84,9 @@ select {
 	border-color: var(--primary);
 	cursor: pointer;
 }
+
+#iColorPicker {
+	margin: 20px;
+	float: left;
+	padding: 1px;
+}

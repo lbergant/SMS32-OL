@@ -79,6 +79,15 @@ $(document).ready(function () {
 			});
 		}
 	});
+
+	$("#iColorPicker").val(default_highlight);
+	$("#iColorPicker").on("input", function () {
+		var color_value = $(this).val();
+		default_highlight = color_value;
+		$(":root").css("--primary", color_value);
+		color_ram(sim.IP.get(), color_value);
+		color_dis_asm(sim.IP.get(), color_value);
+	});
 });
 
 function draw_table(table_name, x_size, y_size) {
