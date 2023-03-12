@@ -1,4 +1,4 @@
- 	JMP Start
+	JMP Start
 	DB 176
 	DB 0
 	DB 3
