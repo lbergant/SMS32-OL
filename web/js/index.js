@@ -19,6 +19,35 @@ $(document).ready(function () {
 		}
 	});
 
+	init_radio_buttons();
+
+	draw_table("tRAM", 17, 16);
+
+	init_file_selection();
+
+	init_colors();
+});
+
+function init_file_selection() {
+	// File selection
+	$("#sFileSelect").change(function () {
+		const selectedFile = $(this).val();
+
+		if (!selectedFile) {
+			$("#taASM").val("");
+		} else {
+			$.ajax({
+				url: selectedFile,
+				dataType: "text",
+				success: function (data) {
+					$("#taASM").val(data);
+				},
+			});
+		}
+	});
+}
+
+function init_radio_buttons() {
 	const base_options = [
 		// { label: "Binary", value: 2, pad: 8 },
 		{ label: "Decimal", value: 10, pad: 3 },
@@ -60,40 +89,56 @@ $(document).ready(function () {
 			color_dis_asm();
 		}
 	);
+}
 
-	draw_table("tRAM", 17, 16);
-
-	// File selection
-	$("#sFileSelect").change(function () {
-		const selectedFile = $(this).val();
-
-		if (!selectedFile) {
-			$("#taASM").val("");
-		} else {
-			$.ajax({
-				url: selectedFile,
-				dataType: "text",
-				success: function (data) {
-					$("#taASM").val(data);
-				},
-			});
-		}
-	});
-
+function init_colors() {
 	$("#iColorPicker").val(default_highlight);
 	$("#iColorPicker").on("input", function () {
 		let color_value = $(this).val();
 
-		let complimentary_color = get_complimentary_color(color_value);
+		update_primary_color(color_value);
 
-		default_highlight = color_value;
-		$(":root").css("--primary", color_value);
-		$(":root").css("--secondary", complimentary_color);
+		set_cookie("SMS_color", color_value, 1);
 
 		color_ram(sim.IP.get(), color_value);
 		color_dis_asm(sim.IP.get(), color_value);
 	});
-});
+
+	let cookie_value = get_cookie("SMS_color");
+	if (cookie_value) {
+		$("#iColorPicker").val(cookie_value);
+		update_primary_color(cookie_value);
+	}
+}
+
+function update_primary_color(color_value) {
+	let complimentary_color = get_complimentary_color(color_value);
+
+	default_highlight = color_value;
+	$(":root").css("--primary", color_value);
+	$(":root").css("--secondary", complimentary_color);
+}
+
+function set_cookie(name, value, days) {
+	var expires = "";
+	if (days) {
+		var date = new Date();
+		date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+		expires = "; expires=" + date.toUTCString();
+	}
+	document.cookie = name + "=" + value + expires + "; path=/";
+}
+
+function get_cookie(name) {
+	var cookies = document.cookie.split(";");
+	for (var i = 0; i < cookies.length; i++) {
+		var cookie = cookies[i].trim();
+		if (cookie.indexOf(name) === 0) {
+			return cookie.substring(name.length + 1, cookie.length);
+		}
+	}
+	return null; // cookie not found
+}
 
 function draw_table(table_name, x_size, y_size) {
 	let table = $("#" + table_name);
