@@ -199,14 +199,20 @@ class Simulator {
 		this.ram.flash(ram);
 	}
 
-	run() {
+	async run() {
 		this.running = true;
 
-		let op_code = 0;
+		let op_code = -1;
 
-		do {
+		while (op_code != 0 && this.running) {
 			op_code = this.step();
-		} while (op_code != 0);
+
+			await this.sleep(500);
+		}
+	}
+
+	sleep(ms) {
+		return new Promise((r) => setTimeout(r, ms));
 	}
 
 	step() {

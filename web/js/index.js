@@ -98,7 +98,7 @@ function init_colors() {
 
 		update_primary_color(color_value);
 
-		set_cookie("SMS_color", color_value, 1);
+		set_cookie("SMS_color", color_value, 14);
 
 		color_ram(sim.IP.get(), color_value);
 		color_dis_asm(sim.IP.get(), color_value);
@@ -200,6 +200,7 @@ function run() {
 }
 
 function step() {
+	sim.running = false;
 	sim.step();
 }
 
@@ -209,7 +210,9 @@ function reset() {
 	color_dis_asm(0, default_highlight);
 }
 
-function stop() {}
+function stop() {
+	sim.running = false;
+}
 
 function print_tags() {
 	let tag_text = "";
