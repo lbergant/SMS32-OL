@@ -282,6 +282,8 @@ class Simulator {
 						break;
 				}
 
+				if (value > 127) value -= 256;
+				else if (value < -128) value += 256;
 				operands.push(value);
 			}
 		}
