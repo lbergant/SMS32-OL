@@ -21,7 +21,7 @@ is assembled into machine code that is NOT the same as 8086 code.
 segment displays, a heater and thermostat, a stepper motor, a
 lift and a snake in a maze. -->
 
-CALL, RET, INT, AND IRET are available. Serious programming
+CALL and RET are available. Serious programming
 problems like multiplexing, procedures, parameter passing and
 recursion can be tackled.
 
