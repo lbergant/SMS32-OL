@@ -385,6 +385,16 @@ class Simulator {
 			case 0xb0:
 				target_register.set(operands[0] + operands[1]);
 				break;
+			// DIV
+			case 0x0b3:
+			case 0x0a3:
+				target_register.set(Math.floor(operands[0] / operands[1]));
+				break;
+			// MOD
+			case 0x0b6:
+			case 0x0a6:
+				target_register.set(operands[0] % operands[1]);
+				break;
 			// MOV
 			case 0xd0:
 			case 0xd1:
