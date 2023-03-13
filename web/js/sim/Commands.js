@@ -66,6 +66,11 @@ function get_op_type(op_code) {
 		case 0xa0: // ADD
 			return CommandType.register_register;
 		case 0xb0: // ADD
+			return CommandType.register_immediate;
+		case 0xa1: // SUB
+			return CommandType.register_register;
+		case 0xb1: // SUB
+			return CommandType.register_immediate;
 		case 0xd0: // MOV
 			return CommandType.register_immediate;
 		case 0xd1: // MOV
@@ -127,6 +132,10 @@ function get_op_type(op_code) {
 			return CommandType.register_register;
 		case 0xbb: // OR
 			return CommandType.register_immediate;
+		case 0xac: // XOR
+			return CommandType.register_register;
+		case 0xbc: // XOR
+			return CommandType.register_immediate;
 		case 0xff: // NOP
 			return CommandType.noop;
 		case 0xe0: // PUSH
@@ -153,7 +162,13 @@ function get_op_code(text_command, type) {
 				case CommandType.register_immediate:
 					return 0xb0;
 			}
-
+		case "SUB":
+			switch (type) {
+				case CommandType.register_register:
+					return 0xa1;
+				case CommandType.register_immediate:
+					return 0xb1;
+			}
 		case "MOV":
 			switch (type) {
 				case CommandType.register_immediate:
@@ -249,6 +264,13 @@ function get_op_code(text_command, type) {
 				case CommandType.register_register:
 					return 0xab;
 			}
+		case "XOR":
+			switch (type) {
+				case CommandType.register_immediate:
+					return 0xbc;
+				case CommandType.register_register:
+					return 0xac;
+			}
 		case "ROL":
 			return 0x9a;
 		case "ROR":
@@ -315,6 +337,9 @@ function get_command_len(op_code) {
 		// ADD
 		case 0xa0:
 		case 0xb0:
+		// SUB:
+		case 0xa1:
+		case 0xb1:
 		// MOV
 		case 0xd0:
 		case 0xd1:
@@ -337,6 +362,9 @@ function get_command_len(op_code) {
 		// OR
 		case 0xbb:
 		case 0xab:
+		// XOR
+		case 0xbc:
+		case 0xac:
 			return 2;
 	}
 

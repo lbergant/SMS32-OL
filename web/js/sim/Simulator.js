@@ -393,10 +393,15 @@ class Simulator {
 
 		// ADD COMMAND
 		switch (command) {
-			//ADD
+			// ADD
 			case 0xa0:
 			case 0xb0:
 				target_register.set(operands[0] + operands[1]);
+				break;
+			// SUB
+			case 0xa1:
+			case 0xb1:
+				target_register.set(operands[0] - operands[1]);
 				break;
 			// MUL
 			case 0x0b2:
@@ -435,6 +440,11 @@ class Simulator {
 			case 0x0bb:
 			case 0x0ab:
 				target_register.set(operands[0] | operands[1]);
+				break;
+			// XOR
+			case 0x0bc:
+			case 0x0ac:
+				target_register.set(operands[0] ^ operands[1]);
 				break;
 			// MOV
 			case 0xd0:
