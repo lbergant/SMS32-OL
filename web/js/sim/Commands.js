@@ -92,6 +92,12 @@ function get_op_type(op_code) {
 			return CommandType.jump;
 		case 0xcb: // RET
 			return CommandType.jump;
+		case 0xda:
+			return CommandType.register_register;
+		case 0xdb:
+			return CommandType.register_immediate;
+		case 0xdc:
+			return CommandType.register_dmemory;
 	}
 
 	return CommandType.unidentified;
@@ -168,6 +174,15 @@ function get_op_code(text_command, type) {
 			return 0xca;
 		case "RET":
 			return 0xcb;
+		case "CMP":
+			switch (type) {
+				case CommandType.register_register:
+					return 0xda;
+				case CommandType.register_immediate:
+					return 0xdb;
+				case CommandType.register_dmemory:
+					return 0xdc;
+			}
 	}
 
 	return -128;
@@ -201,6 +216,10 @@ function get_command_len(op_code) {
 		case 0xd2:
 		case 0xd3:
 		case 0xd4:
+		// CMP
+		case 0xda:
+		case 0xdb:
+		case 0xdc:
 			return 2;
 	}
 

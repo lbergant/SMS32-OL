@@ -364,6 +364,17 @@ class Simulator {
 		}
 	}
 
+	execute_cmp(val1, val2) {
+		this.SR.clear_S;
+		this.SR.clear_Z;
+
+		if (val1 == val2) {
+			this.SR.set_Z();
+		} else if (val1 < val2) {
+			this.SR.set_S();
+		}
+	}
+
 	execute(command, operands, target_register) {
 		let tmp;
 
@@ -402,6 +413,18 @@ class Simulator {
 				this.SP.increment();
 				target_register.set(this.ram.get(this.SP.get()) - 1);
 				break;
+			// CMP
+			case 0xda:
+				// register register
+				this.execute_cmp(operands[0], operands[1]);
+				break;
+			case 0xdb:
+				// register immediate
+				this.execute_cmp(operands[0], operands[1]);
+				break;
+			case 0xdc:
+				// register dmemory
+				this.execute_cmp(operands[0], this.ram.get(operands[1]));
 		}
 
 		return target_register.get();
