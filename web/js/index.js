@@ -49,7 +49,7 @@ function init_file_selection() {
 
 function init_radio_buttons() {
 	const base_options = [
-		// { label: "Binary", value: 2, pad: 8 },
+		{ label: "Binary", value: 2, pad: 8 },
 		{ label: "Decimal", value: 10, pad: 3 },
 		{ label: "Hexadecimal", value: 16, pad: 2 },
 		// { label: "ASCII", value: 0, pad: 1 },
@@ -65,8 +65,9 @@ function init_radio_buttons() {
 
 			let local_ram = sim.ram.copy();
 			print_assembler_result(asm);
+			color_dis_asm(sim.IP.get(), default_highlight);
 			print_ram(local_ram);
-			color_ram(0, default_highlight);
+			color_ram(sim.IP.get(), default_highlight);
 			change_register_base();
 		}
 	);
@@ -85,8 +86,6 @@ function init_radio_buttons() {
 			let local_ram = sim.ram.copy();
 			print_ram(local_ram);
 			color_ram(sim.IP.get(), default_highlight);
-			print_assembler_result(asm);
-			color_dis_asm();
 		}
 	);
 }
@@ -205,7 +204,7 @@ function step() {
 }
 
 function reset() {
-	sim.init_registers();
+	sim.zero_registers();
 	color_ram(sim.IP.get(), default_highlight);
 	color_dis_asm(0, default_highlight);
 }
@@ -318,7 +317,10 @@ function color_dis_asm(idx, color) {
 
 function update_register(reg, value) {
 	if (reg != "td") {
-		$("#" + reg).html(value.toString(default_base).toUpperCase());
+		if (value < 0) value += 256;
+		$("#" + reg).html(
+			value.toString(default_base).padStart(default_pad, "0").toUpperCase()
+		);
 		$("#" + reg).css("color", default_highlight);
 	}
 }
