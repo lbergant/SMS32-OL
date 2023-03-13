@@ -124,11 +124,11 @@ function get_op_type(op_code) {
 			return CommandType.register_immediate;
 		case 0xff: // NOP
 			return CommandType.noop;
-		case 0xe0:
-		case 0xe1:
+		case 0xe0: // PUSH
+		case 0xe1: // POP
 			return CommandType.register;
-		case 0xea:
-		case 0xeb:
+		case 0xea: // PUSHF
+		case 0xeb: // POPF
 			return CommandType.noop;
 	}
 
@@ -246,7 +246,14 @@ function get_op_code(text_command, type) {
 			}
 		case "NOT":
 			return 0xad;
-
+		case "PUSH":
+			return 0xe0;
+		case "POP":
+			return 0xe1;
+		case "PUSHF":
+			return 0xea;
+		case "POPF":
+			return 0xeb;
 		case "NOP":
 			return 0xff;
 	}
@@ -262,6 +269,10 @@ function get_command_len(op_code) {
 		// RET
 		case 0xcb:
 		case 0xff:
+		// PUSHF
+		case 0xea:
+		// POPF
+		case 0xeb:
 			return 0;
 		// JMP
 		case 0xc0:
@@ -279,6 +290,10 @@ function get_command_len(op_code) {
 		case 0xa5:
 		// NOT
 		case 0xad:
+		// PUSH
+		case 0xe0:
+		// POP
+		case 0xe1:
 			return 1;
 		// ADD
 		case 0xa0:

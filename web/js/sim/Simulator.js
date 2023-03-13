@@ -55,7 +55,7 @@ class GeneralRegister extends Register {
 
 class StatusRegister extends Register {
 	constructor() {
-		super();
+		super("SR");
 		this.clear();
 		// this.value = 0;
 	}
@@ -117,7 +117,7 @@ class StatusRegister extends Register {
 			}
 		}
 
-		update_register("tdSR", this.value);
+		this.set(this.value);
 	}
 
 	getBit(bitIndex) {
@@ -427,16 +427,6 @@ class Simulator {
 			case 0xc6:
 				this.execute_jump(command, operands, target_register);
 				break;
-			// CALL
-			case 0xca:
-				this.ram.set(this.SP.get(), this.IP.get() + 2);
-				this.SP.increment(-1);
-				target_register.set(operands[0]);
-				break;
-			case 0xcb:
-				this.SP.increment();
-				target_register.set(this.ram.get(this.SP.get()) - 1);
-				break;
 			// CMP
 			case 0xda:
 				// register register
@@ -457,6 +447,37 @@ class Simulator {
 			// DEC
 			case 0xa5:
 				target_register.set(target_register.get() - 1);
+				break;
+			// CALL
+			case 0xca:
+				this.ram.set(this.SP.get(), this.IP.get() + 2);
+				this.SP.increment(-1);
+				target_register.set(operands[0]);
+				break;
+			// RET
+			case 0xcb:
+				this.SP.increment();
+				target_register.set(this.ram.get(this.SP.get()) - 1);
+				break;
+			// PUSH
+			case 0xe0:
+				this.ram.set(this.SP.get(), operands[0]);
+				this.SP.increment(-1);
+				break;
+			// POP
+			case 0xe1:
+				this.SP.increment();
+				target_register.set(this.ram.get(this.SP.get()));
+				break;
+			// PUSHF
+			case 0xea:
+				this.ram.set(this.SP.get(), this.SR.get());
+				this.SP.increment(-1);
+				break;
+			// POPF
+			case 0xeb:
+				this.SP.increment();
+				this.SR.set(this.ram.get(this.SP.get()));
 				break;
 			// NOP
 			case 0xff:

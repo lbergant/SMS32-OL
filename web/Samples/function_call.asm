@@ -6,6 +6,7 @@
 	MOV BL,2 ;Number to add
 	MOV CL,0 ;Result register
 	CALL 20  ;Call function
+	CALL 30
 	END
 
 ; Subfunction that AL times adds BL to CL
@@ -14,4 +15,12 @@ Loop:
 	ADD CL,BL
 	ADD AL,FF
 	JNZ Loop
+	RET
+
+; Subfunction that changes AL<->BL
+	ORG 30
+	PUSH AL
+	PUSH BL
+	POP AL
+	POP BL
 	RET
