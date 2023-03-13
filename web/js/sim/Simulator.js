@@ -385,6 +385,11 @@ class Simulator {
 			case 0xb0:
 				target_register.set(operands[0] + operands[1]);
 				break;
+			// MUL
+			case 0x0b2:
+			case 0x0a2:
+				target_register.set(Math.floor(operands[0] * operands[1]));
+				break;
 			// DIV
 			case 0x0b3:
 			case 0x0a3:
@@ -441,6 +446,9 @@ class Simulator {
 				break;
 			case 0xa5:
 				target_register.set(target_register.get() - 1);
+				break;
+			case 0xff:
+				break;
 		}
 
 		return target_register.get();

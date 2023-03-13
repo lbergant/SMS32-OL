@@ -113,3 +113,4 @@ web/Samples/*
 !web/Samples/foo.asm
 !web/Samples/function_call.asm
 !web/Samples/first.asm
+web/why.md
