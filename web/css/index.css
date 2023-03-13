@@ -26,8 +26,8 @@ body {
 
 .inline {
 	display: inline-block;
-	width: 33%;
-	min-width: 350px;
+	width: 32%;
+	min-width: 300px;
 	vertical-align: top;
 }
 
