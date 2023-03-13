@@ -89,7 +89,7 @@ class Command {
 		if (com_ops.length > 1) {
 			byte_len += this.parse_operands(com_ops);
 		} else {
-			this.type = CommandType.end;
+			this.type = CommandType.noop;
 		}
 
 		this.op_code = get_op_code(com_ops[0], this.type);

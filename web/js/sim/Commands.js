@@ -30,8 +30,9 @@ const CommandType = {
 	register: "register",
 	data_byte: "data_byte",
 	data_bytes: "data_bytes",
+
 	// no operands,
-	end: "end",
+	noop: "noop",
 	// tags
 	tag: "tag",
 	// command
@@ -122,7 +123,13 @@ function get_op_type(op_code) {
 		case 0xbb: // OR
 			return CommandType.register_immediate;
 		case 0xff: // NOP
-			return CommandType.end;
+			return CommandType.noop;
+		case 0xe0:
+		case 0xe1:
+			return CommandType.register;
+		case 0xea:
+		case 0xeb:
+			return CommandType.noop;
 	}
 
 	return CommandType.unidentified;
@@ -165,11 +172,7 @@ function get_op_code(text_command, type) {
 			break;
 		case "END":
 		case "HALT":
-			switch (type) {
-				case CommandType.end:
-					return 0x00;
-			}
-			break;
+			return 0x00;
 		case "DB":
 			switch (type) {
 				case CommandType.immediate:
