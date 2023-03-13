@@ -180,6 +180,19 @@ class Simulator {
 		clear_register_color();
 	}
 
+	zero_registers() {
+		this.IP.set(0);
+
+		this.AL.set(0);
+		this.BL.set(0);
+		this.CL.set(0);
+		this.DL.set(0);
+
+		// SP
+		this.SP.set(255);
+		this.SR.set(0);
+	}
+
 	init_memory() {
 		this.ram = new RAM();
 	}
@@ -403,6 +416,20 @@ class Simulator {
 			// NOT
 			case 0xad:
 				target_register.set(~target_register.get());
+				break;
+			case 0x9c: // SHL
+				target_register.set(operands[0] << 1);
+				break;
+			case 0x9d: // SHR
+				target_register.set((operands[0] >> 1) & 0x7f); // >> is sign preserving, >>> is
+				break;
+			case 0x9a: // ROL
+				tmp = (operands[0] & 0x80) > 0 ? 0x01 : 0x00;
+				target_register.set((operands[0] << 1) | tmp);
+				break;
+			case 0x9b: // ROR
+				tmp = (operands[0] & 0x01) > 0 ? 0x80 : 0x00;
+				target_register.set((operands[0] >> 1) | tmp);
 				break;
 			// OR
 			case 0x0bb:

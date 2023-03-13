@@ -116,6 +116,11 @@ function get_op_type(op_code) {
 			return CommandType.register_immediate;
 		case 0xa6: // MOD
 			return CommandType.register_register;
+		case 0x9a: // ROL
+		case 0x9b: // ROR
+		case 0x9c: // SHL
+		case 0x9d: // SHR
+			return CommandType.register;
 		case 0xad: // NOT
 			return CommandType.register;
 		case 0xab: // OR
@@ -244,6 +249,14 @@ function get_op_code(text_command, type) {
 				case CommandType.register_register:
 					return 0xab;
 			}
+		case "ROL":
+			return 0x9a;
+		case "ROR":
+			return 0x9b;
+		case "SHL":
+			return 0x9c;
+		case "SHR":
+			return 0x9d;
 		case "NOT":
 			return 0xad;
 		case "PUSH":
@@ -294,6 +307,10 @@ function get_command_len(op_code) {
 		case 0xe0:
 		// POP
 		case 0xe1:
+		case 0x9a: // ROL
+		case 0x9b: // ROR
+		case 0x9c: // SHL
+		case 0x9d: // SHR
 			return 1;
 		// ADD
 		case 0xa0:
