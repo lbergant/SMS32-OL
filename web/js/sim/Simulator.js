@@ -425,6 +425,12 @@ class Simulator {
 			case 0xdc:
 				// register dmemory
 				this.execute_cmp(operands[0], this.ram.get(operands[1]));
+				break;
+			case 0xa4:
+				target_register.set(target_register.get() + 1);
+				break;
+			case 0xa5:
+				target_register.set(target_register.get() - 1);
 		}
 
 		return target_register.get();

@@ -27,6 +27,7 @@ const CommandType = {
 	// one operand
 	jump: "jump",
 	immediate: "immediate",
+	register: "register",
 	data_byte: "data_byte",
 	data_bytes: "data_bytes",
 	// no operands,
@@ -92,12 +93,16 @@ function get_op_type(op_code) {
 			return CommandType.jump;
 		case 0xcb: // RET
 			return CommandType.jump;
-		case 0xda:
+		case 0xda: // CMP
 			return CommandType.register_register;
-		case 0xdb:
+		case 0xdb: // CMP
 			return CommandType.register_immediate;
-		case 0xdc:
+		case 0xdc: // CMP
 			return CommandType.register_dmemory;
+		case 0xa4: // INC
+			return CommandType.register;
+		case 0xa5: // DEC
+			return CommandType.register;
 	}
 
 	return CommandType.unidentified;
@@ -183,6 +188,11 @@ function get_op_code(text_command, type) {
 				case CommandType.register_dmemory:
 					return 0xdc;
 			}
+
+		case "INC":
+			return 0xa4;
+		case "DEC":
+			return 0xa5;
 	}
 
 	return -128;
@@ -206,6 +216,10 @@ function get_command_len(op_code) {
 		case 0xc6:
 		// Call
 		case 0xca:
+		// INC
+		case 0xa4:
+		// DEC
+		case 0xa5:
 			return 1;
 		// ADD
 		case 0xa0:
