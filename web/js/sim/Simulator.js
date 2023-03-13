@@ -400,6 +400,15 @@ class Simulator {
 			case 0x0a6:
 				target_register.set(operands[0] % operands[1]);
 				break;
+			// NOT
+			case 0xad:
+				target_register.set(~target_register.get());
+				break;
+			// OR
+			case 0x0bb:
+			case 0x0ab:
+				target_register.set(operands[0] | operands[1]);
+				break;
 			// MOV
 			case 0xd0:
 			case 0xd1:
@@ -441,12 +450,15 @@ class Simulator {
 				// register dmemory
 				this.execute_cmp(operands[0], this.ram.get(operands[1]));
 				break;
+			// INC
 			case 0xa4:
 				target_register.set(target_register.get() + 1);
 				break;
+			// DEC
 			case 0xa5:
 				target_register.set(target_register.get() - 1);
 				break;
+			// NOP
 			case 0xff:
 				break;
 		}

@@ -115,6 +115,12 @@ function get_op_type(op_code) {
 			return CommandType.register_immediate;
 		case 0xa6: // MOD
 			return CommandType.register_register;
+		case 0xad: // NOT
+			return CommandType.register;
+		case 0xab: // OR
+			return CommandType.register_register;
+		case 0xbb: // OR
+			return CommandType.register_immediate;
 		case 0xff: // NOP
 			return CommandType.end;
 	}
@@ -228,6 +234,16 @@ function get_op_code(text_command, type) {
 				case CommandType.register_register:
 					return 0xa6;
 			}
+		case "OR":
+			switch (type) {
+				case CommandType.register_immediate:
+					return 0xbb;
+				case CommandType.register_register:
+					return 0xab;
+			}
+		case "NOT":
+			return 0xad;
+
 		case "NOP":
 			return 0xff;
 	}
@@ -258,6 +274,8 @@ function get_command_len(op_code) {
 		case 0xa4:
 		// DEC
 		case 0xa5:
+		// NOT
+		case 0xad:
 			return 1;
 		// ADD
 		case 0xa0:
@@ -281,6 +299,9 @@ function get_command_len(op_code) {
 		// MOD
 		case 0xb6:
 		case 0xa6:
+		// OR
+		case 0xbb:
+		case 0xab:
 			return 2;
 	}
 
