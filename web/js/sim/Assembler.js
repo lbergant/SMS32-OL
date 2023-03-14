@@ -199,9 +199,15 @@ class Assembler {
 				line = res.line;
 
 				if (!only_comment) {
-					let is_tag = this.check_if_tag(line);
+					let has_tag = this.check_if_tag(line);
 
-					if (!is_tag) {
+					if (has_tag) {
+						let tag_line = line.split(":");
+						tags.push(new Tag(tag_line[0], this.address));
+						line = tag_line[1];
+					}
+
+					if (line.trim() != "") {
 						let tmp_command = new Command(line, this.address, lines[cnt]);
 						if (tmp_command.op_code != -128) {
 							this.address += tmp_command.get_byte_length();
@@ -212,9 +218,6 @@ class Assembler {
 						} else {
 							error_lines.push(cnt);
 						}
-					} else {
-						// if tag then save as tag
-						tags.push(new Tag(line, this.address));
 					}
 				}
 			}
@@ -245,7 +248,7 @@ class Assembler {
 			}
 		}
 
-		print_asm_error(error_lines);
+		print_tag_error(error_lines);
 	}
 
 	/***
