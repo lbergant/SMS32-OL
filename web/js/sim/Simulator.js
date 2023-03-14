@@ -436,6 +436,11 @@ class Simulator {
 				tmp = (operands[0] & 0x01) > 0 ? 0x80 : 0x00;
 				target_register.set((operands[0] >> 1) | tmp);
 				break;
+			// AND
+			case 0x0ba:
+			case 0x0aa:
+				target_register.set(operands[0] & operands[1]);
+				break;
 			// OR
 			case 0x0bb:
 			case 0x0ab:

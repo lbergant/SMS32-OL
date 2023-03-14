@@ -62,89 +62,31 @@ function get_register_index(text_register) {
  */
 function get_op_type(op_code) {
 	// ADD COMMAND
+	// prettier-ignore
 	switch (op_code) {
-		case 0xa0: // ADD
-			return CommandType.register_register;
-		case 0xb0: // ADD
-			return CommandType.register_immediate;
-		case 0xa1: // SUB
-			return CommandType.register_register;
-		case 0xb1: // SUB
-			return CommandType.register_immediate;
-		case 0xd0: // MOV
-			return CommandType.register_immediate;
-		case 0xd1: // MOV
-			return CommandType.register_dmemory;
-		case 0xd2: // MOV
-			return CommandType.dmemory_register;
-		case 0xd3: // MOV
-			return CommandType.register_imemory;
-		case 0xd4: // MOV
-			return CommandType.imemory_register;
-		case 0xc0: // JMP
-			return CommandType.jump;
-		case 0xc6: //JNO
-			return CommandType.jump;
-		case 0xc4: //JNS
-			return CommandType.jump;
-		case 0xc2: //JNZ
-			return CommandType.jump;
-		case 0xc5: //JO
-			return CommandType.jump;
-		case 0xc3: //JS
-			return CommandType.jump;
-		case 0xc1: //JZ
-			return CommandType.jump;
-		case 0xca: // CALL
-			return CommandType.jump;
-		case 0xcb: // RET
-			return CommandType.jump;
-		case 0xda: // CMP
-			return CommandType.register_register;
-		case 0xdb: // CMP
-			return CommandType.register_immediate;
-		case 0xdc: // CMP
-			return CommandType.register_dmemory;
-		case 0xa4: // INC
-			return CommandType.register;
-		case 0xa5: // DEC
-			return CommandType.register;
-		case 0xb2: // MUL
-			return CommandType.register_immediate;
-		case 0xa2: // MUL
-			return CommandType.register_register;
-		case 0xb3: // DIV
-			return CommandType.register_immediate;
-		case 0xa3: // DIV
-			return CommandType.register_register;
-		case 0xb6: // MOD
-			return CommandType.register_immediate;
-		case 0xa6: // MOD
-			return CommandType.register_register;
-		case 0x9a: // ROL
-		case 0x9b: // ROR
-		case 0x9c: // SHL
-		case 0x9d: // SHR
-			return CommandType.register;
+		case 0xa0: case 0xa1: case 0xa2: case 0xa3: // ADD, SUB, MUL, DIV
+		case 0xa4: case 0xa5: // INC, DEC
+		case 0xa6: case 0xb2: case 0xb3: // MOD, MUL imm, DIV imm
+		case 0xaa: case 0xab: case 0xac: // AND, OR, XOR reg-reg
+		  return CommandType.register_register;
+		case 0xb0: case 0xb1: case 0xbb: case 0xbc: // ADD imm, SUB imm, OR imm, XOR imm
+		case 0xd0: case 0xd3: case 0xba:// MOV imm to reg, reg to immem, ADD imm
+		case 0xda: case 0xdb: case 0xdc: // CMP reg-reg, CMP reg-imm, CMP reg-dmem
+		  return CommandType.register_immediate;
+		case 0xd1: case 0xd2: case 0xd4: // MOV reg-dmem, dmem-reg, reg-imem
+		  return CommandType.register_dmemory;
+		case 0xc0: case 0xc6: case 0xc4: // JMP, JNO, JNS
+		case 0xc2: case 0xc5: case 0xc3: // JNZ, JO, JS
+		case 0xc1: case 0xca: case 0xcb: // JZ, CALL, RET
+		  return CommandType.jump;
+		case 0x9a: case 0x9b: case 0x9c: case 0x9d: // ROL, ROR, SHL, SHR
 		case 0xad: // NOT
-			return CommandType.register;
-		case 0xab: // OR
-			return CommandType.register_register;
-		case 0xbb: // OR
-			return CommandType.register_immediate;
-		case 0xac: // XOR
-			return CommandType.register_register;
-		case 0xbc: // XOR
-			return CommandType.register_immediate;
+		case 0xe0: case 0xe1: // PUSH, POP
+		  return CommandType.register;
+		case 0xea: case 0xeb: // PUSHF, POPF
 		case 0xff: // NOP
-			return CommandType.noop;
-		case 0xe0: // PUSH
-		case 0xe1: // POP
-			return CommandType.register;
-		case 0xea: // PUSHF
-		case 0xeb: // POPF
-			return CommandType.noop;
-	}
+		  return CommandType.noop;
+	  }
 
 	return CommandType.unidentified;
 }
@@ -257,6 +199,13 @@ function get_op_code(text_command, type) {
 				case CommandType.register_register:
 					return 0xa6;
 			}
+		case "AND":
+			switch (type) {
+				case CommandType.register_immediate:
+					return 0xba;
+				case CommandType.register_register:
+					return 0xaa;
+			}
 		case "OR":
 			switch (type) {
 				case CommandType.register_immediate:
@@ -298,73 +247,31 @@ function get_op_code(text_command, type) {
 
 function get_command_len(op_code) {
 	// ADD COMMAND
+	// prettier-ignore
 	switch (op_code) {
 		// END, HALT
 		case 0x00:
-		// RET
-		case 0xcb:
-		case 0xff:
-		// PUSHF
-		case 0xea:
-		// POPF
-		case 0xeb:
+		case 0xcb: case 0xff: // RET NOP
+		case 0xea: case 0xeb: // PUSHF POPF
 			return 0;
-		// JMP
-		case 0xc0:
-		case 0xc1:
-		case 0xc2:
-		case 0xc3:
-		case 0xc4:
-		case 0xc5:
-		case 0xc6:
-		// Call
-		case 0xca:
-		// INC
-		case 0xa4:
-		// DEC
-		case 0xa5:
-		// NOT
-		case 0xad:
-		// PUSH
-		case 0xe0:
-		// POP
-		case 0xe1:
-		case 0x9a: // ROL
-		case 0x9b: // ROR
-		case 0x9c: // SHL
-		case 0x9d: // SHR
+		case 0xc0: case 0xc1: case 0xc2: case 0xc3: // JMP
+		case 0xc4: case 0xc5: case 0xc6: // JMP
+		case 0xca: // Call
+		case 0xa4: case 0xa5:// INC DEC
+		case 0xe0: case 0xe1: // PUSH POP
+		case 0x9a: case 0x9b: // ROL ROR
+		case 0x9c: case 0x9d: // SHL SHR
 			return 1;
-		// ADD
-		case 0xa0:
-		case 0xb0:
-		// SUB:
-		case 0xa1:
-		case 0xb1:
-		// MOV
-		case 0xd0:
-		case 0xd1:
-		case 0xd2:
-		case 0xd3:
-		case 0xd4:
-		// CMP
-		case 0xda:
-		case 0xdb:
-		case 0xdc:
-		// MUL
-		case 0xb2:
-		case 0xa2:
-		// DIV
-		case 0xb3:
-		case 0xa3:
-		// MOD
-		case 0xb6:
-		case 0xa6:
-		// OR
-		case 0xbb:
-		case 0xab:
-		// XOR
-		case 0xbc:
-		case 0xac:
+		case 0xa0: case 0xb0: case 0xa1: case 0xb1: // ADD ADD SUB SUB
+		case 0xd0: case 0xd1: case 0xd2: case 0xd3:	case 0xd4: // MOV MOV MOV MOV MOV
+		case 0xda: case 0xdb: case 0xdc: // CMP
+		case 0xb2: case 0xa2: // MUL MUL
+		case 0xb3: case 0xa3: // DIV DIV
+		case 0xb6: case 0xa6: // MOD MOD
+		case 0xad: // NOT
+		case 0xaa: case 0xba: // AND AND
+		case 0xbb: case 0xab: // OR OR
+		case 0xbc: case 0xac: // XOR XOR
 			return 2;
 	}
 
