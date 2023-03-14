@@ -1,4 +1,5 @@
 let default_base = 16;
+let prev_base = 16;
 let default_pad = 2;
 let ignore_zero = true;
 let default_highlight = getComputedStyle(
@@ -60,6 +61,7 @@ function init_radio_buttons() {
 		"base",
 		function (option) {
 			console.log("Selected base:", option.value);
+			prev_base = default_base;
 			default_base = option.value;
 			default_pad = option.pad;
 
@@ -165,10 +167,7 @@ function draw_table(table_name, x_size, y_size) {
 function change_register_base() {
 	let registers = $(".register");
 	for (let i = 0; i < registers.length; i++) {
-		let val = Number.parseInt(
-			registers[i].innerHTML,
-			default_base == 16 ? 10 : 16
-		);
+		let val = Number.parseInt(registers[i].innerHTML, prev_base);
 		registers[i].innerHTML = val.toString(default_base).toUpperCase();
 	}
 }
