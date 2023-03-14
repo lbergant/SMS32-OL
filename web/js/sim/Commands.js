@@ -65,22 +65,29 @@ function get_op_type(op_code) {
 	// prettier-ignore
 	switch (op_code) {
 		case 0xa0: case 0xa1: case 0xa2: case 0xa3: // ADD, SUB, MUL, DIV
-		case 0xa4: case 0xa5: // INC, DEC
-		case 0xa6: case 0xb2: case 0xb3: // MOD, MUL imm, DIV imm
-		case 0xaa: case 0xab: case 0xac: // AND, OR, XOR reg-reg
+		case 0xa6: case 0xaa: case 0xab: case 0xac: // MOD, AND, OR, XOR
+		case 0xda: // CMP reg-reg,
 		  return CommandType.register_register;
-		case 0xb0: case 0xb1: case 0xbb: case 0xbc: // ADD imm, SUB imm, OR imm, XOR imm
-		case 0xd0: case 0xd3: case 0xba:// MOV imm to reg, reg to immem, ADD imm
-		case 0xda: case 0xdb: case 0xdc: // CMP reg-reg, CMP reg-imm, CMP reg-dmem
+		case 0xb0: case 0xb1: case 0xb2: case 0xb3: // ADD, SUB, MUL, DIV
+		case 0xa6: case 0xba: case 0xbb: case 0xbc: // MOD, AND, OR, XOR 
+		case 0xdb: //  CMP reg-imm
+		case 0xd0: // MOV imm to reg
 		  return CommandType.register_immediate;
-		case 0xd1: case 0xd2: case 0xd4: // MOV reg-dmem, dmem-reg, reg-imem
+		case 0xd3: // MOV 
+			return CommandType.register_imemory;
+		case 0xd4: // MOV 
+			return CommandType.imemory_register;
+		case 0xd1:  case 0xdc: // MOV, CMP
 		  return CommandType.register_dmemory;
+		case 0xd2: // MOV dmem reg
+			return CommandType.dmemory_register
 		case 0xc0: case 0xc6: case 0xc4: // JMP, JNO, JNS
 		case 0xc2: case 0xc5: case 0xc3: // JNZ, JO, JS
 		case 0xc1: case 0xca: case 0xcb: // JZ, CALL, RET
 		  return CommandType.jump;
 		case 0x9a: case 0x9b: case 0x9c: case 0x9d: // ROL, ROR, SHL, SHR
 		case 0xad: // NOT
+		case 0xa4: case 0xa5: // INC, DEC
 		case 0xe0: case 0xe1: // PUSH, POP
 		  return CommandType.register;
 		case 0xea: case 0xeb: // PUSHF, POPF
