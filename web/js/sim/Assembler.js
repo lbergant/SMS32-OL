@@ -84,15 +84,22 @@ class Command {
 		line = line.trim(); // clean line
 		this.type = CommandType.unidentified; // upgrade a type to command type
 		let com_ops = line.split(" "); // devide command and operands
+
+		let com = com_ops[0];
+		let ops = "";
+		for (let i = 1; i < com_ops.length; i++) {
+			ops += com_ops[i];
+		}
+
 		let byte_len = 1;
 
 		if (com_ops.length > 1) {
-			byte_len += this.parse_operands(com_ops);
+			byte_len += this.parse_operands(ops);
 		} else {
 			this.type = CommandType.noop;
 		}
 
-		this.op_code = get_op_code(com_ops[0], this.type);
+		this.op_code = get_op_code(com, this.type);
 
 		if (this.op_code == -1) {
 			//DB command specific code
@@ -122,10 +129,10 @@ class Command {
 
 	/***
 	 * Parse 1 or 2 operands and detiermine their type
-	 * @param com_ops Operands divided by ,
+	 * @param ops Operands divided by ,
 	 */
-	parse_operands(com_ops) {
-		let ops = com_ops[1].split(","); // split operands by ,
+	parse_operands(iOps) {
+		let ops = iOps.split(","); // split operands by ,
 		let command_types = new Array();
 		let num_of_operands = 0;
 
