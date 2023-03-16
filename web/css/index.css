@@ -95,7 +95,7 @@ select {
 
 #iColorPicker {
 	margin: 20px;
-	float: left;
+	/* float: left; */
 	padding: 0px;
 	border: solid 2px var(--secondary);
 	/* border-radius: 10px; */

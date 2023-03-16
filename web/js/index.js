@@ -103,6 +103,25 @@ function init_radio_buttons() {
 			color_ram(sim.IP.get(), default_highlight);
 		}
 	);
+
+	const light_options = [
+		{ label: "Light", value: true },
+		{ label: "Dark", value: false },
+	];
+	init_base_radio_buttons(
+		"dSchemeContainer",
+		light_options,
+		"zero",
+		function (option) {
+			if (option.value) {
+				$(":root").css("--text", "#000000");
+				$(":root").css("--background", "#FFFFFF");
+			} else {
+				$(":root").css("--text", "#FFFFFF");
+				$(":root").css("--background", "#1f1f1f");
+			}
+		}
+	);
 }
 
 function init_colors() {
