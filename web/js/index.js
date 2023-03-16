@@ -27,7 +27,20 @@ $(document).ready(function () {
 	init_file_selection();
 
 	init_colors();
+
+	// init_speed_slider();
 });
+
+// function init_speed_slider() {
+// 	$("#sSpeed").slider({
+// 		position: "max",
+// 	});
+// 	$("#sSpeed").slider("option", "max", 100);
+// 	$("#sSpeed").slider("option", "max", 0);
+// 	$("#sSpeed").on("slide", function (event, ui) {
+// 		console.log(ui.value);
+// 	});
+// }
 
 function init_file_selection() {
 	// File selection
