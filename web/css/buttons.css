@@ -1,6 +1,7 @@
 button {
 	height: 32px;
 	width: 90px;
+	border-radius: var(--border_radius);
 }
 
 /* Buttons */
@@ -8,7 +9,6 @@ button {
 	text-align: center;
 	border: 2px solid;
 	border-color: var(--primary);
-	border-radius: 0px;
 	padding: 5px 10px;
 	display: inline-block;
 	letter-spacing: 1px;
