@@ -111,7 +111,7 @@ function init_radio_buttons() {
 	init_base_radio_buttons(
 		"dSchemeContainer",
 		light_options,
-		"zero",
+		"theme",
 		function (option) {
 			if (option.value) {
 				$(":root").css("--text", "#000000");
