@@ -5,6 +5,9 @@ let ignore_zero = true;
 let default_highlight = getComputedStyle(
 	document.documentElement
 ).getPropertyValue("--primary");
+let default_text_color = getComputedStyle(
+	document.documentElement
+).getPropertyValue("--text");
 
 let asm = new Assembler();
 let sim = new Simulator();
@@ -26,6 +29,7 @@ $(document).ready(function () {
 
 	init_file_selection();
 
+	update_theme(get_cookie("SMS_theme"));
 	init_colors();
 
 	// init_speed_slider();
@@ -113,15 +117,26 @@ function init_radio_buttons() {
 		light_options,
 		"theme",
 		function (option) {
-			if (option.value) {
-				$(":root").css("--text", "#000000");
-				$(":root").css("--background", "#FFFFFF");
-			} else {
-				$(":root").css("--text", "#FFFFFF");
-				$(":root").css("--background", "#1f1f1f");
-			}
+			update_theme(option.value);
 		}
 	);
+}
+
+function update_theme(value) {
+	if (value) {
+		$(":root").css("--text", "#000000");
+		$(":root").css("--background", "#FFFFFF");
+		default_text_color = "#000000";
+		$('input[name="theme"]')[1].checked = false;
+		$('input[name="theme"]')[0].checked = true;
+	} else {
+		$(":root").css("--text", "#FFFFFF");
+		$(":root").css("--background", "#1f1f1f");
+		default_text_color = "#FFFFFF";
+		$('input[name="theme"]')[0].checked = false;
+		$('input[name="theme"]')[1].checked = true;
+	}
+	set_cookie("SMS_theme", value, 14);
 }
 
 function init_colors() {
@@ -159,7 +174,7 @@ function set_cookie(name, value, days) {
 		date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
 		expires = "; expires=" + date.toUTCString();
 	}
-	document.cookie = name + "=" + value + expires + "; path=/";
+	document.cookie = name + "=" + value + expires + "; path=/;SameSite=Lax";
 }
 
 function get_cookie(name) {
@@ -339,9 +354,9 @@ function color_dis_asm(idx, color) {
 			$("#tDisAsm_cell-" + i + "-1").css("color", color);
 			$("#tDisAsm_cell-" + i + "-2").css("color", color);
 		} else {
-			$("#tDisAsm_cell-" + i + "-0").css("color", "#FFFFFF");
-			$("#tDisAsm_cell-" + i + "-1").css("color", "#FFFFFF");
-			$("#tDisAsm_cell-" + i + "-2").css("color", "#FFFFFF");
+			$("#tDisAsm_cell-" + i + "-0").css("color", "");
+			$("#tDisAsm_cell-" + i + "-1").css("color", "");
+			$("#tDisAsm_cell-" + i + "-2").css("color", "");
 		}
 	}
 }
@@ -357,7 +372,7 @@ function update_register(reg, value) {
 }
 
 function clear_register_color() {
-	$(".register").css("color", "#FFFFFF");
+	$(".register").css("color", default_text_color);
 }
 
 // Add radion buttons
