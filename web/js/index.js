@@ -136,6 +136,7 @@ function update_theme(value) {
 		$('input[name="theme"]')[0].checked = false;
 		$('input[name="theme"]')[1].checked = true;
 	}
+	clear_register_color();
 	set_cookie("SMS_theme", value, 14);
 }
 
