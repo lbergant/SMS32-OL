@@ -3,10 +3,10 @@
 var express = require("express");
 var app = express();
 
-app.use(express.static("/home/ubuntu/Projects/MAG/web/"));
+app.use(express.static("/home/ubuntu/Projects/SMS32-OL/web/"));
 
 app.get("/", function (req, res) {
-	res.sendFile("/home/ubuntu/Projects/MAG/web/index.html");
+	res.sendFile("/home/ubuntu/Projects/SMS32-OL/web/index.html");
 });
 
 var server = app.listen(8080, function () {
