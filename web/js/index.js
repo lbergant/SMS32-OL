@@ -160,14 +160,6 @@ function init_colors() {
 	}
 }
 
-function update_primary_color(color_value) {
-	let complimentary_color = get_complimentary_color(color_value);
-
-	default_highlight = color_value;
-	$(":root").css("--primary", color_value);
-	$(":root").css("--secondary", complimentary_color);
-}
-
 function set_cookie(name, value, days) {
 	var expires = "";
 	if (days) {
