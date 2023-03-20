@@ -220,7 +220,7 @@ class Simulator {
 		while (op_code != 0 && this.running) {
 			op_code = this.step();
 
-			await this.sleep(500);
+			await this.sleep((10 - get_speed_value()) * 100);
 		}
 	}
 

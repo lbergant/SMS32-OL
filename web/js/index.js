@@ -32,19 +32,20 @@ $(document).ready(function () {
 	update_theme(get_cookie("SMS_theme"));
 	init_colors();
 
-	// init_speed_slider();
+	init_speed_slider();
 });
 
-// function init_speed_slider() {
-// 	$("#sSpeed").slider({
-// 		position: "max",
-// 	});
-// 	$("#sSpeed").slider("option", "max", 100);
-// 	$("#sSpeed").slider("option", "max", 0);
-// 	$("#sSpeed").on("slide", function (event, ui) {
-// 		console.log(ui.value);
-// 	});
-// }
+function init_speed_slider() {
+	$("#lSpeed").text($("#sSpeed").val());
+}
+
+function update_slider() {
+	$("#lSpeed").text($("#sSpeed").val());
+}
+
+function get_speed_value() {
+	return $("#sSpeed").val();
+}
 
 function init_file_selection() {
 	// File selection
