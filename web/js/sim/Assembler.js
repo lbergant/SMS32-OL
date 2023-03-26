@@ -207,17 +207,21 @@ class Assembler {
 						line = tag_line[1];
 					}
 
-					if (line.trim() != "") {
-						let tmp_command = new Command(line, this.address, lines[cnt]);
-						if (tmp_command.op_code != -128) {
-							this.address += tmp_command.get_byte_length();
-							if (tmp_command.op_code != -127) {
-								// push command if not ORG(-127) (Only ORG has length but no opcode)
-								this.commands.push(tmp_command);
+					if (typeof line !== "undefined") {
+						if (line.trim() != "") {
+							let tmp_command = new Command(line, this.address, lines[cnt]);
+							if (tmp_command.op_code != -128) {
+								this.address += tmp_command.get_byte_length();
+								if (tmp_command.op_code != -127) {
+									// push command if not ORG(-127) (Only ORG has length but no opcode)
+									this.commands.push(tmp_command);
+								}
+							} else {
+								error_lines.push(cnt);
 							}
-						} else {
-							error_lines.push(cnt);
 						}
+					} else {
+						error_lines.push(cnt);
 					}
 				}
 			}

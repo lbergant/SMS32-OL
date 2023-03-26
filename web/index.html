@@ -45,27 +45,31 @@
 				>
 			</div>
 		</header>
-		<div class="center" style="margin-top: 70px" id="dCenter">
-			<div class="inline shadow" id="dASM">
-				<h2>ASM</h2>
-				<textarea rows="30" id="taASM"></textarea>
-				<div style="padding-top: 5px"><label id="error"></label></div>
-				<div style="padding-top: 5px"><label id="tag_err"></label></div>
-				<div style="padding-top: 5px">
-					<button class="button_slide slide_down" onclick="assemble()">
-						Assemble
-					</button>
-					<select id="sFileSelect">
-						<option value="">None</option>
-						<option value="Samples/test.asm">test.asm</option>
-						<option value="Samples/first.asm">first.asm</option>
-						<option value="Samples/foo.asm">foo.asm</option>
-						<option value="Samples/function_call.asm">function_call.asm</option>
-						<option value="Samples/arithmetic.asm">arithmetic.asm</option>
-						<option value="Samples/shifting.asm">shifting.asm</option>
-						<!-- <option value="Samples/first.asm">first.asm</option> -->
-					</select>
+		<div class="center full_height" style="margin-top: 70px" id="dCenter">
+			<div class="inline shadow" style="height: calc(100% - 145px)" id="dASM">
+				<div>
+					<h2>ASM</h2>
+					<div style="padding-bottom: 5px">
+						<button class="button_slide slide_down" onclick="assemble()">
+							Assemble
+						</button>
+						<select id="sFileSelect">
+							<option value="">None</option>
+							<option value="Samples/test.asm">test.asm</option>
+							<option value="Samples/first.asm">first.asm</option>
+							<option value="Samples/foo.asm">foo.asm</option>
+							<option value="Samples/function_call.asm">
+								function_call.asm
+							</option>
+							<option value="Samples/arithmetic.asm">arithmetic.asm</option>
+							<option value="Samples/shifting.asm">shifting.asm</option>
+							<!-- <option value="Samples/first.asm">first.asm</option> -->
+						</select>
+					</div>
 				</div>
+				<textarea id="taASM"></textarea>
+				<div style="padding-bottom: 5px"><label id="error"></label></div>
+				<div style="padding-bottom: 5px"><label id="tag_err"></label></div>
 			</div>
 			<div class="inline">
 				<div class="shadow">
