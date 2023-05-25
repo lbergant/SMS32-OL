@@ -46,7 +46,7 @@
 			</div>
 		</header>
 		<div class="center main" id="dCenter">
-			<div class="inline shadow" style="height: calc(100% - 55px)" id="dASM">
+			<div class="inline shadow" style="height: 100%" id="dASM">
 				<div>
 					<h2>ASM</h2>
 					<div style="padding-bottom: 5px">
@@ -71,7 +71,7 @@
 				<div style="padding-bottom: 5px"><label id="error"></label></div>
 				<div style="padding-bottom: 5px"><label id="tag_err"></label></div>
 			</div>
-			<div class="inline">
+			<div class="inline" style="height: calc(100% - 70px)">
 				<div class="shadow">
 					<h2>Simulator</h2>
 					<div style="margin-bottom: 15px">
@@ -120,9 +120,11 @@
 						</table>
 					</div>
 				</div>
-				<div class="shadow">
+				<div class="shadow" style="height: calc(100% - 123px)">
 					<h2>Assembler</h2>
-					<table class="dis_asm_table" id="tDisAsm"></table>
+					<div style="overflow-y: scroll; height: calc(100% - 48px)">
+						<table class="dis_asm_table" id="tDisAsm"></table>
+					</div>
 				</div>
 			</div>
 			<div class="shadow inline">
