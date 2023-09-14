@@ -26,11 +26,12 @@
 	<body>
 		<header class="center">
 			<div style="float: left">
-				<input type="color" id="iColorPicker" />
-				<div
-					style="display: inline-grid; vertical-align: top"
-					id="dSchemeContainer"
-				></div>
+				<img
+					src="img/setting.png"
+					style="height: 32px; padding: 20px; cursor: pointer"
+					alt="Settings"
+					onclick="settings_toggle()"
+				/>
 			</div>
 			<div style="display: inline-block; padding-left: 6%">
 				<img id="iHeader" src="img/CPU.ico" height="48px" />
@@ -133,6 +134,17 @@
 					<table class="ram_table" id="tRAM"></table>
 					<div id="dRadioBaseContainer">Base:</div>
 					<div id="dRadioZeroContainer">Zero show:</div>
+				</div>
+			</div>
+			<div id="dSettings" class="shadow inline">
+				<div>
+					<h2>Settings</h2>
+					<input type="color" id="iColorPicker" class="inline-block setting" />
+					<div class="inline-block setting" id="dSchemeContainer"></div>
+					<div class="inline-block setting">
+						<label>Font: </label>
+						<input id="iFontSize" type="number" value="14" />
+					</div>
 				</div>
 			</div>
 			<!-- <div style="position: absolute; bottom: 0; width: 98%">

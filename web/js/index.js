@@ -33,6 +33,8 @@ $(document).ready(function () {
 	init_colors();
 
 	init_speed_slider();
+
+	settings_toggle();
 });
 
 function init_speed_slider() {
@@ -418,5 +420,16 @@ function print_tag_error(error_lines) {
 
 		$("#tag_err").text(err_txt.slice(0, err_txt.length - 2));
 		$("#tag_err").css("color", "red");
+	}
+}
+
+function settings_toggle() {
+	var $settings = $("#dSettings");
+	if ($settings.is(":visible")) {
+		$("#dSettings").hide();
+		$("#dCenter").css("height", "calc(100% - 70px)");
+	} else {
+		$("#dSettings").show();
+		$("#dCenter").css("height", "calc(100% - 245px)");
 	}
 }

@@ -48,7 +48,7 @@ body {
 	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 	border-radius: 10px;
 	padding: 1px 20px 20px;
-	margin: 20px 0.4%;
+	margin: 20px 0.4% 0.4%;
 }
 
 .ram_table {
@@ -154,4 +154,18 @@ h1 {
 	width: 180px;
 	border-radius: var(--border_radius);
 	background: var(--primary);
+}
+
+#iFontSize {
+	width: 40px;
+}
+
+.inline-block {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+#dSettings {
+	/* TODO fix width */
+	width: 28%;
 }
