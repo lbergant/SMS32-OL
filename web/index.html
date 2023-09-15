@@ -30,7 +30,7 @@
 					src="img/setting.png"
 					style="height: 32px; padding: 20px; cursor: pointer"
 					alt="Settings"
-					onclick="settings_toggle()"
+					onclick="toggle_output('dSettings')"
 				/>
 			</div>
 			<div style="display: inline-block; padding-left: 6%">
@@ -177,7 +177,7 @@
 		</div>
 
 		<div class="center" id="dExpanded">
-			<div id="dSettings" class="inline">
+			<div id="dSettings" class="inline" style="display: none">
 				<div class="shadow">
 					<div>
 						<h2>Settings</h2>
@@ -194,29 +194,29 @@
 					</div>
 				</div>
 			</div>
-			<div id="d7SegDis" class="inline">
-				<div class="shadow">
+			<div id="d7SegDis" class="inline" style="display: none">
+				<div class="shadow module">
 					<div>
 						<h2>7 Segment display</h2>
 					</div>
 				</div>
 			</div>
-			<div id="dMotor" class="inline">
-				<div class="shadow">
+			<div id="dMotor" class="inline" style="display: none">
+				<div class="shadow module">
 					<div>
 						<h2>Motor</h2>
 					</div>
 				</div>
 			</div>
-			<div id="dTraffic" class="inline">
-				<div class="shadow">
+			<div id="dTraffic" class="inline" style="display: none">
+				<div class="shadow module">
 					<div>
 						<h2>Traffic</h2>
 					</div>
 				</div>
 			</div>
-			<div id="dElevator" class="inline">
-				<div class="shadow">
+			<div id="dElevator" class="inline" style="display: none">
+				<div class="shadow module">
 					<div>
 						<h2>Elevator</h2>
 					</div>

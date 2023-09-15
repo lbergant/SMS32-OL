@@ -33,8 +33,6 @@ $(document).ready(function () {
 	init_colors();
 
 	init_speed_slider();
-
-	settings_toggle();
 });
 
 function init_speed_slider() {
@@ -423,24 +421,28 @@ function print_tag_error(error_lines) {
 	}
 }
 
-function settings_toggle() {
-	var $settings = $("#dSettings");
-	if ($settings.is(":visible")) {
-		$("#dSettings").hide();
-		$("#dCenter").css("height", "calc(100% - 70px)");
-	} else {
-		$("#dSettings").show();
-		$("#dCenter").css("height", "calc(100% - 245px)");
-	}
-}
+// function settings_toggle() {
+// 	var $settings = $("#dSettings");
+// 	if ($settings.is(":visible")) {
+// 		$("#dSettings").hide();
+// 		$("#dCenter").css("height", "calc(100% - 70px)");
+// 	} else {
+// 		$("#dSettings").show();
+// 		$("#dCenter").css("height", "calc(100% - 245px)");
+// 	}
+// }
+
+let visible_modules = 0;
 
 function toggle_output(name) {
 	var $module = $("#" + name);
 	if ($module.is(":visible")) {
 		$("#" + name).hide();
-		// $("#dCenter").css("height", "calc(100% - 70px)");
+		visible_modules--;
+		if (visible_modules == 0) $("#dCenter").css("height", "calc(100% - 70px)");
 	} else {
 		$("#" + name).show();
-		// $("#dCenter").css("height", "calc(100% - 245px)");
+		if (visible_modules == 0) $("#dCenter").css("height", "calc(100% - 435px)");
+		visible_modules++;
 	}
 }
