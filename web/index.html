@@ -47,32 +47,35 @@
 			</div>
 		</header>
 		<div class="center main" id="dCenter">
-			<div class="inline shadow" style="height: 100%" id="dASM">
-				<div>
-					<h2>ASM</h2>
-					<div style="padding-bottom: 5px">
-						<button class="button_slide slide_down" onclick="assemble()">
-							Assemble
-						</button>
-						<select id="sFileSelect">
-							<option value="">None</option>
-							<option value="Samples/test.asm">test.asm</option>
-							<option value="Samples/first.asm">first.asm</option>
-							<option value="Samples/foo.asm">foo.asm</option>
-							<option value="Samples/function_call.asm">
-								function_call.asm
-							</option>
-							<option value="Samples/arithmetic.asm">arithmetic.asm</option>
-							<option value="Samples/shifting.asm">shifting.asm</option>
-							<!-- <option value="Samples/first.asm">first.asm</option> -->
-						</select>
+			<div class="inline">
+				<div id="dASM" class="shadow" style="height: 100%">
+					<div>
+						<h2>ASM</h2>
+						<div style="padding-bottom: 5px">
+							<button class="button_slide slide_down" onclick="assemble()">
+								Assemble
+							</button>
+							<select id="sFileSelect">
+								<option value="">None</option>
+								<option value="Samples/test.asm">test.asm</option>
+								<option value="Samples/first.asm">first.asm</option>
+								<option value="Samples/foo.asm">foo.asm</option>
+								<option value="Samples/function_call.asm">
+									function_call.asm
+								</option>
+								<option value="Samples/arithmetic.asm">arithmetic.asm</option>
+								<option value="Samples/shifting.asm">shifting.asm</option>
+								<option value="Samples/7Segment.asm">7Seg.asm</option>
+								<!-- <option value="Samples/first.asm">first.asm</option> -->
+							</select>
+						</div>
 					</div>
+					<textarea id="taASM"></textarea>
+					<div style="padding-bottom: 5px"><label id="error"></label></div>
+					<div style="padding-bottom: 5px"><label id="tag_err"></label></div>
 				</div>
-				<textarea id="taASM"></textarea>
-				<div style="padding-bottom: 5px"><label id="error"></label></div>
-				<div style="padding-bottom: 5px"><label id="tag_err"></label></div>
 			</div>
-			<div class="inline" style="height: calc(100% - 70px)">
+			<div id="dSim_Asm" class="inline">
 				<div class="shadow">
 					<h2>Simulator</h2>
 					<div style="margin-bottom: 15px">
@@ -121,29 +124,101 @@
 						</table>
 					</div>
 				</div>
-				<div class="shadow" style="height: calc(100% - 123px)">
+				<div class="shadow" style="height: calc(100% - 193px)">
 					<h2>Assembler</h2>
 					<div style="overflow-y: scroll; height: calc(100% - 48px)">
 						<table class="dis_asm_table" id="tDisAsm"></table>
 					</div>
 				</div>
 			</div>
-			<div class="shadow inline">
-				<div id="dMemory">
-					<h2>Memory</h2>
-					<table class="ram_table" id="tRAM"></table>
-					<div id="dRadioBaseContainer">Base:</div>
-					<div id="dRadioZeroContainer">Zero show:</div>
+			<div id="dMem_Feat" class="inline">
+				<div class="shadow">
+					<div id="dMemory">
+						<h2>Memory</h2>
+						<table class="ram_table" id="tRAM"></table>
+						<div id="dRadioBaseContainer">Base:</div>
+						<div id="dRadioZeroContainer">Zero show:</div>
+					</div>
+				</div>
+				<div id="dOutput" class="shadow" style="height: calc(100% - 577px)">
+					<div>
+						<h2>Output</h2>
+						<div style="margin-bottom: 15px">
+							<button
+								class="button_slide slide_down"
+								onclick="toggle_output('d7SegDis')"
+							>
+								7 Seg
+							</button>
+							<button
+								class="button_slide slide_down"
+								onclick="toggle_output('dElevator')"
+							>
+								Elevator
+							</button>
+							<button
+								class="button_slide slide_down"
+								onclick="toggle_output('dTraffic')"
+							>
+								Traffic
+							</button>
+							<button
+								class="button_slide slide_down"
+								onclick="toggle_output('dMotor')"
+							>
+								Motor
+							</button>
+						</div>
+					</div>
+
+					<textarea id="teOutputText"></textarea>
 				</div>
 			</div>
-			<div id="dSettings" class="shadow inline">
-				<div>
-					<h2>Settings</h2>
-					<input type="color" id="iColorPicker" class="inline-block setting" />
-					<div class="inline-block setting" id="dSchemeContainer"></div>
-					<div class="inline-block setting">
-						<label>Font: </label>
-						<input id="iFontSize" type="number" value="14" />
+		</div>
+
+		<div class="center" id="dExpanded">
+			<div id="dSettings" class="inline">
+				<div class="shadow">
+					<div>
+						<h2>Settings</h2>
+						<input
+							type="color"
+							id="iColorPicker"
+							class="inline-block setting"
+						/>
+						<div class="inline-block setting" id="dSchemeContainer"></div>
+						<div class="inline-block setting">
+							<label>Font: </label>
+							<input id="iFontSize" type="number" value="14" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="d7SegDis" class="inline">
+				<div class="shadow">
+					<div>
+						<h2>7 Segment display</h2>
+					</div>
+				</div>
+			</div>
+			<div id="dMotor" class="inline">
+				<div class="shadow">
+					<div>
+						<h2>Motor</h2>
+					</div>
+				</div>
+			</div>
+			<div id="dTraffic" class="inline">
+				<div class="shadow">
+					<div>
+						<h2>Traffic</h2>
+					</div>
+				</div>
+			</div>
+			<div id="dElevator" class="inline">
+				<div class="shadow">
+					<div>
+						<h2>Elevator</h2>
 					</div>
 				</div>
 			</div>

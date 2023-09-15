@@ -34,14 +34,15 @@ body {
 	font-family: monospace;
 	margin-top: 30px;
 	font-size: 14px;
-	height: calc(100% - 78px);
+	height: calc(100% - 76px);
 }
 
 .inline {
 	display: inline-block;
-	width: 30%;
+	width: 32%;
 	min-width: 300px;
 	vertical-align: top;
+	height: calc(100%);
 }
 
 .shadow {
@@ -101,8 +102,9 @@ header {
 }
 
 .main {
-	height: calc(100% - 70px);
-	margin-top: 70px;
+	height: calc(100% - 78px);
+	margin-top: 78px;
+	margin-bottom: 50px;
 }
 
 /* button, */
@@ -165,7 +167,10 @@ h1 {
 	vertical-align: middle;
 }
 
-#dSettings {
-	/* TODO fix width */
+/* #dSettings {
 	width: 28%;
+} */
+
+#dExpanded {
+	height: 245px;
 }

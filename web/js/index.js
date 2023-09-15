@@ -433,3 +433,14 @@ function settings_toggle() {
 		$("#dCenter").css("height", "calc(100% - 245px)");
 	}
 }
+
+function toggle_output(name) {
+	var $module = $("#" + name);
+	if ($module.is(":visible")) {
+		$("#" + name).hide();
+		// $("#dCenter").css("height", "calc(100% - 70px)");
+	} else {
+		$("#" + name).show();
+		// $("#dCenter").css("height", "calc(100% - 245px)");
+	}
+}
