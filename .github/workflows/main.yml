@@ -25,7 +25,7 @@ jobs:
 
       - name: Deploy to Oracle Ubuntu
         run: |
-          ssh ubuntu@130.61.222.83 "cd /home/ubuntu/Projects/SMS32-OL && git pull origin release"
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}  # Add your SSH private key as a secret in your repository
+          ssh -i ${{ secrets.SSH_PRIVATE_KEY }} ubuntu@130.61.222.83 "cd /home/ubuntu/Projects/SMS32-OL && git pull origin release"
+        # env:
+        #   SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}  # Add your SSH private key as a secret in your repository
 
