@@ -36,8 +36,9 @@ function byteToBinaryArray(byte) {
 	}
 }
 
-function displayRaw(display, digit) {
-	display = $(".display:eq(" + display + ")");
+function displayRaw(display_num, digit) {
+	display_num = Math.abs(display_num);
+	display = $(".display:eq(" + display_num + ")");
 	const segmentElements = display.find(".segment");
 
 	if (digit < 0) digit += 256;
@@ -52,6 +53,8 @@ function displayRaw(display, digit) {
 			segmentElements.eq(i).removeClass("on");
 		}
 	}
+
+	$("#lbl7seg" + display_num).html(segments);
 }
 
 // // Example usage:
