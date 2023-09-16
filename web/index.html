@@ -13,6 +13,7 @@
 		<link rel="stylesheet" href="css/index.css" />
 		<link rel="stylesheet" href="css/buttons.css" />
 		<link rel="stylesheet" href="css/modules/7seg.css" />
+		<link rel="stylesheet" href="css/modules/tLights.css" />
 		<script src="js/jquery-3.6.1.min.js"></script>
 		<script src="js/jquery-ui.js"></script>
 		<script src="js/sim/Assembler.js"></script>
@@ -20,6 +21,7 @@
 		<script src="js/sim/Simulator.js"></script>
 		<script src="js/colors.js"></script>
 		<script src="js/modules/7seg.js"></script>
+		<script src="js/modules/tLights.js"></script>
 		<script src="js/index.js"></script>
 
 		<meta http-equiv="ScreenOrientation" content="autoRotate:disabled" />
@@ -297,6 +299,24 @@
 				<div class="shadow module">
 					<div>
 						<h2>Traffic</h2>
+						<div>
+							<div class="traffic-light">
+								<div class="red"></div>
+								<div class="yellow"></div>
+								<div class="green"></div>
+							</div>
+
+							<div class="traffic-light">
+								<div class="red"></div>
+								<div class="yellow"></div>
+								<div class="green"></div>
+							</div>
+						</div>
+						<div>
+							<label style="color: lightgray">LLLRRR</label
+							><label style="color: red">SS</label>
+						</div>
+						<label id="lbl7seg0" style="padding: 20px">00000000</label>
 					</div>
 				</div>
 			</div>
