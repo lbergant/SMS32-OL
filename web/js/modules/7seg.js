@@ -1,9 +1,16 @@
 function displayDigit(display, digit) {
-	// Define which segments should be on for each digit
+	// Define segment configurations for digits 0 through 9
 	const segments = [
 		[1, 1, 1, 1, 1, 1, 0], // 0
 		[0, 1, 1, 0, 0, 0, 0], // 1
-		// Define segments for other digits
+		[1, 1, 0, 1, 1, 0, 1], // 2
+		[1, 1, 1, 1, 0, 0, 1], // 3
+		[0, 1, 1, 0, 0, 1, 1], // 4
+		[1, 0, 1, 1, 0, 1, 1], // 5
+		[1, 0, 1, 1, 1, 1, 1], // 6
+		[1, 1, 1, 0, 0, 0, 0], // 7
+		[1, 1, 1, 1, 1, 1, 1], // 8
+		[1, 1, 1, 1, 0, 1, 1], // 9
 	];
 
 	const segmentElements = display.find(".segment");

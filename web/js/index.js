@@ -34,8 +34,8 @@ $(document).ready(function () {
 
 	init_speed_slider();
 
-	displayDigit($(".display:eq(0)"), 0);
-	displayDigit($(".display:eq(1)"), 1);
+	displayDigit($(".display:eq(0)"), 7);
+	displayDigit($(".display:eq(1)"), 9);
 });
 
 function init_speed_slider() {
