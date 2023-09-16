@@ -6,7 +6,7 @@
 
 .segment {
 	position: absolute;
-	background-color: maroon;
+	background-color: lightgray;
 	color: white;
 	border-radius: 5px;
 	text-align: center;
@@ -59,7 +59,7 @@
 .dp {
 	width: 10px;
 	height: 10px;
-	background-color: maroon;
+	background-color: lightgray;
 	border-radius: 5px;
 	position: absolute;
 	top: 140px;
@@ -68,5 +68,6 @@
 
 /* Define CSS classes for the on state */
 .on {
-	background-color: red; /* Change color for the on state */
+	/* background-color: var(--secondary); Change color for the on state */
+	background-color: red;
 }

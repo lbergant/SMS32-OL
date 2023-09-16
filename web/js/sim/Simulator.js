@@ -166,6 +166,18 @@ class OutputDevice {
 		self.id = id;
 		self.value = 0;
 	}
+
+	write(input) {
+		self.value = input;
+	}
+}
+
+class SevenSegDisplay extends OutputDevice {
+	write(input) {
+		super.write(input);
+
+		displayRaw(input % 2, input);
+	}
 }
 
 class Simulator {
@@ -224,6 +236,8 @@ class Simulator {
 			this.output_devices[i] = new OutputDevice(i);
 		}
 
+		this.output_devices[2] = new SevenSegDisplay(2);
+
 		this.input_devices = new Array(num_of_input_devices);
 
 		// this.input_devices[0] = new InputDevice(0);
@@ -233,6 +247,7 @@ class Simulator {
 	init() {
 		this.init_registers();
 		this.init_memory();
+		this.init_devices();
 
 		this.running = false;
 	}
@@ -422,7 +437,7 @@ class Simulator {
 	}
 
 	execute_device_write(device) {
-		// TODO
+		this.output_devices[device].write(this.AL.get());
 	}
 
 	execute_device_read(device) {

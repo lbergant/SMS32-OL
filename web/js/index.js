@@ -33,9 +33,6 @@ $(document).ready(function () {
 	init_colors();
 
 	init_speed_slider();
-
-	displayDigit($(".display:eq(0)"), 7);
-	displayDigit($(".display:eq(1)"), 9);
 });
 
 function init_speed_slider() {
@@ -447,7 +444,7 @@ function toggle_output(name) {
 		}
 	} else {
 		$("#" + name).show();
-		if (visible_modules == 0 && $("#dCenter").height() > 715) {
+		if (visible_modules == 0) {
 			$("#dCenter").css("height", "715px");
 		}
 		visible_modules++;
