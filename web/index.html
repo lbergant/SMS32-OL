@@ -173,32 +173,30 @@
 						<div style="margin-bottom: 15px">
 							<button
 								class="button_slide slide_down"
-								onclick="toggle_output('d7SegDis')"
+								onclick="toggle_output('dLog')"
 							>
-								7 Seg
+								Log
 							</button>
 							<button
 								class="button_slide slide_down"
-								onclick="toggle_output('dElevator')"
+								onclick="toggle_output('')"
 							>
-								Elevator
+								1
 							</button>
 							<button
 								class="button_slide slide_down"
-								onclick="toggle_output('dTraffic')"
+								onclick="toggle_output('')"
 							>
-								Traffic
+								2
 							</button>
 							<button
 								class="button_slide slide_down"
-								onclick="toggle_output('dMotor')"
+								onclick="toggle_output('dMtor')"
 							>
-								Motor
+								3
 							</button>
 						</div>
 					</div>
-
-					<!-- <textarea id="teOutputText"></textarea> -->
 				</div>
 			</div>
 		</div>
@@ -218,6 +216,17 @@
 							<label>Font: </label>
 							<input id="iFontSize" type="number" value="14" />
 						</div>
+					</div>
+				</div>
+			</div>
+			<div id="dLog" class="inline" style="display: none">
+				<div class="shadow module">
+					<div style="height: 100%">
+						<h2>Log</h2>
+						<textarea
+							id="teOutputText"
+							style="height: calc(100% - 90px)"
+						></textarea>
 					</div>
 				</div>
 			</div>
