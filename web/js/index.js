@@ -439,10 +439,14 @@ function toggle_output(name) {
 	if ($module.is(":visible")) {
 		$("#" + name).hide();
 		visible_modules--;
-		if (visible_modules == 0) $("#dCenter").css("height", "calc(100% - 70px)");
+		if (visible_modules == 0) {
+			$("#dCenter").css("height", "calc(100% - 60px)");
+		}
 	} else {
 		$("#" + name).show();
-		if (visible_modules == 0) $("#dCenter").css("height", "calc(100% - 435px)");
+		if (visible_modules == 0 && $("#dCenter").height() > 715) {
+			$("#dCenter").css("height", "715px");
+		}
 		visible_modules++;
 	}
 }

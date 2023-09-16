@@ -28,13 +28,13 @@
 			<div style="float: left">
 				<img
 					src="img/setting.png"
-					style="height: 32px; padding: 20px; cursor: pointer"
+					style="height: 32px; padding: 15px; cursor: pointer"
 					alt="Settings"
 					onclick="toggle_output('dSettings')"
 				/>
 			</div>
-			<div style="display: inline-block; padding-left: 6%">
-				<img id="iHeader" src="img/CPU.ico" height="48px" />
+			<div style="display: inline-block; padding-left: 13%; margin-top: -5px">
+				<img id="iHeader" src="img/CPU.ico" height="40px" />
 				<h1>SMS32</h1>
 			</div>
 			<div id="dLinks">
@@ -140,7 +140,7 @@
 						<div id="dRadioZeroContainer">Zero show:</div>
 					</div>
 				</div>
-				<div id="dOutput" class="shadow" style="height: calc(100% - 577px)">
+				<div id="dOutput" class="shadow" style="max-height: 138px">
 					<div>
 						<h2>Output</h2>
 						<div style="margin-bottom: 15px">
@@ -169,9 +169,36 @@
 								Motor
 							</button>
 						</div>
+
+						<div style="margin-bottom: 15px">
+							<button
+								class="button_slide slide_down"
+								onclick="toggle_output('d7SegDis')"
+							>
+								7 Seg
+							</button>
+							<button
+								class="button_slide slide_down"
+								onclick="toggle_output('dElevator')"
+							>
+								Elevator
+							</button>
+							<button
+								class="button_slide slide_down"
+								onclick="toggle_output('dTraffic')"
+							>
+								Traffic
+							</button>
+							<button
+								class="button_slide slide_down"
+								onclick="toggle_output('dMotor')"
+							>
+								Motor
+							</button>
+						</div>
 					</div>
 
-					<textarea id="teOutputText"></textarea>
+					<!-- <textarea id="teOutputText"></textarea> -->
 				</div>
 			</div>
 		</div>
