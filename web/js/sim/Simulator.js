@@ -161,6 +161,25 @@ class RAM {
 	}
 }
 
+class OutputDevice {
+	constructor(id) {
+		self.id = id;
+		self.value = 0;
+	}
+
+	write(input) {
+		self.value = input;
+	}
+}
+
+class SevenSegDisplay extends OutputDevice {
+	write(input) {
+		super.write(input);
+
+		displayRaw(input % 2, input);
+	}
+}
+
 class Simulator {
 	init_registers() {
 		// Status register
@@ -197,9 +216,38 @@ class Simulator {
 		this.ram = new RAM();
 	}
 
+	init_devices() {
+		// OUTPUT:
+		// 	1 - Traffic lights
+		// 	2 - 7 segment
+		// 	3 - Heater
+		// 	4 - Snake
+		// 	5 - Motor
+		const num_of_output_devices = 5;
+
+		// INPUT
+		// 	00 - Key
+		// 	03 - Heater
+		const num_of_input_devices = 2;
+
+		this.output_devices = new Array(num_of_output_devices);
+
+		for (let i = 0; i < num_of_output_devices; i++) {
+			this.output_devices[i] = new OutputDevice(i);
+		}
+
+		this.output_devices[2] = new SevenSegDisplay(2);
+
+		this.input_devices = new Array(num_of_input_devices);
+
+		// this.input_devices[0] = new InputDevice(0);
+		// this.input_devices[3] = new InputDevice(3);
+	}
+
 	init() {
 		this.init_registers();
 		this.init_memory();
+		this.init_devices();
 
 		this.running = false;
 	}
@@ -388,6 +436,14 @@ class Simulator {
 		}
 	}
 
+	execute_device_write(device) {
+		this.output_devices[device].write(this.AL.get());
+	}
+
+	execute_device_read(device) {
+		// TODO
+	}
+
 	execute(command, operands, target_register) {
 		let tmp;
 
@@ -520,6 +576,12 @@ class Simulator {
 			case 0xeb:
 				this.SP.increment();
 				this.SR.set(this.ram.get(this.SP.get()));
+				break;
+			case 0xf0:
+				this.execute_device_read(operands[0]);
+				break;
+			case 0xf1:
+				this.execute_device_write(operands[0]);
 				break;
 			// NOP
 			case 0xff:

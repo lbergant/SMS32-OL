@@ -12,12 +12,14 @@
 
 		<link rel="stylesheet" href="css/index.css" />
 		<link rel="stylesheet" href="css/buttons.css" />
+		<link rel="stylesheet" href="css/modules/7seg.css" />
 		<script src="js/jquery-3.6.1.min.js"></script>
 		<script src="js/jquery-ui.js"></script>
 		<script src="js/sim/Assembler.js"></script>
 		<script src="js/sim/Commands.js"></script>
 		<script src="js/sim/Simulator.js"></script>
 		<script src="js/colors.js"></script>
+		<script src="js/modules/7seg.js"></script>
 		<script src="js/index.js"></script>
 
 		<meta http-equiv="ScreenOrientation" content="autoRotate:disabled" />
@@ -28,13 +30,13 @@
 			<div style="float: left">
 				<img
 					src="img/setting.png"
-					style="height: 32px; padding: 20px; cursor: pointer"
+					style="height: 32px; padding: 15px; cursor: pointer"
 					alt="Settings"
-					onclick="settings_toggle()"
+					onclick="toggle_output('dSettings')"
 				/>
 			</div>
-			<div style="display: inline-block; padding-left: 6%">
-				<img id="iHeader" src="img/CPU.ico" height="48px" />
+			<div style="display: inline-block; padding-left: 13%; margin-top: -5px">
+				<img id="iHeader" src="img/CPU.ico" height="40px" />
 				<h1>SMS32</h1>
 			</div>
 			<div id="dLinks">
@@ -47,32 +49,41 @@
 			</div>
 		</header>
 		<div class="center main" id="dCenter">
-			<div class="inline shadow" style="height: 100%" id="dASM">
-				<div>
-					<h2>ASM</h2>
-					<div style="padding-bottom: 5px">
-						<button class="button_slide slide_down" onclick="assemble()">
-							Assemble
-						</button>
-						<select id="sFileSelect">
-							<option value="">None</option>
-							<option value="Samples/test.asm">test.asm</option>
-							<option value="Samples/first.asm">first.asm</option>
-							<option value="Samples/foo.asm">foo.asm</option>
-							<option value="Samples/function_call.asm">
-								function_call.asm
-							</option>
-							<option value="Samples/arithmetic.asm">arithmetic.asm</option>
-							<option value="Samples/shifting.asm">shifting.asm</option>
-							<!-- <option value="Samples/first.asm">first.asm</option> -->
-						</select>
+			<div class="inline">
+				<div id="dASM" class="shadow" style="height: 100%">
+					<div>
+						<h2>ASM</h2>
+						<div style="padding-bottom: 5px">
+							<button class="button_slide slide_down" onclick="assemble()">
+								Assemble
+							</button>
+							<select id="sFileSelect">
+								<option value="">None</option>
+								<option value="Samples/test.asm">test.asm</option>
+								<option value="Samples/first.asm">first.asm</option>
+								<option value="Samples/foo.asm">foo.asm</option>
+								<option value="Samples/function_call.asm">
+									function_call.asm
+								</option>
+								<option value="Samples/arithmetic.asm">arithmetic.asm</option>
+								<option value="Samples/shifting.asm">shifting.asm</option>
+								<option value="Samples/7Segment.asm">7Seg.asm</option>
+								<!-- <option value="Samples/first.asm">first.asm</option> -->
+							</select>
+						</div>
+					</div>
+					<textarea id="taASM"></textarea>
+					<div style="padding-bottom: 5px"><label id="error"></label></div>
+					<div style="padding-bottom: 5px"><label id="tag_err"></label></div>
+				</div>
+			</div>
+			<div id="dSim_Asm" class="inline">
+				<div class="shadow" style="height: calc(100% - 193px)">
+					<h2>Assembler</h2>
+					<div style="overflow-y: scroll; height: calc(100% - 48px)">
+						<table class="dis_asm_table" id="tDisAsm"></table>
 					</div>
 				</div>
-				<textarea id="taASM"></textarea>
-				<div style="padding-bottom: 5px"><label id="error"></label></div>
-				<div style="padding-bottom: 5px"><label id="tag_err"></label></div>
-			</div>
-			<div class="inline" style="height: calc(100% - 70px)">
 				<div class="shadow">
 					<h2>Simulator</h2>
 					<div style="margin-bottom: 15px">
@@ -121,29 +132,178 @@
 						</table>
 					</div>
 				</div>
-				<div class="shadow" style="height: calc(100% - 123px)">
-					<h2>Assembler</h2>
-					<div style="overflow-y: scroll; height: calc(100% - 48px)">
-						<table class="dis_asm_table" id="tDisAsm"></table>
+			</div>
+			<div id="dMem_Feat" class="inline">
+				<div class="shadow">
+					<div id="dMemory">
+						<h2>Memory</h2>
+						<table class="ram_table" id="tRAM"></table>
+						<div id="dRadioBaseContainer">Base:</div>
+						<div id="dRadioZeroContainer">Zero show:</div>
+					</div>
+				</div>
+				<div id="dOutput" class="shadow" style="max-height: 138px">
+					<div>
+						<h2>Output</h2>
+						<div style="margin-bottom: 15px">
+							<button
+								class="button_slide slide_down"
+								onclick="toggle_output('d7SegDis')"
+							>
+								7 Seg
+							</button>
+							<button
+								class="button_slide slide_down"
+								onclick="toggle_output('dElevator')"
+							>
+								Elevator
+							</button>
+							<button
+								class="button_slide slide_down"
+								onclick="toggle_output('dTraffic')"
+							>
+								Traffic
+							</button>
+							<button
+								class="button_slide slide_down"
+								onclick="toggle_output('dMotor')"
+							>
+								Motor
+							</button>
+						</div>
+
+						<div style="margin-bottom: 15px">
+							<button
+								class="button_slide slide_down"
+								onclick="toggle_output('dLog')"
+							>
+								Log
+							</button>
+							<button
+								class="button_slide slide_down"
+								onclick="toggle_output('')"
+							>
+								1
+							</button>
+							<button
+								class="button_slide slide_down"
+								onclick="toggle_output('')"
+							>
+								2
+							</button>
+							<button
+								class="button_slide slide_down"
+								onclick="toggle_output('dMtor')"
+							>
+								3
+							</button>
+						</div>
 					</div>
 				</div>
 			</div>
-			<div class="shadow inline">
-				<div id="dMemory">
-					<h2>Memory</h2>
-					<table class="ram_table" id="tRAM"></table>
-					<div id="dRadioBaseContainer">Base:</div>
-					<div id="dRadioZeroContainer">Zero show:</div>
+		</div>
+
+		<div class="center" id="dExpanded">
+			<div id="dSettings" class="inline" style="display: none">
+				<div class="shadow">
+					<div>
+						<h2>Settings</h2>
+						<input
+							type="color"
+							id="iColorPicker"
+							class="inline-block setting"
+						/>
+						<div class="inline-block setting" id="dSchemeContainer"></div>
+						<div class="inline-block setting">
+							<label>Font: </label>
+							<input id="iFontSize" type="number" value="14" />
+						</div>
+					</div>
 				</div>
 			</div>
-			<div id="dSettings" class="shadow inline">
-				<div>
-					<h2>Settings</h2>
-					<input type="color" id="iColorPicker" class="inline-block setting" />
-					<div class="inline-block setting" id="dSchemeContainer"></div>
-					<div class="inline-block setting">
-						<label>Font: </label>
-						<input id="iFontSize" type="number" value="14" />
+			<div id="dLog" class="inline" style="display: none">
+				<div class="shadow module">
+					<div style="height: 100%">
+						<h2>Log</h2>
+						<textarea
+							id="teOutputText"
+							style="height: calc(100% - 90px)"
+						></textarea>
+					</div>
+				</div>
+			</div>
+			<div id="d7SegDis" class="inline" style="display: none">
+				<div class="shadow module">
+					<div>
+						<h2>7 Segment display</h2>
+						<div class="" style="padding-top: 20px">
+							<div class="display" style="display: inline-block">
+								<div class="segment a">a</div>
+								<div class="segment b">b</div>
+								<div class="segment c">c</div>
+								<div class="segment d">d</div>
+								<div class="segment e">e</div>
+								<div class="segment f">f</div>
+								<div class="segment g">g</div>
+								<div class="dp"></div>
+								<!-- Decimal Point (optional) -->
+							</div>
+							<!-- <label id="lbl7seg1">11111100</label> -->
+
+							<div class="display" style="display: inline-block">
+								<div class="segment a">a</div>
+								<div class="segment b">b</div>
+								<div class="segment c">c</div>
+								<div class="segment d">d</div>
+								<div class="segment e">e</div>
+								<div class="segment f">f</div>
+								<div class="segment g">g</div>
+								<div class="dp"></div>
+								<!-- Decimal Point (optional) -->
+							</div>
+							<!-- <label id="lbl7seg1">11111100</label> -->
+						</div>
+						<div>
+							<div style="display: inline-block">
+								<div>
+									<label style="color: lightgray">abcdefg</label
+									><label style="color: red">S</label>
+								</div>
+								<label id="lbl7seg0" style="padding: 20px">00000000</label>
+							</div>
+							<div style="display: inline-block">
+								<div>
+									<label style="color: lightgray">abcdefg</label
+									><label style="color: red">S</label>
+								</div>
+								<label id="lbl7seg1" style="padding: 20px">00000000</label>
+							</div>
+						</div>
+
+						<!-- <div class="display">
+							
+						</div> -->
+					</div>
+				</div>
+			</div>
+			<div id="dMotor" class="inline" style="display: none">
+				<div class="shadow module">
+					<div>
+						<h2>Motor</h2>
+					</div>
+				</div>
+			</div>
+			<div id="dTraffic" class="inline" style="display: none">
+				<div class="shadow module">
+					<div>
+						<h2>Traffic</h2>
+					</div>
+				</div>
+			</div>
+			<div id="dElevator" class="inline" style="display: none">
+				<div class="shadow module">
+					<div>
+						<h2>Elevator</h2>
 					</div>
 				</div>
 			</div>
