@@ -33,6 +33,9 @@ $(document).ready(function () {
 	init_colors();
 
 	init_speed_slider();
+
+	displayDigit($(".display:eq(0)"), 0);
+	displayDigit($(".display:eq(1)"), 1);
 });
 
 function init_speed_slider() {

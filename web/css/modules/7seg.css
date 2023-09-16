@@ -1,0 +1,72 @@
+.display {
+	width: 100px;
+	height: 180px;
+	position: relative;
+}
+
+.segment {
+	position: absolute;
+	background-color: #333;
+	color: white;
+	border-radius: 5px;
+	text-align: center;
+}
+
+.b,
+.c,
+.e,
+.f {
+	width: 20px;
+	height: 50px;
+}
+
+.a,
+.g,
+.d {
+	height: 20px;
+	width: 50px;
+}
+
+.a {
+	top: 0;
+	left: 20px;
+}
+.b {
+	top: 20px;
+	left: 70px;
+}
+.c {
+	top: 80px;
+	left: 70px;
+}
+.d {
+	top: 130px;
+	left: 20px;
+}
+.e {
+	top: 80px;
+	left: 0px;
+}
+.f {
+	top: 20px;
+	left: 0px;
+}
+.g {
+	top: 65px;
+	left: 20px;
+}
+
+.dp {
+	width: 10px;
+	height: 10px;
+	background-color: #333;
+	border-radius: 5px;
+	position: absolute;
+	top: 140px;
+	left: 80px; /* Adjust position as needed */
+}
+
+/* Define CSS classes for the on state */
+.on {
+	background-color: #f00; /* Change color for the on state */
+}
