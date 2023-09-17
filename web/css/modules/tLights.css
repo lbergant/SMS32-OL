@@ -17,13 +17,25 @@
 }
 
 .red {
-	background-color: red;
+	background-color: rgb(180, 2, 2);
 }
 
 .yellow {
-	background-color: yellow;
+	background-color: rgb(149, 149, 0);
 }
 
 .green {
-	background-color: green;
+	background-color: rgb(0, 90, 0);
+}
+
+.on-red {
+	background-color: red;
+}
+
+.on-yellow {
+	background-color: yellow;
+}
+
+.on-green {
+	background-color: rgb(0, 180, 0);
 }
