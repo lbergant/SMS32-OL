@@ -1,22 +1,52 @@
-const trafficLights = document.querySelectorAll(".traffic-light");
+function byteToBinaryArray(byte) {
+	if (byte >= 0 && byte <= 255) {
+		const binaryString = byte.toString(2).padStart(8, "0"); // Convert to binary and pad to 8 bits
+		const binaryArray = binaryString.split("").map(Number);
+		return binaryArray;
+	} else {
+		console.error("Invalid byte value. Byte value must be between 0 and 255.");
+		return [];
+	}
+}
 
-function toggleLights() {
-	trafficLights.forEach((light) => {
-		const redLight = light.querySelector(".red");
-		const yellowLight = light.querySelector(".yellow");
-		const greenLight = light.querySelector(".green");
+function toggleLights(value) {
+	const trafficLights = $(".traffic-light");
 
-		if (redLight.classList.contains("on")) {
-			redLight.classList.remove("on");
-			yellowLight.classList.add("on");
-		} else if (yellowLight.classList.contains("on")) {
-			yellowLight.classList.remove("on");
-			greenLight.classList.add("on");
-		} else {
-			greenLight.classList.remove("on");
-			redLight.classList.add("on");
+	if (value < 0) value += 256;
+
+	let bin_arr = byteToBinaryArray(value);
+
+	for (let i = 0; i < 6; i++) {
+		let selector = i;
+		let light_selector = Math.floor(selector / 3);
+		let ryg_selector = selector % 3;
+		let on_off_class = "";
+
+		switch (ryg_selector) {
+			case 0:
+				on_off_class = "on-red";
+				break;
+			case 1:
+				on_off_class = "on-yellow";
+				break;
+			case 2:
+				on_off_class = "on-green";
+				break;
 		}
-	});
+		if (bin_arr[i] == 1) {
+			trafficLights
+				.eq(light_selector)
+				.children()
+				.eq(ryg_selector)
+				.addClass(on_off_class);
+		} else {
+			trafficLights
+				.eq(light_selector)
+				.children()
+				.eq(ryg_selector)
+				.removeClass(on_off_class);
+		}
+	}
 }
 
 // // Call the toggleLights function to start the traffic lights

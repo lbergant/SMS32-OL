@@ -180,6 +180,14 @@ class SevenSegDisplay extends OutputDevice {
 	}
 }
 
+class TLight extends OutputDevice {
+	write(input) {
+		super.write(input);
+
+		toggleLights(value);
+	}
+}
+
 class Simulator {
 	init_registers() {
 		// Status register
@@ -236,6 +244,7 @@ class Simulator {
 			this.output_devices[i] = new OutputDevice(i);
 		}
 
+		this.output_devices[1] = new TLight(1);
 		this.output_devices[2] = new SevenSegDisplay(2);
 
 		this.input_devices = new Array(num_of_input_devices);
