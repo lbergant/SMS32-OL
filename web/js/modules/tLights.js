@@ -47,6 +47,8 @@ function toggleLights(value) {
 				.removeClass(on_off_class);
 		}
 	}
+
+	$("#lblTLight").html(bin_arr);
 }
 
 // // Call the toggleLights function to start the traffic lights
