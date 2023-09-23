@@ -110,9 +110,10 @@ function init_radio_buttons() {
 	);
 
 	const light_options = [
-		{ label: "Light", value: true },
-		{ label: "Dark", value: false },
+		{ label: "Light", value: false },
+		{ label: "Dark", value: true },
 	];
+
 	init_base_radio_buttons(
 		"dSchemeContainer",
 		light_options,
@@ -124,18 +125,20 @@ function init_radio_buttons() {
 }
 
 function update_theme(value) {
-	if (value) {
-		$(":root").css("--text", "#000000");
-		$(":root").css("--background", "#FFFFFF");
-		default_text_color = "#000000";
-		$('input[name="theme"]')[1].checked = false;
-		$('input[name="theme"]')[0].checked = true;
-	} else {
+	if (value.toString() == "true") {
 		$(":root").css("--text", "#FFFFFF");
 		$(":root").css("--background", "#1f1f1f");
 		default_text_color = "#FFFFFF";
 		$('input[name="theme"]')[0].checked = false;
 		$('input[name="theme"]')[1].checked = true;
+		value = true;
+	} else {
+		$(":root").css("--text", "#000000");
+		$(":root").css("--background", "#FFFFFF");
+		default_text_color = "#000000";
+		$('input[name="theme"]')[1].checked = false;
+		$('input[name="theme"]')[0].checked = true;
+		value = false;
 	}
 	clear_register_color();
 	set_cookie("SMS_theme", value, 14);
@@ -179,7 +182,7 @@ function get_cookie(name) {
 			return cookie.substring(name.length + 1, cookie.length);
 		}
 	}
-	return null; // cookie not found
+	return false; // cookie not found
 }
 
 function draw_table(table_name, x_size, y_size) {
@@ -244,7 +247,7 @@ function step() {
 }
 
 function reset() {
-	sim.zero_registers();
+	sim.reset();
 	color_ram(sim.IP.get(), default_highlight);
 	color_dis_asm(0, default_highlight);
 }

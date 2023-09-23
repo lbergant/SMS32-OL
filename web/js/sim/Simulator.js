@@ -162,13 +162,21 @@ class RAM {
 }
 
 class OutputDevice {
+	id;
+	value;
+
 	constructor(id) {
-		self.id = id;
-		self.value = 0;
+		this.id = id;
+		this.value = 0;
+	}
+
+	reset() {
+		this.write(0);
+		this.write(1);
 	}
 
 	write(input) {
-		self.value = input;
+		this.value = input;
 	}
 }
 
@@ -184,7 +192,7 @@ class TLight extends OutputDevice {
 	write(input) {
 		super.write(input);
 
-		toggleLights(value);
+		toggleLights(input);
 	}
 }
 
@@ -218,6 +226,17 @@ class Simulator {
 		// SP
 		this.SP.set(255);
 		this.SR.set(0);
+	}
+
+	zero_input_output() {
+		for (let i = 0; i < this.output_devices.length; i++) {
+			this.output_devices[i].reset();
+		}
+
+		// Do the same for input devices
+		// for (let i = 0; i < num_of_output_devices; i++) {
+		// 	this.output_devices[i].reset();
+		// }
 	}
 
 	init_memory() {
@@ -307,7 +326,8 @@ class Simulator {
 	}
 
 	reset() {
-		this.init();
+		this.zero_registers();
+		this.zero_input_output();
 	}
 
 	fetch() {
