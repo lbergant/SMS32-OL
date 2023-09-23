@@ -14,6 +14,7 @@
 		<link rel="stylesheet" href="css/buttons.css" />
 		<link rel="stylesheet" href="css/modules/7seg.css" />
 		<link rel="stylesheet" href="css/modules/tLights.css" />
+		<link rel="stylesheet" href="css/modules/input.css" />
 		<script src="js/jquery-3.6.1.min.js"></script>
 		<script src="js/jquery-ui.js"></script>
 		<script src="js/sim/Assembler.js"></script>
@@ -22,6 +23,7 @@
 		<script src="js/colors.js"></script>
 		<script src="js/modules/7seg.js"></script>
 		<script src="js/modules/tLights.js"></script>
+		<script src="js/modules/input.js"></script>
 		<script src="js/index.js"></script>
 
 		<meta http-equiv="ScreenOrientation" content="autoRotate:disabled" />
@@ -71,6 +73,7 @@
 								<option value="Samples/shifting.asm">shifting.asm</option>
 								<option value="Samples/7Segment.asm">7Seg.asm</option>
 								<option value="Samples/tLight.asm">TLight.asm</option>
+								<option value="Samples/InOut.asm">InputOutput.asm</option>
 								<!-- <option value="Samples/first.asm">first.asm</option> -->
 							</select>
 						</div>
@@ -184,7 +187,7 @@
 							</button>
 							<button
 								class="button_slide slide_down"
-								onclick="toggle_output('')"
+								onclick="toggle_output('dInput')"
 							>
 								1
 							</button>
@@ -196,7 +199,7 @@
 							</button>
 							<button
 								class="button_slide slide_down"
-								onclick="toggle_output('dMtor')"
+								onclick="toggle_output('')"
 							>
 								3
 							</button>
@@ -325,6 +328,42 @@
 				<div class="shadow module">
 					<div>
 						<h2>Elevator</h2>
+					</div>
+				</div>
+			</div>
+			<div id="dInput" class="inline" style="display: none">
+				<div class="shadow module">
+					<div>
+						<h2>Input</h2>
+						<div class="keyboard-input">
+							<input type="text" id="char-input" maxlength="1" />
+							<div class="numeric-keypad">
+								<div class="key-row">
+									<button class="button_slide slide_down key">1</button>
+									<button class="button_slide slide_down key">2</button>
+									<button class="button_slide slide_down key">3</button>
+								</div>
+								<div class="key-row">
+									<button class="button_slide slide_down key">4</button>
+									<button class="button_slide slide_down key">5</button>
+									<button class="button_slide slide_down key">6</button>
+								</div>
+								<div class="key-row">
+									<button class="button_slide slide_down key">7</button>
+									<button class="button_slide slide_down key">8</button>
+									<button class="button_slide slide_down key">9</button>
+								</div>
+								<div class="key-row"></div>
+								<div class="key-row">
+									<button class="button_slide slide_down key">0</button>
+								</div>
+								<div class="key-row">
+									<button class="button_slide slide_down key-clear key">
+										C
+									</button>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
