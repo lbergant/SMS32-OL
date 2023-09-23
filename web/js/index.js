@@ -27,8 +27,6 @@ $(document).ready(function () {
 
 	draw_table("tRAM", 17, 16);
 
-	draw_table("tVDU", 8, 3);
-
 	init_file_selection();
 
 	update_theme(get_cookie("SMS_theme"));
@@ -310,6 +308,21 @@ function print_assembler_result(asm) {
 		cell.text(asm.commands[i].line);
 	}
 	// $("#taDisAsm").val(ram_text);
+}
+
+function update_RAM_GUI(address, value) {
+	if (address >= 0xc0 && address < 0xc0 + 0x10) update_SVG_GUI(address, value);
+	udpate_ram_position(address, value);
+}
+
+function udpate_ram_position(pos, value) {
+	const cell = $("#tRAM_cell-" + Math.floor(pos / 16) + "-" + ((pos % 16) + 1));
+	cell.html(
+		value
+			.toString(default_base)
+			.padStart(default_pad, "0")
+			.padEnd(default_pad + 1, " ")
+	);
 }
 
 function print_ram(ram) {

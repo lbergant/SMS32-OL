@@ -148,13 +148,15 @@ class RAM {
 	}
 
 	get(address) {
+		if (address < 0) address += 256;
 		return this.#ram[address];
 	}
 
 	set(address, value) {
 		if (address < 0) address += 256;
 		this.#ram[address] = value;
-		print_ram(this.#ram, default_base); // TODO_L do this nicer
+		// update_ram_GUI(this.#ram); // TODO_L do this nicer
+		update_RAM_GUI(address, value);
 	}
 
 	copy() {
