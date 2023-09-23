@@ -26,7 +26,7 @@
 
 Rep:
 	IN 00	; Input from port 00 (keyboard)
-	CMP AL,2D	; Was key press the "-" key?
+	CMP AL,A	; Was key press the "-" key?
 	JZ Stop	; If yes then jump to Stop
 	MOV [BL],AL	; Copy keypress to RAM at position [BL]
 	INC BL	; BL points to the next location.
@@ -45,6 +45,17 @@ Stop:
 ; A PROCEDURE TO DISPLAY TEXT ON THE SIMULATED SCREEN
 	ORG 40	; Code starts from address [10]
 			; **** YOU MUST FILL THIS GAP ****
+			; Copy the data from prev address to new address
+	MOV CL,C0
+Print:
+	MOV AL,[BL]
+	CMP AL,0
+	JZ Endprint
+	MOV [CL], AL
+	INC CL
+	INC BL
+	JMP Print
+Endprint:
 	RET		; At present this procedure does
 			; nothing other than return.
 

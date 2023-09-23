@@ -18,9 +18,17 @@ $(document).ready(function () {
 
 	// Handle button clicks on the numeric keypad
 	$(".key").click(function () {
-		var enteredChar = $(this).text();
+		enteredChar = $(this).text();
 		// Append the clicked digit to the input field
 		$("#char-input").val(enteredChar);
+		charCode = Number(enteredChar) + 0x30;
+	});
+
+	$(".key-enter").click(function () {
+		enteredChar = $(this).text().trim();
+		// Append the clicked digit to the input field
+		$("#char-input").val(enteredChar);
+		charCode = 10;
 	});
 
 	// Handle the "Clear" button click
