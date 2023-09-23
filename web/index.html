@@ -193,9 +193,9 @@
 							</button>
 							<button
 								class="button_slide slide_down"
-								onclick="toggle_output('')"
+								onclick="toggle_output('dVDUOutput')"
 							>
-								2
+								Output
 							</button>
 							<button
 								class="button_slide slide_down"
@@ -227,14 +227,11 @@
 					</div>
 				</div>
 			</div>
-			<div id="dLog" class="inline" style="display: none">
+			<div id="dVDUOutput" class="inline" style="display: none">
 				<div class="shadow module">
 					<div style="height: 100%">
-						<h2>Log</h2>
-						<textarea
-							id="teOutputText"
-							style="height: calc(100% - 90px)"
-						></textarea>
+						<h2>VDU Output</h2>
+						<table class="VDU_table" id="tVDU"></table>
 					</div>
 				</div>
 			</div>
@@ -368,6 +365,17 @@
 								</div>
 							</div>
 						</div>
+					</div>
+				</div>
+			</div>
+			<div id="dLog" class="inline" style="display: none">
+				<div class="shadow module">
+					<div style="height: 100%">
+						<h2>Log</h2>
+						<textarea
+							id="teOutputText"
+							style="height: calc(100% - 90px)"
+						></textarea>
 					</div>
 				</div>
 			</div>

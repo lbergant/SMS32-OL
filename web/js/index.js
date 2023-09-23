@@ -27,6 +27,8 @@ $(document).ready(function () {
 
 	draw_table("tRAM", 17, 16);
 
+	draw_table("tVDU", 8, 3);
+
 	init_file_selection();
 
 	update_theme(get_cookie("SMS_theme"));
