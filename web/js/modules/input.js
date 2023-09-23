@@ -1,11 +1,14 @@
+let charCode = 0;
+let enteredChar = " ";
+
 $(document).ready(function () {
 	$("#char-input").keypress(function (e) {
 		// Check if the entered value is a valid character (letters, numbers, symbols, etc.)
 		$("#char-input").val("");
-		var charCode = e.which;
+		charCode = e.which;
 		if (is_valid_character(charCode)) {
 			// Handle the input here (e.g., display it, send it to the server, etc.)
-			var enteredChar = String.fromCharCode(charCode);
+			enteredChar = String.fromCharCode(charCode);
 			// console.log("Entered character: " + enteredChar + " " + Number(charCode));
 		} else {
 			// Prevent entering invalid characters
@@ -32,4 +35,6 @@ function is_valid_character(charCode) {
 	return Number(charCode) <= 255;
 }
 
-function read_input_char() {}
+function read_input_char() {
+	return Number(charCode);
+}

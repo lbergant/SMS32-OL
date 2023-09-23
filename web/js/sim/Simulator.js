@@ -161,7 +161,7 @@ class RAM {
 	}
 }
 
-class OutputDevice {
+class Device {
 	id;
 	value;
 
@@ -169,7 +169,9 @@ class OutputDevice {
 		this.id = id;
 		this.value = 0;
 	}
+}
 
+class OutputDevice extends Device {
 	reset() {
 		this.write(0);
 		this.write(1);
@@ -193,6 +195,24 @@ class TLight extends OutputDevice {
 		super.write(input);
 
 		toggleLights(input);
+	}
+}
+
+class InputDevice extends Device {
+	id;
+	value;
+
+	read() {
+		return this.value;
+	}
+}
+
+class Keyboard extends InputDevice {
+	read() {
+		let val = read_input_char();
+		this.value = val;
+
+		return val;
 	}
 }
 
@@ -268,7 +288,7 @@ class Simulator {
 
 		this.input_devices = new Array(num_of_input_devices);
 
-		// this.input_devices[0] = new InputDevice(0);
+		this.input_devices[0] = new Keyboard(0);
 		// this.input_devices[3] = new InputDevice(3);
 	}
 
@@ -470,7 +490,7 @@ class Simulator {
 	}
 
 	execute_device_read(device) {
-		// TODO
+		this.AL.set(this.input_devices[device].read());
 	}
 
 	execute(command, operands, target_register) {
@@ -606,9 +626,11 @@ class Simulator {
 				this.SP.increment();
 				this.SR.set(this.ram.get(this.SP.get()));
 				break;
+			// IN
 			case 0xf0:
 				this.execute_device_read(operands[0]);
 				break;
+			// OUT
 			case 0xf1:
 				this.execute_device_write(operands[0]);
 				break;

@@ -26,7 +26,7 @@
 
 Rep:
 	IN 00	; Input from port 00 (keyboard)
-	CMP AL,0D	; Was key press the Enter key?
+	CMP AL,2D	; Was key press the "-" key?
 	JZ Stop	; If yes then jump to Stop
 	MOV [BL],AL	; Copy keypress to RAM at position [BL]
 	INC BL	; BL points to the next location.
