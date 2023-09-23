@@ -71,7 +71,7 @@ table {
 }
 
 .tDisAsm_td_class {
-	width: 120px;
+	/* width: calc(100% - 200px); */
 }
 
 .tRAM_td_class {

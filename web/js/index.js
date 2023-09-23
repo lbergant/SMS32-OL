@@ -300,9 +300,11 @@ function print_assembler_result(asm) {
 		}
 
 		cell = $("#tDisAsm_cell-" + i + "-1");
+		cell.css("width", 120);
 		cell.text(op_code + ram_text);
 
 		cell = $("#tDisAsm_cell-" + i + "-2");
+		// cell.css("width", "");
 		cell.text(asm.commands[i].line);
 	}
 	// $("#taDisAsm").val(ram_text);
