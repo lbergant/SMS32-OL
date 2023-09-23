@@ -162,13 +162,21 @@ class RAM {
 }
 
 class OutputDevice {
+	id;
+	value;
+
 	constructor(id) {
-		self.id = id;
-		self.value = 0;
+		this.id = id;
+		this.value = 0;
+	}
+
+	reset() {
+		this.write(0);
+		this.write(1);
 	}
 
 	write(input) {
-		self.value = input;
+		this.value = input;
 	}
 }
 
@@ -177,6 +185,14 @@ class SevenSegDisplay extends OutputDevice {
 		super.write(input);
 
 		displayRaw(input % 2, input);
+	}
+}
+
+class TLight extends OutputDevice {
+	write(input) {
+		super.write(input);
+
+		toggleLights(input);
 	}
 }
 
@@ -212,6 +228,17 @@ class Simulator {
 		this.SR.set(0);
 	}
 
+	zero_input_output() {
+		for (let i = 0; i < this.output_devices.length; i++) {
+			this.output_devices[i].reset();
+		}
+
+		// Do the same for input devices
+		// for (let i = 0; i < num_of_output_devices; i++) {
+		// 	this.output_devices[i].reset();
+		// }
+	}
+
 	init_memory() {
 		this.ram = new RAM();
 	}
@@ -236,6 +263,7 @@ class Simulator {
 			this.output_devices[i] = new OutputDevice(i);
 		}
 
+		this.output_devices[1] = new TLight(1);
 		this.output_devices[2] = new SevenSegDisplay(2);
 
 		this.input_devices = new Array(num_of_input_devices);
@@ -298,7 +326,8 @@ class Simulator {
 	}
 
 	reset() {
-		this.init();
+		this.zero_registers();
+		this.zero_input_output();
 	}
 
 	fetch() {
