@@ -70,9 +70,9 @@ table {
 	overflow: hidden;
 }
 
-.tDisAsm_td_class {
-	/* width: calc(100% - 200px); */
-}
+/* .tDisAsm_td_class {
+	width: calc(100% - 200px);
+} */
 
 .tRAM_td_class {
 	width: 25px;

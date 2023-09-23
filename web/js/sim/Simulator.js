@@ -152,6 +152,7 @@ class RAM {
 	}
 
 	set(address, value) {
+		if (address < 0) address += 256;
 		this.#ram[address] = value;
 		print_ram(this.#ram, default_base); // TODO_L do this nicer
 	}
