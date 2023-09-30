@@ -643,6 +643,13 @@ class Simulator {
 				this.ram.set(this.SP.get(), this.IP.get() + 2);
 				this.SP.increment(-1);
 				target_register.set(this.ram.get(operands[0] + 2) - 2);
+				break;
+			case 0xfc:
+				this.SR.set_I;
+				break;
+			case 0xfd:
+				this.SR.clear_I;
+				break;
 			// NOP
 			case 0xff:
 				break;

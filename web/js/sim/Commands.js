@@ -97,6 +97,8 @@ function get_op_type(op_code) {
 		  	return CommandType.register;
 		case 0xf0: case 0xf1:
 			return CommandType.immediate;
+		case 0xfc: case 0xfd:
+			return CommandType.noop;
 		case 0xea: case 0xeb: // PUSHF, POPF
 		case 0xff: // NOP
 		  return CommandType.noop;
@@ -260,6 +262,10 @@ function get_op_code(text_command, type) {
 			return 0xcc;
 		case "IRET":
 			return 0xcd;
+		case "STI":
+			return 0xfc;
+		case "CLI":
+			return 0xfd;
 		case "NOP":
 			return 0xff;
 	}
@@ -275,6 +281,7 @@ function get_command_len(op_code) {
 		case 0x00:
 		case 0xcb: case 0xff: // RET NOP
 		case 0xea: case 0xeb: // PUSHF POPF
+		case 0xfc: case 0xfd:
 		case 0xcd: // IRET
 			return 0;
 		case 0xc0: case 0xc1: case 0xc2: case 0xc3: // JMP
