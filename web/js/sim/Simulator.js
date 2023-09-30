@@ -165,8 +165,8 @@ class RAM {
 }
 
 class Device {
-	id;
-	value;
+	#id;
+	#value;
 
 	constructor(id) {
 		this.id = id;
@@ -220,6 +220,14 @@ class Keyboard extends InputDevice {
 }
 
 class Simulator {
+	running;
+	hw_interrupt_timer_interval;
+	hw_interrupt_timer_counter;
+
+	set_hw_interrupt_interval(interval) {
+		this.hw_interrupt_timer_interval = interval;
+	}
+
 	init_registers() {
 		// Status register
 		this.SR = new StatusRegister();
@@ -300,6 +308,8 @@ class Simulator {
 		this.init_memory();
 		this.init_devices();
 
+		this.hw_interrupt_timer_interval = 3000;
+		this.hw_interrupt_timer_counter = 0;
 		this.running = false;
 	}
 
@@ -317,9 +327,24 @@ class Simulator {
 		let op_code = -1;
 
 		while (op_code != 0 && this.running) {
-			op_code = this.step();
+			let timer_interval = 10 - get_speed_value();
+			this.hw_interrupt_timer_counter += timer_interval * 100;
 
-			await this.sleep((10 - get_speed_value()) * 100);
+			if (this.hw_interrupt_timer_counter >= this.hw_interrupt_timer_interval) {
+				let result = this.execute(0xcc, [0x02 - 2], this.IP);
+
+				console.log("Executing: HW Interrupt, jumping to " + result);
+
+				this.IP.increment(2);
+				color_ram(this.IP.get(), default_highlight);
+				color_dis_asm(this.IP.get(), default_highlight);
+
+				this.hw_interrupt_timer_counter = 0;
+			} else {
+				op_code = this.step();
+			}
+
+			await this.sleep(timer_interval * 100);
 		}
 	}
 
@@ -327,7 +352,7 @@ class Simulator {
 		return new Promise((r) => setTimeout(r, ms));
 	}
 
-	step() {
+	step(override_op_code = null) {
 		clear_register_color();
 		// this.SR.clear();
 
@@ -351,6 +376,7 @@ class Simulator {
 	reset() {
 		this.zero_registers();
 		this.zero_input_output();
+		this.hw_interrupt_timer_counter = 0;
 	}
 
 	fetch() {
@@ -640,7 +666,7 @@ class Simulator {
 				break;
 			// INT
 			case 0xcc:
-				this.ram.set(this.SP.get(), this.IP.get() + 2);
+				this.ram.set(this.SP.get(), this.IP.get());
 				this.SP.increment(-1);
 				target_register.set(this.ram.get(operands[0] + 2) - 2);
 				break;
