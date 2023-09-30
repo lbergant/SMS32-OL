@@ -329,7 +329,10 @@ class Simulator {
 
 		while (op_code != 0 && this.running) {
 			let timer_interval = 10 - get_speed_value();
-			this.hw_interrupt_timer_counter += timer_interval * 100;
+			
+			if(this.SR.get_I() == 1){
+				this.hw_interrupt_timer_counter += timer_interval * 100;
+			}
 
 			if (this.hw_interrupt_timer_counter >= this.hw_interrupt_timer_interval) {
 				let result = this.execute(0xcc, [0x02 - 2], this.IP);
@@ -668,11 +671,13 @@ class Simulator {
 				this.SP.increment(-1);
 				target_register.set(this.ram.get(operands[0] + 2) - 2);
 				break;
+			// STI
 			case 0xfc:
-				this.SR.set_I;
+				this.SR.set_I();
 				break;
+			// CLI
 			case 0xfd:
-				this.SR.clear_I;
+				this.SR.clear_I();
 				break;
 			// NOP
 			case 0xff:

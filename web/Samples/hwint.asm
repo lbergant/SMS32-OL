@@ -1,9 +1,9 @@
-	JMP Start
+	JMP Zero
 	ORG 2
 	DB 50
 
-
 	ORG 20
+Zero:
 	STI
 
 Start:
