@@ -225,6 +225,7 @@ class Simulator {
 	hw_interrupt_timer_counter;
 
 	set_hw_interrupt_interval(interval) {
+		interval = Number(interval)*1000;
 		this.hw_interrupt_timer_interval = interval;
 	}
 

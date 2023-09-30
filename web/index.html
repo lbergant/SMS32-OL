@@ -95,7 +95,21 @@
 					</div>
 				</div>
 				<div class="shadow">
-					<h2>Simulator</h2>
+					<div style="padding-right: 24px;">
+					<img
+						src="img/setting.png"
+						style="
+							display: inline-block; 
+							vertical-align: top; 
+							position: relative; 
+							height: 24px; 
+							padding-top: 15px; 
+							cursor: pointer"
+						alt="Settings"
+						onclick="toggle_output('dSimSettings')"
+					/>
+					<h2	style="display: inline-block; vertical-align: top;">Simulator</h2>
+					</div>
 					<div style="margin-bottom: 15px">
 						<button class="button_slide slide_down" onclick="run()">Run</button>
 						<button class="button_slide slide_down" onclick="step()">
@@ -107,9 +121,9 @@
 						<button class="button_slide slide_down" onclick="reset()">
 							Reset
 						</button>
-						<button class="button_slide slide_down" onclick="toggle_hw_int()">
-							HW Int
-						</button>
+						<!-- <button class="button_slide slide_down" onclick="toggle_output('dSimSettings')">
+							Settings
+						</button> -->
 					</div>
 					<div id="dHWInt" class="slidecontainer" style="display: inline-block">
 						<label>Speed:</label>
@@ -124,20 +138,7 @@
 							oninput="update_slider()"
 						/>
 					</div>
-					<div class="slidecontainer" style="display: inline-block">
-						<label>HW int:</label>
-						<label id="lHWInt">10</label>
-						<input
-							type="range"
-							min="0"
-							max="10"
-							value="5"
-							class="slider"
-							id="sHWIntSpeed"
-							oninput="update_hw_interrupt_speed()"
-						/>
-					</div>
-					<div>
+					<div style="padding-top: 4px;">
 						<table>
 							<tr>
 								<td>AL:</td>
@@ -217,12 +218,12 @@
 							>
 								Output
 							</button>
-							<!-- <button
+							<button
 								class="button_slide slide_down"
 								onclick="toggle_output('')"
 							>
-								3
-							</button> -->
+								Settings
+							</button>
 						</div>
 					</div>
 				</div>
@@ -230,17 +231,40 @@
 		</div>
 
 		<div class="center" id="dExpanded">
+			<div id="dSimSettings" class="inline" style="display: none">
+				<div class="shadow setting">
+					<div style="height: 100%">
+						<h2>Simulator Settings</h2>
+						<div style="padding-top: 25px;">
+						<div class="slidecontainer" style="display: inline-block">
+							<label>HW int:</label>
+							<label id="lHWInt">3</label>
+							<input
+								type="range"
+								min="1"
+								max="10"
+								value="3"
+								step="1"
+								class="slider"
+								id="sHWIntSpeed"
+								oninput="update_hw_interrupt_speed()"
+							/>
+						</div>
+					</div>
+					</div>
+				</div>
+			</div>
 			<div id="dSettings" class="inline" style="display: none">
-				<div class="shadow">
+				<div class="shadow setting">
 					<div>
 						<h2>Settings</h2>
 						<input
 							type="color"
 							id="iColorPicker"
-							class="inline-block setting"
+							class="inline-block"
 						/>
-						<div class="inline-block setting" id="dSchemeContainer"></div>
-						<div class="inline-block setting">
+						<div class="inline-block" id="dSchemeContainer"></div>
+						<div class="inline-block">
 							<label>Font: </label>
 							<input id="iFontSize" type="number" value="14" />
 						</div>

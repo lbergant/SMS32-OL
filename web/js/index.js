@@ -475,5 +475,13 @@ function toggle_hw_int() {
 	let $div = $("#dHWInt");
 	if ($div.is(":visible")) {
 		$div.hide();
+	}else{
+		$div.show();
 	}
+}
+
+function update_hw_interrupt_speed(){
+	let hw_interval_value = $("#sHWIntSpeed").val();
+	$("#lHWInt").text(hw_interval_value);
+	sim.set_hw_interrupt_interval(hw_interval_value);
 }
