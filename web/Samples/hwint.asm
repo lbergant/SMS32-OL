@@ -1,0 +1,27 @@
+	JMP Start
+	ORG 2
+	DB 50
+
+
+	ORG 20
+	STI
+
+Start:
+	MOV AL,0 ;0
+	INC AL ;1
+	INC AL ;2
+	INC AL ;3
+	INC AL ;4
+	INC AL ;5
+	INC AL ;6
+	NOP
+	NOP
+	NOP
+	JMP Start
+
+	ORG 50
+Sub:
+	NOP
+	NOP
+	NOP
+	IRET

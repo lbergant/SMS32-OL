@@ -336,13 +336,12 @@ class Simulator {
 				console.log("Executing: HW Interrupt, jumping to " + result);
 
 				this.IP.increment(2);
-				color_ram(this.IP.get(), default_highlight);
-				color_dis_asm(this.IP.get(), default_highlight);
+				// color_ram(this.IP.get(), default_highlight);
+				// color_dis_asm(this.IP.get(), default_highlight);
 
 				this.hw_interrupt_timer_counter = 0;
-			} else {
-				op_code = this.step();
 			}
+			op_code = this.step();
 
 			await this.sleep(timer_interval * 100);
 		}
