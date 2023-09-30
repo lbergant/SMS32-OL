@@ -155,7 +155,7 @@ h2 {
 	width: 100%;
 }
 
-#sSpeed {
+.slider {
 	-webkit-appearance: none;
 	appearance: none;
 	width: 180px;

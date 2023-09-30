@@ -470,3 +470,10 @@ function toggle_output(name) {
 		visible_modules++;
 	}
 }
+
+function toggle_hw_int() {
+	let $div = $("#dHWInt");
+	if ($div.is(":visible")) {
+		$div.hide();
+	}
+}

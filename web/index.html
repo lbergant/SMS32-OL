@@ -107,8 +107,11 @@
 						<button class="button_slide slide_down" onclick="reset()">
 							Reset
 						</button>
+						<button class="button_slide slide_down" onclick="toggle_hw_int()">
+							HW Int
+						</button>
 					</div>
-					<div class="slidecontainer">
+					<div id="dHWInt" class="slidecontainer" style="display: inline-block">
 						<label>Speed:</label>
 						<label id="lSpeed">10</label>
 						<input
@@ -119,6 +122,19 @@
 							class="slider"
 							id="sSpeed"
 							oninput="update_slider()"
+						/>
+					</div>
+					<div class="slidecontainer" style="display: inline-block">
+						<label>HW int:</label>
+						<label id="lHWInt">10</label>
+						<input
+							type="range"
+							min="0"
+							max="10"
+							value="5"
+							class="slider"
+							id="sHWIntSpeed"
+							oninput="update_hw_interrupt_speed()"
 						/>
 					</div>
 					<div>
