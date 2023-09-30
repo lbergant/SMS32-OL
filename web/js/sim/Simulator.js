@@ -604,8 +604,9 @@ class Simulator {
 				this.SP.increment(-1);
 				target_register.set(operands[0]);
 				break;
-			// RET
+			// RET, IRET
 			case 0xcb:
+			case 0xcd:
 				this.SP.increment();
 				target_register.set(this.ram.get(this.SP.get()) - 1);
 				break;
@@ -637,6 +638,11 @@ class Simulator {
 			case 0xf1:
 				this.execute_device_write(operands[0]);
 				break;
+			// INT
+			case 0xcc:
+				this.ram.set(this.SP.get(), this.IP.get() + 2);
+				this.SP.increment(-1);
+				target_register.set(this.ram.get(operands[0] + 2) - 2);
 			// NOP
 			case 0xff:
 				break;

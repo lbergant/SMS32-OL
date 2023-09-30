@@ -85,6 +85,11 @@ function get_op_type(op_code) {
 		case 0xc2: case 0xc5: case 0xc3: // JNZ, JO, JS
 		case 0xc1: case 0xca: case 0xcb: // JZ, CALL, RET
 		  	return CommandType.jump;
+		case 0xcc: // INT
+			// return CommandType.imemory;
+			return CommandType.jump;
+		case 0xcd: // IRET
+			return CommandType.jump;
 		case 0x9a: case 0x9b: case 0x9c: case 0x9d: // ROL, ROR, SHL, SHR
 		case 0xad: // NOT
 		case 0xa4: case 0xa5: // INC, DEC
@@ -251,6 +256,10 @@ function get_op_code(text_command, type) {
 			return 0xf0;
 		case "OUT":
 			return 0xf1;
+		case "INT":
+			return 0xcc;
+		case "IRET":
+			return 0xcd;
 		case "NOP":
 			return 0xff;
 	}
@@ -266,6 +275,7 @@ function get_command_len(op_code) {
 		case 0x00:
 		case 0xcb: case 0xff: // RET NOP
 		case 0xea: case 0xeb: // PUSHF POPF
+		case 0xcd: // IRET
 			return 0;
 		case 0xc0: case 0xc1: case 0xc2: case 0xc3: // JMP
 		case 0xc4: case 0xc5: case 0xc6: // JMP
@@ -276,6 +286,7 @@ function get_command_len(op_code) {
 		case 0x9a: case 0x9b: // ROL ROR
 		case 0x9c: case 0x9d: // SHL SHR
 		case 0xf0: case 0xf1: // IN OUT
+		case 0xcc: // INT
 			return 1;
 		case 0xa0: case 0xb0: // ADD ADD
 		case 0xa1: case 0xb1: // SUB SUB

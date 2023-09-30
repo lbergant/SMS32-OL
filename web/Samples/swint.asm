@@ -27,7 +27,7 @@ Start:
 	NOT AL	; Invert the bits in AL
 	AND AL,FE	; Force right most bit to zero
 	MOV [70],AL	; Copy inverted bits back to RAM
-	OUT s02	; Send data to seven segment display
+	OUT 02	; Send data to seven segment display
 	IRET
 ;--------------------------------------------------------------
 	END
