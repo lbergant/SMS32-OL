@@ -207,11 +207,13 @@ class TLight extends OutputDevice {
 }
 
 class InputDevice extends Device {
-	id;
-	value;
 
 	read() {
 		return this.value;
+	}
+
+	reset(){
+		this.value = 0;
 	}
 }
 
@@ -282,7 +284,7 @@ class Simulator {
 		}
 
 		for (let i = 0; i < this.input_devices.length; i++) {
-			this.output_devices[i].reset();
+			this.input_devices[i].reset();
 		}
 	}
 
@@ -301,8 +303,8 @@ class Simulator {
 
 		// INPUT
 		// 	00 - Key
-		// 	03 - Heater
-		const num_of_input_devices = 2;
+		// 	03 - Heater - todo
+		const num_of_input_devices = 1;
 
 		this.output_devices = new Array(num_of_output_devices);
 
