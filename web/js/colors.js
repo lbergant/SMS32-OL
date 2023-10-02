@@ -1,5 +1,6 @@
 function update_primary_color(color_value) {
-	let complimentary_color = get_complimentary_color(color_value);
+	// let complimentary_color = get_complimentary_color(color_value);
+	let complimentary_color = get_triadic_color(color_value)[1];
 
 	default_highlight = color_value;
 	$(":root").css("--primary", color_value);
@@ -71,4 +72,15 @@ function get_complimentary_color(hexColor) {
 
 	// Return the complimentary color
 	return compHexColor;
+}
+
+
+function get_triadic_color(hexColor){
+	var rgbColor = hex_to_rgb(hexColor);
+
+	// Invert each RGB component to get the complimentary color
+	let color1 = rgb_to_hex([rgbColor[1], rgbColor[2], rgbColor[0]]);
+	let color2 = rgb_to_hex([rgbColor[2], rgbColor[0], rgbColor[1]]);
+
+	return [color1, color2];
 }
