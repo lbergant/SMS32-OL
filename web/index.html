@@ -235,9 +235,9 @@
 				<div class="shadow setting">
 					<div style="height: 100%">
 						<h2>Simulator Settings</h2>
-						<div style="padding-top: 25px;">
+						<div style="padding-top: 12px;">
 						<div class="slidecontainer" style="display: inline-block">
-							<label>HW int:</label>
+							<label>Timer interval:</label>
 							<label id="lHWInt">3</label>
 							<input
 								type="range"
@@ -249,6 +249,12 @@
 								id="sHWIntSpeed"
 								oninput="update_hw_interrupt_speed()"
 							/>
+						</div>
+						
+						<div>
+							<label>Interrupt mode:</label>
+							<div style="display: inline-block" id="dHWIntContainer">
+							</div>
 						</div>
 					</div>
 					</div>

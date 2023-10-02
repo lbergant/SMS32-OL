@@ -122,6 +122,20 @@ function init_radio_buttons() {
 			update_theme(option.value);
 		}
 	);
+
+	const HWINtOptions = [
+		{ label: "HW interrupt", value: HWMode.himHWFlag },
+		{ label: "Timer", value: HWMode.himTimer },
+	];
+
+	init_base_radio_buttons(
+		"dHWIntContainer",
+		HWINtOptions,
+		"HWMode",
+		function (option) {
+			sim.change_hw_interrupt_mode(option.value);
+		}
+	);
 }
 
 function update_theme(value) {
@@ -226,7 +240,7 @@ function assemble() {
 	let ram = asm.commands_to_ram();
 
 	// load compiled program to sim
-	sim.init();
+	sim.reset();
 	sim.load_program(ram);
 
 	print_ram(ram);

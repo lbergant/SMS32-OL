@@ -1,3 +1,8 @@
+const HWMode = {
+	himTimer: 0,
+	himHWFlag: 1,	
+}
+
 class Register {
 	value;
 	reg_name;
@@ -221,12 +226,23 @@ class Keyboard extends InputDevice {
 
 class Simulator {
 	running;
+
+	hw_interrupt_mode;
 	hw_interrupt_timer_interval;
 	hw_interrupt_timer_counter;
+	hw_interrupt_flag;
 
 	set_hw_interrupt_interval(interval) {
 		interval = Number(interval)*1000;
 		this.hw_interrupt_timer_interval = interval;
+	}
+
+	trigger_default_interrupt(){
+		this.hw_interrupt_flag = 1;
+	}
+
+	change_hw_interrupt_mode(mode){
+		this.hw_interrupt_mode = mode;
 	}
 
 	init_registers() {
@@ -265,10 +281,9 @@ class Simulator {
 			this.output_devices[i].reset();
 		}
 
-		// Do the same for input devices
-		// for (let i = 0; i < num_of_output_devices; i++) {
-		// 	this.output_devices[i].reset();
-		// }
+		for (let i = 0; i < this.input_devices.length; i++) {
+			this.output_devices[i].reset();
+		}
 	}
 
 	init_memory() {
@@ -311,7 +326,14 @@ class Simulator {
 
 		this.hw_interrupt_timer_interval = 3000;
 		this.hw_interrupt_timer_counter = 0;
-		this.running = false;
+		this.hw_interrupt_flag = 0;
+		this.hw_interrupt_mode = HWMode.himTimer;
+	}
+
+	reset() {
+		this.zero_registers();
+		this.zero_input_output();
+		this.hw_interrupt_timer_counter = 0;
 	}
 
 	constructor() {
@@ -334,7 +356,8 @@ class Simulator {
 				this.hw_interrupt_timer_counter += timer_interval * 100;
 			}
 
-			if (this.hw_interrupt_timer_counter >= this.hw_interrupt_timer_interval) {
+			if ((this.hw_interrupt_mode == HWMode.himHWFlag && this.hw_interrupt_flag == 1) ||
+				(this.hw_interrupt_mode == HWMode.himTimer && this.hw_interrupt_timer_counter >= this.hw_interrupt_timer_interval)) {
 				let result = this.execute(0xcc, [0x02 - 2], this.IP);
 
 				console.log("Executing: HW Interrupt, jumping to " + result);
@@ -372,12 +395,6 @@ class Simulator {
 		color_ram(this.IP.get(), default_highlight);
 		color_dis_asm(this.IP.get(), default_highlight);
 		return op_code;
-	}
-
-	reset() {
-		this.zero_registers();
-		this.zero_input_output();
-		this.hw_interrupt_timer_counter = 0;
 	}
 
 	fetch() {
