@@ -1,7 +1,7 @@
 const HWMode = {
 	himTimer: 0,
-	himHWFlag: 1,	
-}
+	himHWFlag: 1,
+};
 
 class Register {
 	value;
@@ -207,12 +207,11 @@ class TLight extends OutputDevice {
 }
 
 class InputDevice extends Device {
-
 	read() {
 		return this.value;
 	}
 
-	reset(){
+	reset() {
 		this.value = 0;
 	}
 }
@@ -235,15 +234,15 @@ class Simulator {
 	hw_interrupt_flag;
 
 	set_hw_interrupt_interval(interval) {
-		interval = Number(interval)*1000;
+		interval = Number(interval) * 1000;
 		this.hw_interrupt_timer_interval = interval;
 	}
 
-	trigger_default_interrupt(){
+	trigger_default_interrupt() {
 		this.hw_interrupt_flag = 1;
 	}
 
-	change_hw_interrupt_mode(mode){
+	change_hw_interrupt_mode(mode) {
 		this.hw_interrupt_mode = mode;
 	}
 
@@ -353,13 +352,17 @@ class Simulator {
 
 		while (op_code != 0 && this.running) {
 			let timer_interval = 10 - get_speed_value();
-			
-			if(this.SR.get_I() == 1){
+
+			if (this.SR.get_I() == 1) {
 				this.hw_interrupt_timer_counter += timer_interval * 100;
 			}
 
-			if ((this.hw_interrupt_mode == HWMode.himHWFlag && this.hw_interrupt_flag == 1) ||
-				(this.hw_interrupt_mode == HWMode.himTimer && this.hw_interrupt_timer_counter >= this.hw_interrupt_timer_interval)) {
+			if (
+				(this.hw_interrupt_mode == HWMode.himHWFlag &&
+					this.hw_interrupt_flag == 1) ||
+				(this.hw_interrupt_mode == HWMode.himTimer &&
+					this.hw_interrupt_timer_counter >= this.hw_interrupt_timer_interval)
+			) {
 				let result = this.execute(0xcc, [0x02 - 2], this.IP);
 
 				console.log("Executing: HW Interrupt, jumping to " + result);

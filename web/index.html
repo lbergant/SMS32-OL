@@ -95,20 +95,23 @@
 					</div>
 				</div>
 				<div class="shadow">
-					<div style="padding-right: 24px;">
-					<img
-						src="img/setting.png"
-						style="
-							display: inline-block; 
-							vertical-align: top; 
-							position: relative; 
-							height: 24px; 
-							padding-top: 15px; 
-							cursor: pointer"
-						alt="Settings"
-						onclick="toggle_output('dSimSettings')"
-					/>
-					<h2	style="display: inline-block; vertical-align: top;">Simulator</h2>
+					<div style="padding-right: 24px">
+						<img
+							src="img/setting.png"
+							style="
+								display: inline-block;
+								vertical-align: top;
+								position: relative;
+								height: 24px;
+								padding-top: 15px;
+								cursor: pointer;
+							"
+							alt="Settings"
+							onclick="toggle_output('dSimSettings')"
+						/>
+						<h2 style="display: inline-block; vertical-align: top">
+							Simulator
+						</h2>
 					</div>
 					<div style="margin-bottom: 15px">
 						<button class="button_slide slide_down" onclick="run()">Run</button>
@@ -138,7 +141,7 @@
 							oninput="update_slider()"
 						/>
 					</div>
-					<div style="padding-top: 4px;">
+					<div style="padding-top: 4px">
 						<table>
 							<tr>
 								<td>AL:</td>
@@ -218,12 +221,12 @@
 							>
 								Output
 							</button>
-							<button
+							<!-- <button
 								class="button_slide slide_down"
 								onclick="toggle_output('')"
 							>
 								Settings
-							</button>
+							</button> -->
 						</div>
 					</div>
 				</div>
@@ -235,28 +238,27 @@
 				<div class="shadow setting">
 					<div style="height: 100%">
 						<h2>Simulator Settings</h2>
-						<div style="padding-top: 12px;">
-						<div class="slidecontainer" style="display: inline-block">
-							<label>Timer interval:</label>
-							<label id="lHWInt">3</label>
-							<input
-								type="range"
-								min="1"
-								max="10"
-								value="3"
-								step="1"
-								class="slider"
-								id="sHWIntSpeed"
-								oninput="update_hw_interrupt_speed()"
-							/>
-						</div>
-						
-						<div>
-							<label>Interrupt mode:</label>
-							<div style="display: inline-block" id="dHWIntContainer">
+						<div style="padding-top: 12px">
+							<div class="slidecontainer" style="display: inline-block">
+								<label>Timer interval:</label>
+								<label id="lHWInt">3</label>
+								<input
+									type="range"
+									min="1"
+									max="10"
+									value="3"
+									step="1"
+									class="slider"
+									id="sHWIntSpeed"
+									oninput="update_hw_interrupt_speed()"
+								/>
+							</div>
+
+							<div>
+								<label>Interrupt mode:</label>
+								<div style="display: inline-block" id="dHWIntContainer"></div>
 							</div>
 						</div>
-					</div>
 					</div>
 				</div>
 			</div>
@@ -264,11 +266,7 @@
 				<div class="shadow setting">
 					<div>
 						<h2>Settings</h2>
-						<input
-							type="color"
-							id="iColorPicker"
-							class="inline-block"
-						/>
+						<input type="color" id="iColorPicker" class="inline-block" />
 						<div class="inline-block" id="dSchemeContainer"></div>
 						<div class="inline-block">
 							<label>Font: </label>
