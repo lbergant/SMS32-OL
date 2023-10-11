@@ -33,7 +33,35 @@ $(document).ready(function () {
 	init_colors();
 
 	init_speed_slider();
+
+	init_line_numbering();
 });
+
+let $lineNumbers;
+let $textarea;
+
+function init_line_numbering() {
+	$textarea = $("#taASM");
+	$lineNumbers = $(".line-numbers");
+
+	$textarea.on("input", updateLineNumbers);
+	$textarea.on("scroll", updateScroll);
+
+	updateLineNumbers();
+}
+
+function updateLineNumbers() {
+	const lines = $textarea.val().split("\n");
+	$lineNumbers.empty();
+
+	for (let i = 0; i < lines.length; i++) {
+		$lineNumbers.append(i + "<br>");
+	}
+}
+
+function updateScroll() {
+	$lineNumbers.css("margin-top", -$textarea.scrollTop() + "px");
+}
 
 function init_speed_slider() {
 	$("#lSpeed").text($("#sSpeed").val());
@@ -60,6 +88,7 @@ function init_file_selection() {
 				dataType: "text",
 				success: function (data) {
 					$("#taASM").val(data);
+					updateLineNumbers();
 				},
 			});
 		}
