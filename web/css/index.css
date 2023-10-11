@@ -22,6 +22,7 @@ textarea {
 	position: relative;
 	height: calc(100% - 150px);
 	margin-top: 20px;
+	resize: none;
 }
 
 html {
