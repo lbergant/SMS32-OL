@@ -10,7 +10,7 @@
 }
 
 textarea {
-	width: 98%;
+	width: 95%;
 	/* max-width: 500px; */
 	tab-size: 4;
 	color: var(--text);
@@ -186,6 +186,21 @@ h2 {
 	height: 333px;
 }
 
-.setting{
+.setting {
 	height: 120px;
+}
+
+.line-numbers {
+	/* vertical-align: top; */
+	/* padding-top: 24px; */
+	/* margin-top: 10px; */
+	/* margin-left: -2px; */
+}
+
+#line-numbers-parent {
+	display: inline-block;
+	overflow: hidden;
+	position: relative;
+	height: calc(100% - 150px);
+	width: 16px;
 }
