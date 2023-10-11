@@ -55,7 +55,7 @@ function updateLineNumbers() {
 	$lineNumbers.empty();
 
 	for (let i = 0; i < lines.length; i++) {
-		$lineNumbers.append(i + 1 + "<br>");
+		$lineNumbers.append(i + "<br>");
 	}
 }
 
