@@ -61,7 +61,8 @@ class Command {
 	constructor(line, address, raw_line) {
 		console.group("Command: " + line);
 		this.address = address;
-		this.line = raw_line;
+		this.line = line;
+		this.raw_line = raw_line;
 		this.byte_len = 0;
 		this.operands = new Array();
 
