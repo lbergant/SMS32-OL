@@ -1,7 +1,7 @@
 let default_base = 16;
 let prev_base = 16;
 let default_pad = 2;
-let ignore_zero = true;
+let ignore_zero = false;
 let default_highlight = getComputedStyle(
 	document.documentElement
 ).getPropertyValue("--primary");
