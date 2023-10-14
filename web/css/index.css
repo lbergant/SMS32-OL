@@ -10,7 +10,7 @@
 }
 
 textarea {
-	width: 95%;
+	width: calc(100% - 32px);
 	/* max-width: 500px; */
 	tab-size: 4;
 	color: var(--text);
