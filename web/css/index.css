@@ -23,6 +23,8 @@ textarea {
 	height: calc(100% - 150px);
 	margin-top: 20px;
 	resize: none;
+	white-space: pre;
+	overflow-x: scroll;
 }
 
 html {
@@ -188,7 +190,7 @@ h2 {
 }
 
 .setting {
-	height: 120px;
+	height: 150px;
 }
 
 .line-numbers {

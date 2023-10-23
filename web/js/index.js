@@ -252,11 +252,11 @@ function draw_table(table_name, x_size, y_size) {
 }
 
 function change_register_base() {
-	let registers = $(".register");
-	for (let i = 0; i < registers.length; i++) {
-		let val = Number.parseInt(registers[i].innerHTML, prev_base);
-		registers[i].innerHTML = val.toString(default_base).toUpperCase();
-	}
+	// let registers = $(".register");
+	// for (let i = 0; i < registers.length; i++) {
+	// 	let val = Number.parseInt(registers[i].innerHTML, prev_base);
+	// 	registers[i].innerHTML = val.toString(default_base).toUpperCase();
+	// }
 }
 
 function assemble() {
@@ -421,10 +421,14 @@ function color_dis_asm(idx, color) {
 function update_register(reg, value) {
 	if (reg != "td") {
 		if (value < 0) value += 256;
-		$("#" + reg).html(
-			value.toString(default_base).padStart(default_pad, "0").toUpperCase()
-		);
+		$("#" + reg).html(value.toString(10).padStart(3, "0").toUpperCase());
 		$("#" + reg).css("color", default_highlight);
+
+		$("#" + reg + "h").html(value.toString(16).padStart(2, "0").toUpperCase());
+		$("#" + reg + "h").css("color", default_highlight);
+
+		$("#" + reg + "b").html(value.toString(2).padStart(8, "0").toUpperCase());
+		$("#" + reg + "b").css("color", default_highlight);
 	}
 }
 
@@ -483,17 +487,6 @@ function print_tag_error(error_lines) {
 		$("#tag_err").css("color", "red");
 	}
 }
-
-// function settings_toggle() {
-// 	var $settings = $("#dSettings");
-// 	if ($settings.is(":visible")) {
-// 		$("#dSettings").hide();
-// 		$("#dCenter").css("height", "calc(100% - 70px)");
-// 	} else {
-// 		$("#dSettings").show();
-// 		$("#dCenter").css("height", "calc(100% - 245px)");
-// 	}
-// }
 
 let visible_modules = 0;
 

@@ -91,7 +91,7 @@
 				</div>
 			</div>
 			<div id="dSim_Asm" class="inline">
-				<div class="shadow" style="height: calc(100% - 193px)">
+				<div class="shadow" style="height: calc(100% - 211px)">
 					<h2>Assembler</h2>
 					<div style="overflow-y: scroll; height: calc(100% - 48px)">
 						<table class="dis_asm_table" id="tDisAsm"></table>
@@ -131,20 +131,8 @@
 							Settings
 						</button> -->
 					</div>
-					<div id="dHWInt" class="slidecontainer" style="display: inline-block">
-						<label>Speed:</label>
-						<label id="lSpeed">10</label>
-						<input
-							type="range"
-							min="0"
-							max="10"
-							value="5"
-							class="slider"
-							id="sSpeed"
-							oninput="update_slider()"
-						/>
-					</div>
-					<div style="padding-top: 4px">
+
+					<div style="padding-top: 4px; overflow-x: scroll;">
 						<table>
 							<tr>
 								<td>AL:</td>
@@ -162,6 +150,37 @@
 								<td>IP:</td>
 								<td class="register" id="tdIP" style="width: 30px">0</td>
 							</tr>
+							<tr>
+								<td></td>
+								<td class="register" id="tdALh" style="width: 30px">0</td>
+								<td></td>
+								<td class="register" id="tdBLh" style="width: 30px">0</td>
+								<td></td>
+								<td class="register" id="tdCLh" style="width: 30px">0</td>
+								<td></td>
+								<td class="register" id="tdDLh" style="width: 30px">0</td>
+								<td></td>
+								<td class="register" id="tdSPh" style="width: 30px">0</td>
+								<td></td>
+								<td class="register" id="tdSRh" style="width: 30px">0</td>
+								<td></td>
+								<td class="register" id="tdIPh" style="width: 30px">0</td>
+							</tr>
+							<td></td>
+								<td class="register" id="tdALb" style="width: 30px">0</td>
+								<td></td>
+								<td class="register" id="tdBLb" style="width: 30px">0</td>
+								<td></td>
+								<td class="register" id="tdCLb" style="width: 30px">0</td>
+								<td></td>
+								<td class="register" id="tdDLb" style="width: 30px">0</td>
+								<td></td>
+								<td class="register" id="tdSPb" style="width: 30px">0</td>
+								<td></td>
+								<td class="register" id="tdSRb" style="width: 30px">0</td>
+								<td></td>
+								<td class="register" id="tdIPb" style="width: 30px">0</td>
+							</tr>
 						</table>
 					</div>
 				</div>
@@ -170,7 +189,9 @@
 				<div class="shadow">
 					<div id="dMemory">
 						<h2>Memory</h2>
-						<table class="ram_table" id="tRAM"></table>
+						<div style="overflow: scroll;">
+							<table class="ram_table" id="tRAM"></table>
+						</div>
 						<div id="dRadioBaseContainer">Base:</div>
 						<div id="dRadioZeroContainer">Zero show:</div>
 					</div>
@@ -241,9 +262,32 @@
 				<div class="shadow setting">
 					<div style="height: 100%">
 						<h2>Simulator Settings</h2>
-						<div style="padding-top: 12px">
+						<div style="padding-top: 0px">
+							<div
+								id="dSpeedContainer"
+								class="slidecontainer"
+								style="display: inline-block"
+							>
+								<label>Sim. speed:</label>
+								<label id="lSpeed">10</label>
+								<input
+									type="range"
+									min="0"
+									max="10"
+									value="5"
+									class="slider"
+									id="sSpeed"
+									oninput="update_slider()"
+								/>
+							</div>
+							<br />
+							<br />
+							<div>
+								<label>Interrupt mode:</label>
+								<div style="display: inline-block" id="dHWIntContainer"></div>
+							</div>
 							<div class="slidecontainer" style="display: inline-block">
-								<label>Timer interval:</label>
+								<label>HW int. tmr. interval:</label>
 								<label id="lHWInt">3</label>
 								<input
 									type="range"
@@ -255,11 +299,6 @@
 									id="sHWIntSpeed"
 									oninput="update_hw_interrupt_speed()"
 								/>
-							</div>
-
-							<div>
-								<label>Interrupt mode:</label>
-								<div style="display: inline-block" id="dHWIntContainer"></div>
 							</div>
 						</div>
 					</div>
