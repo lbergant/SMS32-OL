@@ -24,7 +24,7 @@ textarea {
 	margin-top: 20px;
 	resize: none;
 	white-space: pre;
-	overflow-x: scroll;
+	overflow-x: auto;
 }
 
 html {

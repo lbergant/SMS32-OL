@@ -242,10 +242,10 @@
 									<input
 										type="checkbox"
 										class="custom-checkbox"
-										id="cbx-3"
+										id="cbx-Traffic"
 										onclick="toggle_output('dTraffic')"
 									/>
-									<label for="cbx-3" class="toggle"><span></span></label>
+									<label for="cbx-Traffic" class="toggle"><span></span></label>
 								</div>
 							</div>
 							<!-- <button
@@ -254,33 +254,45 @@
 							>
 								Motor
 							</button> -->
-						</div>
+							<!-- </div>
 
-						<div style="margin-bottom: 15px">
+						<div style="margin-bottom: 15px"> -->
 							<!-- <button
 								class="button_slide slide_down"
 								onclick="toggle_output('dLog')"
 							>
 								Log
 							</button> -->
-							<button
-								class="button_slide slide_down"
-								onclick="toggle_output('dInput')"
-							>
-								Input
-							</button>
-							<button
-								class="button_slide slide_down"
-								onclick="toggle_output('dVDUOutput')"
-							>
-								Output
-							</button>
-							<!-- <button
-								class="button_slide slide_down"
-								onclick="toggle_output('')"
-							>
-								Settings
-							</button> -->
+							<div style="display: inline-block">
+								<label style="vertical-align: top; display: inline-block"
+									>Input</label
+								>
+								<div style="display: inline-block" class="checkbox-wrapper-3">
+									<input
+										type="checkbox"
+										class="custom-checkbox"
+										id="cbx-Input"
+										onclick="toggle_output('dInput')"
+									/>
+									<label for="cbx-Input" class="toggle"><span></span></label>
+								</div>
+							</div>
+							<div style="display: inline-block">
+								<label style="vertical-align: top; display: inline-block"
+									>VDU Output</label
+								>
+								<div style="display: inline-block" class="checkbox-wrapper-3">
+									<input
+										type="checkbox"
+										class="custom-checkbox"
+										id="cbx-VDUOutput"
+										onclick="toggle_output('dVDUOutput')"
+									/>
+									<label for="cbx-VDUOutput" class="toggle"
+										><span></span
+									></label>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
