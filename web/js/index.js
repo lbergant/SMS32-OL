@@ -25,6 +25,8 @@ $(document).ready(function () {
 
 	init_radio_buttons();
 
+	init_IO_checkboxes();
+
 	draw_table("tRAM", 17, 16);
 
 	init_file_selection();
@@ -36,6 +38,10 @@ $(document).ready(function () {
 
 	init_line_numbering();
 });
+
+function init_IO_checkboxes() {
+	$(".custom-checkbox").prop("checked", false);
+}
 
 let $lineNumbers;
 let $textarea;
