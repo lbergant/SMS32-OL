@@ -1,3 +1,9 @@
+.io-toggle {
+	padding-right: 5px;
+	padding-left: 5px;
+	width: 90px;
+}
+
 .checkbox-wrapper-3 input[type="checkbox"] {
 	visibility: hidden;
 	display: none;
