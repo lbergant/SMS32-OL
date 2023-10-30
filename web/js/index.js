@@ -315,6 +315,7 @@ function change_register_base() {
 function assemble() {
 	let lines = $("#taASM").val().split("\n");
 
+	stop();
 	console.clear();
 
 	asm.main(lines);

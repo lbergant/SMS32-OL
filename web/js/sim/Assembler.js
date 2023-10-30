@@ -239,7 +239,8 @@ class Assembler {
 				if (tmp_operand.type == OperandType.tag && tmp_operand.value == -1) {
 					tags.find(function (value) {
 						if (value.name == this.op) {
-							this.value = value.address - tmp_command.address;
+							let val = value.address - tmp_command.address;
+							this.value = val >= 0 ? val : val + 256;
 						}
 					}, tmp_operand);
 				}
