@@ -63,12 +63,13 @@ body {
 }
 
 table {
-	/* width: 90%; */
+	width: 90%;
 	margin: 0 auto;
 	border-radius: var(--border_radius);
 }
 
 .dis_asm_table {
+	width: 295px;
 	text-align: left;
 	overflow: hidden;
 }
