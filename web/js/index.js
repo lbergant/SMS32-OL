@@ -48,6 +48,7 @@ function init_registers() {
 	let registers = ["AL", "BL", "CL", "DL", "SP", "SR", "IP"];
 
 	// Define rows
+	let tr4 = $("<tr>").appendTo(table);
 	let tr1 = $("<tr>").appendTo(table);
 	let tr2 = $("<tr>").appendTo(table);
 	let tr3 = $("<tr>").appendTo(table);
@@ -58,7 +59,7 @@ function init_registers() {
 		// Add the register name and the corresponding register ID
 		$("<td>")
 			.text(registerName + ":")
-			.appendTo(tr1);
+			.appendTo(tr4);
 		$("<td>")
 			.addClass("register")
 			.attr("id", "td" + registerName)
@@ -67,7 +68,7 @@ function init_registers() {
 			.appendTo(tr1);
 
 		// Add additional rows for ALh, BLh, CLh, etc.
-		$("<td>").appendTo(tr2);
+		// $("<td>").appendTo(tr2);
 		$("<td>")
 			.addClass("register")
 			.attr("id", "td" + registerName + "h")
@@ -75,7 +76,7 @@ function init_registers() {
 			.text("0")
 			.appendTo(tr2);
 
-		$("<td>").appendTo(tr3);
+		// $("<td>").appendTo(tr3);
 		$("<td>")
 			.addClass("register")
 			.attr("id", "td" + registerName + "b")
@@ -372,7 +373,7 @@ function print_assembler_result(asm) {
 				.toUpperCase()
 				.padStart(default_pad, "0") + ":"
 		);
-		cell.css("width", 40);
+		// cell.css("width", 40);
 
 		// address to string
 		let op_code = asm.commands[i].op_code;
@@ -395,11 +396,11 @@ function print_assembler_result(asm) {
 		}
 
 		cell = $("#tDisAsm_cell-" + i + "-1");
-		cell.css("width", 120);
+		// cell.css("width", 120);
 		cell.text(op_code + ram_text);
 
 		cell = $("#tDisAsm_cell-" + i + "-2");
-		// cell.css("width", "");
+		cell.css("min-width", "90px");
 		cell.text(asm.commands[i].line);
 	}
 	// $("#taDisAsm").val(ram_text);
