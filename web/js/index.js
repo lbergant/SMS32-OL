@@ -29,6 +29,8 @@ $(document).ready(function () {
 
 	draw_table("tRAM", 17, 16);
 
+	init_registers();
+
 	init_file_selection();
 
 	update_theme(get_cookie("SMS_theme"));
@@ -38,6 +40,50 @@ $(document).ready(function () {
 
 	init_line_numbering();
 });
+
+function init_registers() {
+	let table = $("<table>").appendTo("#register-table-container");
+
+	// Create an array of register names
+	let registers = ["AL", "BL", "CL", "DL", "SP", "SR", "IP"];
+
+	// Define rows
+	let tr1 = $("<tr>").appendTo(table);
+	let tr2 = $("<tr>").appendTo(table);
+	let tr3 = $("<tr>").appendTo(table);
+
+	for (let i = 0; i < registers.length; i++) {
+		let registerName = registers[i];
+
+		// Add the register name and the corresponding register ID
+		$("<td>")
+			.text(registerName + ":")
+			.appendTo(tr1);
+		$("<td>")
+			.addClass("register")
+			.attr("id", "td" + registerName)
+			.css("width", "30px")
+			.text("0")
+			.appendTo(tr1);
+
+		// Add additional rows for ALh, BLh, CLh, etc.
+		$("<td>").appendTo(tr2);
+		$("<td>")
+			.addClass("register")
+			.attr("id", "td" + registerName + "h")
+			.css("width", "30px")
+			.text("0")
+			.appendTo(tr2);
+
+		$("<td>").appendTo(tr3);
+		$("<td>")
+			.addClass("register")
+			.attr("id", "td" + registerName + "b")
+			.css("width", "30px")
+			.text("0")
+			.appendTo(tr3);
+	}
+}
 
 function init_IO_checkboxes() {
 	$(".custom-checkbox").prop("checked", false);
