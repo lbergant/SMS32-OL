@@ -27,7 +27,7 @@ $(document).ready(function () {
 
 	init_IO_checkboxes();
 
-	draw_table("tRAM", 17, 16);
+	draw_table("tRAM", 17, 16, "00");
 
 	init_registers();
 
@@ -175,8 +175,8 @@ function init_radio_buttons() {
 	);
 
 	const zero_options = [
-		{ label: "ON", value: false },
 		{ label: "OFF", value: true },
+		{ label: "ON", value: false },
 	];
 	init_base_radio_buttons(
 		"dRadioZeroContainer",
@@ -281,7 +281,7 @@ function get_cookie(name) {
 	return false; // cookie not found
 }
 
-function draw_table(table_name, x_size, y_size) {
+function draw_table(table_name, x_size, y_size, default_value) {
 	let table = $("#" + table_name);
 	let table_txt = "<tbody>";
 	for (let i = 0; i < y_size; i++) {
@@ -296,7 +296,9 @@ function draw_table(table_name, x_size, y_size) {
 				i +
 				"-" +
 				j +
-				'">.</td>';
+				'">' +
+				default_value +
+				"</td>";
 		}
 		table_txt += "</tr>";
 	}
@@ -364,7 +366,7 @@ function print_tags() {
 }
 
 function print_assembler_result(asm) {
-	draw_table("tDisAsm", 3, asm.commands.length);
+	draw_table("tDisAsm", 3, asm.commands.length, "");
 
 	for (let i = 0; i < asm.commands.length; i++) {
 		let cell = $("#tDisAsm_cell-" + i + "-0");

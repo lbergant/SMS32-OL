@@ -1,5 +1,5 @@
 $(document).ready(function () {
-	draw_table("tVDU", 9, 3);
+	draw_table("tVDU", 9, 3, ".");
 	// TODO fill 1st row/col numbers
 	for (let i = 0; i < 3; i++) {
 		for (let j = 0; j < 9; j++) {
