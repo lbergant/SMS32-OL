@@ -133,58 +133,10 @@
 						</button> -->
 					</div>
 
-					<div style="padding-top: 4px; overflow-x: auto">
-						<table>
-							<tr>
-								<td>AL:</td>
-								<td class="register" id="tdAL" style="width: 30px">0</td>
-								<td>BL:</td>
-								<td class="register" id="tdBL" style="width: 30px">0</td>
-								<td>CL:</td>
-								<td class="register" id="tdCL" style="width: 30px">0</td>
-								<td>DL:</td>
-								<td class="register" id="tdDL" style="width: 30px">0</td>
-								<td>SP:</td>
-								<td class="register" id="tdSP" style="width: 30px">0</td>
-								<td>SR:</td>
-								<td class="register" id="tdSR" style="width: 30px">0</td>
-								<td>IP:</td>
-								<td class="register" id="tdIP" style="width: 30px">0</td>
-							</tr>
-							<tr>
-								<td></td>
-								<td class="register" id="tdALh" style="width: 30px">0</td>
-								<td></td>
-								<td class="register" id="tdBLh" style="width: 30px">0</td>
-								<td></td>
-								<td class="register" id="tdCLh" style="width: 30px">0</td>
-								<td></td>
-								<td class="register" id="tdDLh" style="width: 30px">0</td>
-								<td></td>
-								<td class="register" id="tdSPh" style="width: 30px">0</td>
-								<td></td>
-								<td class="register" id="tdSRh" style="width: 30px">0</td>
-								<td></td>
-								<td class="register" id="tdIPh" style="width: 30px">0</td>
-							</tr>
-							<tr>
-								<td></td>
-								<td class="register" id="tdALb" style="width: 30px">0</td>
-								<td></td>
-								<td class="register" id="tdBLb" style="width: 30px">0</td>
-								<td></td>
-								<td class="register" id="tdCLb" style="width: 30px">0</td>
-								<td></td>
-								<td class="register" id="tdDLb" style="width: 30px">0</td>
-								<td></td>
-								<td class="register" id="tdSPb" style="width: 30px">0</td>
-								<td></td>
-								<td class="register" id="tdSRb" style="width: 30px">0</td>
-								<td></td>
-								<td class="register" id="tdIPb" style="width: 30px">0</td>
-							</tr>
-						</table>
-					</div>
+					<div
+						style="padding-top: 4px; overflow-x: auto"
+						id="register-table-container"
+					></div>
 				</div>
 			</div>
 			<div id="dMem_Feat" class="inline">
@@ -207,7 +159,7 @@
 									>7 Seg</label
 								>
 								<br />
-								<div style="display: inline-block" class="checkbox-wrapper-3">
+								<div style="display: inline-block" class="checkbox-wrapper">
 									<input
 										type="checkbox"
 										class="custom-checkbox"
@@ -219,28 +171,16 @@
 							</div>
 							<!-- <button
 								class="button_slide slide_down"
-								onclick="toggle_output('d7SegDis')"
-							>
-								7 Seg
-							</button> -->
-							<!-- <button
-								class="button_slide slide_down"
 								onclick="toggle_output('dElevator')"
 							>
 								Elevator
-							</button> -->
-							<!-- <button
-								class="button_slide slide_down"
-								onclick="toggle_output('dTraffic')"
-							>
-								Traffic
 							</button> -->
 							<div style="display: inline-block" class="io-toggle">
 								<label style="vertical-align: top; display: inline-block"
 									>Traffic</label
 								>
 								<br />
-								<div style="display: inline-block" class="checkbox-wrapper-3">
+								<div style="display: inline-block" class="checkbox-wrapper">
 									<input
 										type="checkbox"
 										class="custom-checkbox"
@@ -270,7 +210,7 @@
 									>Input</label
 								>
 								<br />
-								<div style="display: inline-block" class="checkbox-wrapper-3">
+								<div style="display: inline-block" class="checkbox-wrapper">
 									<input
 										type="checkbox"
 										class="custom-checkbox"
@@ -285,7 +225,7 @@
 									>VDU Output</label
 								>
 								<br />
-								<div style="display: inline-block" class="checkbox-wrapper-3">
+								<div style="display: inline-block" class="checkbox-wrapper">
 									<input
 										type="checkbox"
 										class="custom-checkbox"
