@@ -1,0 +1,27 @@
+.dot {
+	height: 25px;
+	width: 25px;
+	background-color: #bbb;
+	border-radius: 50%;
+	display: inline-block;
+}
+
+.dot-container {
+	position: relative;
+	width: 0px; /* Adjust container size as needed */
+	height: 250px;
+	left: calc(50% - 138px);
+	top: 4px;
+}
+
+.star {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border-left: 80px solid transparent;
+	border-right: 80px solid transparent;
+	border-bottom: 160px solid red; /* Adjust the color as needed */
+	transform: translate(-50%, -50%);
+}

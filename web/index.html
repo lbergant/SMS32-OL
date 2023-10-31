@@ -16,6 +16,7 @@
 		<link rel="stylesheet" href="css/modules/7seg.css" />
 		<link rel="stylesheet" href="css/modules/tLights.css" />
 		<link rel="stylesheet" href="css/modules/input.css" />
+		<link rel="stylesheet" href="css/modules/Motor.css" />
 		<link rel="stylesheet" href="css/modules/output.css" />
 		<script src="js/jquery-3.6.1.min.js"></script>
 		<script src="js/jquery-ui.js"></script>
@@ -27,6 +28,7 @@
 		<script src="js/modules/tLights.js"></script>
 		<script src="js/modules/input.js"></script>
 		<script src="js/modules/output.js"></script>
+		<script src="js/modules/motor.js"></script>
 		<script src="js/index.js"></script>
 
 		<meta http-equiv="ScreenOrientation" content="autoRotate:disabled" />
@@ -191,6 +193,21 @@
 										onclick="toggle_output('dTraffic')"
 									/>
 									<label for="cbx-Traffic" class="toggle"><span></span></label>
+								</div>
+							</div>
+							<div style="display: inline-block" class="io-toggle">
+								<label style="vertical-align: top; display: inline-block"
+									>Motor</label
+								>
+								<br />
+								<div style="display: inline-block" class="checkbox-wrapper">
+									<input
+										type="checkbox"
+										class="custom-checkbox"
+										id="cbx-Motor"
+										onclick="toggle_output('dMotor')"
+									/>
+									<label for="cbx-Motor" class="toggle"><span></span></label>
 								</div>
 							</div>
 							<!-- <button
@@ -372,6 +389,9 @@
 				<div class="shadow module">
 					<div>
 						<h2>Motor</h2>
+						<div class="dot-container">
+							<div class="star"></div>
+						</div>
 					</div>
 				</div>
 			</div>

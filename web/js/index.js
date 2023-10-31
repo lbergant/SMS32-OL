@@ -39,6 +39,8 @@ $(document).ready(function () {
 	init_speed_slider();
 
 	init_line_numbering();
+
+	init_motor();
 });
 
 function init_registers() {
