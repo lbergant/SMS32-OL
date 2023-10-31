@@ -86,13 +86,16 @@
 					<div id="line-numbers-parent">
 						<div class="line-numbers"></div>
 					</div>
-					<textarea id="taASM" style="display: inline-block"></textarea>
+					<textarea
+						id="taASM"
+						style="display: inline-block; width: calc(100% - 42px)"
+					></textarea>
 					<div style="padding-bottom: 5px"><label id="error"></label></div>
 					<div style="padding-bottom: 5px"><label id="tag_err"></label></div>
 				</div>
 			</div>
 			<div id="dSim_Asm" class="inline">
-				<div class="shadow" style="height: calc(100% - 211px)">
+				<div class="shadow" style="height: calc(100% - 222px)">
 					<h2>Assembler</h2>
 					<div style="overflow-y: auto; height: calc(100% - 48px)">
 						<table class="dis_asm_table" id="tDisAsm"></table>
@@ -117,7 +120,7 @@
 							Simulator
 						</h2>
 					</div>
-					<div style="margin-bottom: 15px">
+					<div style="margin-bottom: 5px">
 						<button class="button_slide slide_down" onclick="run()">Run</button>
 						<button class="button_slide slide_down" onclick="step()">
 							Step

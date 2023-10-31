@@ -38,6 +38,7 @@ body {
 	margin-top: 30px;
 	font-size: 14px;
 	height: calc(100% - 88px);
+	min-width: 1150px;
 }
 
 .inline {
@@ -195,10 +196,7 @@ h2 {
 }
 
 .line-numbers {
-	/* vertical-align: top; */
-	/* padding-top: 24px; */
-	/* margin-top: 10px; */
-	/* margin-left: -2px; */
+	text-align: right;
 }
 
 #line-numbers-parent {
@@ -206,5 +204,5 @@ h2 {
 	overflow: hidden;
 	position: relative;
 	height: calc(100% - 150px);
-	width: 16px;
+	width: 24px;
 }
