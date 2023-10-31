@@ -8,7 +8,7 @@
 
 .dot-container {
 	position: relative;
-	width: 0px; /* Adjust container size as needed */
+	width: 250px; /* Adjust container size as needed */
 	height: 250px;
 	left: calc(50% - 138px);
 	top: 4px;
@@ -16,12 +16,14 @@
 
 .star {
 	position: absolute;
-	top: 50%;
+	top: 15%;
 	left: 50%;
-	width: 0;
-	height: 0;
-	border-left: 80px solid transparent;
+	width: 25px;
+	height: 200px;
+	border-radius: 10px;
+	background-color: rebeccapurple;
+	/* border-left: 80px solid transparent;
 	border-right: 80px solid transparent;
-	border-bottom: 160px solid red; /* Adjust the color as needed */
-	transform: translate(-50%, -50%);
+	border-bottom: 140px solid red;
+	transform: translate(-50%, -50%); */
 }

@@ -28,7 +28,7 @@
 		<script src="js/modules/tLights.js"></script>
 		<script src="js/modules/input.js"></script>
 		<script src="js/modules/output.js"></script>
-		<script src="js/modules/motor.js"></script>
+		<script src="js/modules/Motor.js"></script>
 		<script src="js/index.js"></script>
 
 		<meta http-equiv="ScreenOrientation" content="autoRotate:disabled" />
@@ -390,7 +390,21 @@
 					<div>
 						<h2>Motor</h2>
 						<div class="dot-container">
-							<div class="star"></div>
+							<div
+								class="star"
+								style="rotate: 30deg"
+								onclick="rotate_motor(10)"
+							></div>
+							<div
+								class="star"
+								style="rotate: 90deg"
+								onclick="rotate_motor(10)"
+							></div>
+							<div
+								class="star"
+								style="rotate: 150deg"
+								onclick="rotate_motor(10)"
+							></div>
 						</div>
 					</div>
 				</div>

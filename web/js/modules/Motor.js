@@ -1,6 +1,7 @@
-function init_motor() {
-	var numberOfDots = 24;
+let numberOfDots = 36;
+let same = 6;
 
+function init_motor() {
 	// Get the container element
 	var container = $(".dot-container");
 
@@ -14,7 +15,7 @@ function init_motor() {
 
 	// Create and append the dots
 	for (var i = 0; i < numberOfDots; i++) {
-		var dot = $('<div class="dot dot-' + (i % 4) + '"></div');
+		var dot = $('<div class="dot dot-' + (i % same) + '"></div');
 
 		// Calculate the position of each dot relative to the container
 		var x = radius * Math.cos((angle * i * Math.PI) / 180);
@@ -35,5 +36,18 @@ function init_motor() {
 function updateDotCSS(inval, color) {
 	$(".dot-" + inval).css({
 		"background-color": color,
+	});
+}
+
+let pos = 0;
+
+function rotate_motor(deg) {
+	updateDotCSS((pos / (360 / numberOfDots)) % same, "gray");
+	pos += deg;
+	console.log("hello");
+	updateDotCSS((pos / (360 / numberOfDots)) % same, "red");
+
+	$(".star").css({
+		transform: "rotate(" + pos + "deg)",
 	});
 }
