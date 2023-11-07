@@ -1,5 +1,5 @@
-let numberOfDots = 36;
-let same = 6;
+let numberOfDots = 24;
+let same = 4;
 
 function init_motor() {
 	// Get the container element
@@ -39,15 +39,87 @@ function updateDotCSS(inval, color) {
 	});
 }
 
+function clear_dots() {
+	$(".dot").css({
+		"background-color": "lightgrey",
+	});
+}
+
 let pos = 0;
+let cnt = 1;
 
 function rotate_motor(deg) {
-	updateDotCSS((pos / (360 / numberOfDots)) % same, "gray");
-	pos += deg;
-	console.log("hello");
-	updateDotCSS((pos / (360 / numberOfDots)) % same, "red");
+	// updateDotCSS((pos / (360 / numberOfDots)) % same, "gray");
+	// pos += deg;
+	// console.log("hello");
+	// updateDotCSS((pos / (360 / numberOfDots)) % same, "red");
 
+	move_motor(cnt);
+	cnt = cnt + 1;
+	if (cnt > 15) cnt = 1;
+}
+
+function move_motor(value) {
+	let arr = byte_to_bin_arr(value);
+	clear_dots();
+
+	for (let i = arr.length - 1; i > 3; i--) {
+		if (arr[i] == 1) {
+			updateDotCSS(arr.length - 1 - i, "red");
+		}
+	}
+
+	switch (value) {
+		case 15:
+		case 11:
+		case 1:
+			pos = 0;
+			break;
+		case 7:
+		case 5:
+		case 2:
+			pos = 1;
+			break;
+		case 14:
+		case 10:
+		case 4:
+			pos = 2;
+			break;
+		case 13:
+		case 8:
+			pos = 3;
+			break;
+		case 3:
+			pos = 0.5;
+			break;
+		case 6:
+			pos = 1.5;
+			break;
+		case 9:
+			pos = 3.5;
+			break;
+		case 12:
+			pos = 2.5;
+			break;
+	}
+
+	deg = pos * 15;
+	console.log();
+	console.log(value);
+	console.log(pos);
+	console.log(deg);
 	$(".star").css({
-		transform: "rotate(" + pos + "deg)",
+		transform: "rotate(" + deg + "deg)",
 	});
+}
+
+function byte_to_bin_arr(byte) {
+	if (byte >= 0 && byte <= 255) {
+		const binaryString = byte.toString(2).padStart(8, "0"); // Convert to binary and pad to 8 bits
+		const binaryArray = binaryString.split("").map(Number);
+		return binaryArray;
+	} else {
+		console.error("Invalid byte value. Byte value must be between 0 and 255.");
+		return [];
+	}
 }

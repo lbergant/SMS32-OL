@@ -206,6 +206,14 @@ class TLight extends OutputDevice {
 	}
 }
 
+class Motor extends OutputDevice {
+	write(input) {
+		super.write(input);
+
+		move_motor(input);
+	}
+}
+
 class InputDevice extends Device {
 	read() {
 		return this.value;
@@ -293,6 +301,7 @@ class Simulator {
 
 	init_devices() {
 		// OUTPUT:
+		// 	0 -
 		// 	1 - Traffic lights
 		// 	2 - 7 segment
 		// 	3 - Heater
@@ -313,6 +322,7 @@ class Simulator {
 
 		this.output_devices[1] = new TLight(1);
 		this.output_devices[2] = new SevenSegDisplay(2);
+		this.output_devices[5] = new Motor(5);
 
 		this.input_devices = new Array(num_of_input_devices);
 
