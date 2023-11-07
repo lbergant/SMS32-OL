@@ -1,9 +1,10 @@
 .dot {
 	height: 25px;
 	width: 25px;
-	background-color: #bbb;
+	background-color: lightgray;
 	border-radius: 50%;
 	display: inline-block;
+	line-height: 25px;
 }
 
 .dot-container {
@@ -11,7 +12,7 @@
 	width: 250px; /* Adjust container size as needed */
 	height: 250px;
 	left: calc(50% - 138px);
-	top: 4px;
+	top: -8px;
 }
 
 .star {
@@ -21,7 +22,7 @@
 	width: 25px;
 	height: 200px;
 	border-radius: 10px;
-	background-color: rebeccapurple;
+	background-color: var(--primary);
 	/* border-left: 80px solid transparent;
 	border-right: 80px solid transparent;
 	border-bottom: 140px solid red;

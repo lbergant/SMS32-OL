@@ -15,7 +15,7 @@ function init_motor() {
 
 	// Create and append the dots
 	for (var i = 0; i < numberOfDots; i++) {
-		var dot = $('<div class="dot dot-' + (i % same) + '"></div');
+		var dot = $('<div class="dot dot-' + (i % same) + '"></div>');
 
 		// Calculate the position of each dot relative to the container
 		var x = radius * Math.cos((angle * i * Math.PI) / 180);
@@ -27,6 +27,7 @@ function init_motor() {
 			top: "calc(50% + " + y + "px)",
 			left: "calc(50% + " + x + "px)",
 		});
+		dot.html(2 ** (i % same));
 
 		// Append the dot to the container
 		container.append(dot);
@@ -49,11 +50,6 @@ let pos = 0;
 let cnt = 1;
 
 function rotate_motor(deg) {
-	// updateDotCSS((pos / (360 / numberOfDots)) % same, "gray");
-	// pos += deg;
-	// console.log("hello");
-	// updateDotCSS((pos / (360 / numberOfDots)) % same, "red");
-
 	move_motor(cnt);
 	cnt = cnt + 1;
 	if (cnt > 15) cnt = 1;
@@ -65,7 +61,7 @@ function move_motor(value) {
 
 	for (let i = arr.length - 1; i > 3; i--) {
 		if (arr[i] == 1) {
-			updateDotCSS(arr.length - 1 - i, "red");
+			updateDotCSS(arr.length - 1 - i, "var(--secondary)");
 		}
 	}
 
@@ -104,10 +100,6 @@ function move_motor(value) {
 	}
 
 	deg = pos * 15;
-	console.log();
-	console.log(value);
-	console.log(pos);
-	console.log(deg);
 	$(".star").css({
 		transform: "rotate(" + deg + "deg)",
 	});
