@@ -111,6 +111,7 @@ header {
 	height: calc(100% - 66px);
 	margin-top: 55px;
 	margin-bottom: 50px;
+	min-height: 715px;
 }
 
 /* button, */
