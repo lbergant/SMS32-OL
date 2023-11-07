@@ -1,0 +1,18 @@
+Reset:
+	MOV AL,1
+	OUT 5
+	MOV AL,3
+	OUT 5
+	MOV AL,2
+	OUT 5
+	MOV AL,6
+	OUT 5
+	MOV AL,4
+	OUT 5
+	MOV AL,C
+	OUT 5
+	MOV AL,8
+	OUT 5
+	MOV AL,9
+	OUT 5
+	JMP Reset
