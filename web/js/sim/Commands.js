@@ -44,7 +44,7 @@ const CommandType = {
 };
 
 function get_register_index(text_register) {
-	switch (text_register) {
+	switch (text_register.toUpperCase()) {
 		case "AL":
 			return 0x00;
 		case "BL":

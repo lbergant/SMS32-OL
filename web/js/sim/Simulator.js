@@ -537,8 +537,7 @@ class Simulator {
 	}
 
 	execute_cmp(val1, val2) {
-		this.SR.clear_S;
-		this.SR.clear_Z;
+		this.SR.clear();
 
 		if (val1 == val2) {
 			this.SR.set_Z();
@@ -555,6 +554,16 @@ class Simulator {
 		this.AL.set(this.input_devices[device].read());
 	}
 
+	updatte_SR(val) {
+		this.SR.clear();
+
+		if (val == 0){
+			this.SR.set_Z();
+		}else if(val < 0){
+			this.SR.set_O();
+		}
+	}
+
 	execute(command, operands, target_register) {
 		let tmp;
 
@@ -564,59 +573,72 @@ class Simulator {
 			case 0xa0:
 			case 0xb0:
 				target_register.set(operands[0] + operands[1]);
+				this.updatte_SR(target_register.get());
 				break;
 			// SUB
 			case 0xa1:
 			case 0xb1:
 				target_register.set(operands[0] - operands[1]);
+				this.updatte_SR(target_register.get());
 				break;
 			// MUL
 			case 0x0b2:
 			case 0x0a2:
 				target_register.set(Math.floor(operands[0] * operands[1]));
+				this.updatte_SR(target_register.get());
 				break;
 			// DIV
 			case 0x0b3:
 			case 0x0a3:
 				target_register.set(Math.floor(operands[0] / operands[1]));
+				this.updatte_SR(target_register.get());
 				break;
 			// MOD
 			case 0x0b6:
 			case 0x0a6:
 				target_register.set(operands[0] % operands[1]);
+				this.updatte_SR(target_register.get());
 				break;
 			// NOT
 			case 0xad:
 				target_register.set(~target_register.get());
+				this.updatte_SR(target_register.get());
 				break;
 			case 0x9c: // SHL
 				target_register.set(operands[0] << 1);
+				this.updatte_SR(target_register.get());
 				break;
 			case 0x9d: // SHR
 				target_register.set((operands[0] >> 1) & 0x7f); // >> is sign preserving, >>> is
+				this.updatte_SR(target_register.get());
 				break;
 			case 0x9a: // ROL
 				tmp = (operands[0] & 0x80) > 0 ? 0x01 : 0x00;
 				target_register.set((operands[0] << 1) | tmp);
+				this.updatte_SR(target_register.get());
 				break;
 			case 0x9b: // ROR
 				tmp = (operands[0] & 0x01) > 0 ? 0x80 : 0x00;
 				target_register.set((operands[0] >> 1) | tmp);
+				this.updatte_SR(target_register.get());
 				break;
 			// AND
 			case 0x0ba:
 			case 0x0aa:
 				target_register.set(operands[0] & operands[1]);
+				this.updatte_SR(target_register.get());
 				break;
 			// OR
 			case 0x0bb:
 			case 0x0ab:
 				target_register.set(operands[0] | operands[1]);
+				this.updatte_SR(target_register.get());
 				break;
 			// XOR
 			case 0x0bc:
 			case 0x0ac:
 				target_register.set(operands[0] ^ operands[1]);
+				this.updatte_SR(target_register.get());
 				break;
 			// MOV
 			case 0xd0:
@@ -652,10 +674,12 @@ class Simulator {
 			// INC
 			case 0xa4:
 				target_register.set(target_register.get() + 1);
+				this.updatte_SR(target_register.get());
 				break;
 			// DEC
 			case 0xa5:
 				target_register.set(target_register.get() - 1);
+				this.updatte_SR(target_register.get());
 				break;
 			// CALL
 			case 0xca:
