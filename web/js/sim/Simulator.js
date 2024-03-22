@@ -40,18 +40,6 @@ class GeneralRegister extends Register {
 			if (this.asm) this.asm.SR.clear_O();
 		}
 
-		if (value == 0) {
-			if (this.asm) this.asm.SR.set_Z();
-		} else {
-			if (this.asm) this.asm.SR.clear_Z();
-		}
-
-		if (value < 0) {
-			if (this.asm) this.asm.SR.set_S();
-		} else {
-			if (this.asm) this.asm.SR.clear_S();
-		}
-
 		// set(value);
 		this.value = value;
 		update_register("td" + this.reg_name, value);
@@ -69,7 +57,7 @@ class StatusRegister extends Register {
 		this.clear_Z();
 		this.clear_S();
 		this.clear_O();
-		this.clear_I();
+		// this.clear_I();
 	}
 
 	set_Z() {
@@ -160,7 +148,6 @@ class RAM {
 	set(address, value) {
 		if (address < 0) address += 256;
 		this.#ram[address] = value;
-		// update_ram_GUI(this.#ram); // TODO_L do this nicer
 		update_RAM_GUI(address, value);
 	}
 
@@ -685,6 +672,8 @@ class Simulator {
 			case 0xca:
 				this.ram.set(this.SP.get(), this.IP.get() + 2);
 				this.SP.increment(-1);
+				if (operands[0] < 0) 
+					operands[0] += 256;
 				target_register.set(operands[0]);
 				break;
 			// RET, IRET
