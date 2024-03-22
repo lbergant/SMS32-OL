@@ -1,5 +1,5 @@
 ; =========================================================
-;                   LESSON 6: Function call
+;                   LESSON 7: Function call
 ; =========================================================
 ; In this lesson we will get to know ORG CALL and RET operators
 ;

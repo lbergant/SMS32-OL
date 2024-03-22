@@ -1,21 +1,23 @@
-	MOV AL,3
-	MOV BL,3
-	CMP AL,BL
-	CMP AL,[2]
-	CMP AL,3
+; =========================================================
+;                   LESSON 3: Arithmetic
+; =========================================================
+; In this lesson we will get to know ADD SUB MUL and DIV
+;
+; 1. Try to ASSEMBLE and RUN this example
+; 2. Replace one TODO at a time with code and repeat from step 1
+;
+; Result: AL = 0, BL = 18 (0x12), CL = 10 (0xA)
+; =========================================================
 
-	INC AL
-	INC BL
-	DEC AL
+    MOV AL,5
+    MOV BL,6
+    MOV CL,A
 
-	DIV BL,AL
-	MUL AL,4
-	MUL BL,2
-	MOD AL,BL
+    ; TODO: Multiply AL and BL to get 30 (0x1D) to AL
 
-	NOT AL
-	MOV AL,1
-	OR AL,BL
-	SUB AL,BL
-	SUB BL,1
-	XOR AL,5
+    ; TODO: Divide 30 from AL with 10 (0xA) from CL
+
+    ; TODO: Subtract 3 from AL
+
+    ; TODO: Add 12 to BL
+

@@ -1,5 +1,5 @@
 ; =========================================================
-;                   LESSON 7: Data bytes
+;                   LESSON 8: Data bytes
 ; =========================================================
 ; In this lesson we will get to know DB command
 ;
@@ -8,13 +8,13 @@
 ; 1. Try to ASSEMBLE and RUN this example
 ; 2. Replace one TO DO at a time with code and repeat from step 1
 ;
-; Result: 
+; Result: VDU displays "(HelloWorld)"
 ; =========================================================
 
     JMP Init
     ORG 2
     DB 28           ; This declares one data byte
-    ; TO DO: Declare a data byte with a value 29
+    ; TO DO: Declare a data byte with a value 0x29
 
     ORG 60
     DB "HelloWorld" ; This declares 10 data bytes using 
@@ -23,7 +23,7 @@
     ORG 10
 Init:
     MOV BL,0        ; Selects to which position to write
-    MOV AL,[2]      ; Moves data from address 0x00 in RAM to AL
+    MOV AL,[2]      ; Moves data from address 0x02 in RAM to AL
     CALL 40         ; Calls a function that writes data from AL
                     ; to VDU output on position in BL
     
@@ -42,7 +42,7 @@ Init:
 
     END
 
-; Write to display, Write char in BL to position in AL
+; Write to display, Write char in AL to position in BL
     ORG 40
     PUSH CL
     MOV CL,C0
