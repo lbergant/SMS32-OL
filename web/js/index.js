@@ -316,6 +316,20 @@ function change_register_base() {
 	// }
 }
 
+function download(){
+	var text = $("#taASM").val();
+	var blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+	var url = URL.createObjectURL(blob);
+	var link = document.createElement("a");
+	link.setAttribute("href", url);
+	link.setAttribute("download", "SMS_Download.asm");
+	link.style.display = "none";
+	document.body.appendChild(link);
+	link.click();
+	document.body.removeChild(link);
+	URL.revokeObjectURL(url);
+}
+
 function assemble() {
 	let lines = $("#taASM").val().split("\n");
 
@@ -331,6 +345,8 @@ function assemble() {
 	sim.load_program(ram);
 
 	print_ram(ram);
+	// for (let i = 0xC0; i < 0xD0; i++)
+	// 	update_RAM_GUI(i, ram[i]);
 	color_ram(sim.IP.get(), default_highlight);
 	print_assembler_result(asm);
 	color_dis_asm(0, default_highlight);
@@ -351,6 +367,8 @@ function reset() {
 	sim.reset();
 	color_ram(sim.IP.get(), default_highlight);
 	color_dis_asm(0, default_highlight);
+
+	// TODO: Reset Outputs
 }
 
 function stop() {

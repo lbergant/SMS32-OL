@@ -68,6 +68,18 @@
 							</button>
 							<select id="sFileSelect">
 								<option value="">None</option>
+								<option value="Samples/1.asm">1. Introduction</option>
+								<option value="Samples/2.asm">2. MOV ADD</option>
+								<option value="Samples/3.asm">3. Arithmetic</option>
+								<option value="Samples/4.asm">4. Bitwise operators</option>
+								<option value="Samples/5.asm">5. Loops</option>
+								<option value="Samples/Test1.asm">Test 1</option>
+								<option value="Samples/6.asm">6. Function call</option>
+								<option value="Samples/7.asm">7. Data bytes</option>
+								<!-- <option value="Samples/8.asm">5</option>
+								<option value="Samples/9.asm">5</option>
+								<option value="Samples/10.asm">5</option> -->
+								<!-- <option value="Samples/Test2.asm">Test 1</option> -->
 								<option value="Samples/test.asm">test.asm</option>
 								<option value="Samples/first.asm">first.asm</option>
 								<option value="Samples/foo.asm">foo.asm</option>
@@ -84,6 +96,10 @@
 								<option value="Samples/Motor.asm">Motor.asm</option>
 								<!-- <option value="Samples/first.asm">first.asm</option> -->
 							</select>
+						
+							<button class="button_slide slide_down" onclick="download()">
+								Download
+							</button>
 						</div>
 					</div>
 					<div id="line-numbers-parent">
@@ -91,7 +107,7 @@
 					</div>
 					<textarea
 						id="taASM"
-						style="display: inline-block; width: calc(100% - 43px)"
+						style="display: inline-block; width: calc(100% - 43px); font-size: 14px"
 					></textarea>
 					<div style="padding-bottom: 5px"><label id="error"></label></div>
 					<div style="padding-bottom: 5px"><label id="tag_err"></label></div>
