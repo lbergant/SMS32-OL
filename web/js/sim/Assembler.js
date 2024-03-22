@@ -250,7 +250,7 @@ class Assembler {
 		let error_lines = new Array();
 		for (let i = 0; i < this.commands.length; i++) {
 			for (let j = 0; j < this.commands[i].operands.length; j++) {
-				if (this.commands[i].operands[j].value == -1) error_lines.push(i);
+				if (this.commands[i].operands[j].value == -1) error_lines.push(this.commands[i].operands[j].op);
 			}
 		}
 
