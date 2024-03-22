@@ -8,6 +8,9 @@ let default_highlight = getComputedStyle(
 let default_text_color = getComputedStyle(
 	document.documentElement
 ).getPropertyValue("--text");
+let default_text_size = getComputedStyle(
+	document.documentElement
+).getPropertyValue("--font-size");
 
 let asm = new Assembler();
 let sim = new Simulator();
@@ -35,6 +38,8 @@ $(document).ready(function () {
 
 	update_theme(get_cookie("SMS_theme"));
 	init_colors();
+
+	init_fonts();
 
 	init_speed_slider();
 
@@ -260,6 +265,21 @@ function init_colors() {
 		$("#iColorPicker").val(cookie_value);
 		update_primary_color(cookie_value);
 	}
+}
+
+function init_fonts(){
+	let cookie_value = get_cookie("SMS_font_size");
+	if (cookie_value) {
+		$("#iFontSize").val(cookie_value);
+		change_font_size();
+	}
+}
+
+function change_font_size(){
+	default_text_size = $("#iFontSize").val();
+	$(":root").css("--font-size", default_text_size + "px");
+
+	set_cookie("SMS_font_size", default_text_size, 14);
 }
 
 function set_cookie(name, value, days) {
@@ -554,7 +574,7 @@ function print_tag_error(error_lines) {
 	if (error_lines.length == 0) {
 		$("#tag_err").text("");
 	} else {
-		let err_txt = "Tag errors on lines: ";
+		let err_txt = "Tag errors: ";
 		error_lines.forEach(function (value, idx) {
 			err_txt += value + ", ";
 		});

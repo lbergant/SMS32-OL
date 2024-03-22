@@ -7,6 +7,7 @@
 	--text: #ffffff;
 	/* --text: #000000; */
 	--border_radius: 10px;
+	--font-size: 14px;
 }
 
 textarea {
@@ -25,6 +26,7 @@ textarea {
 	resize: none;
 	white-space: pre;
 	overflow-x: auto;
+	font-size:var(--font-size);
 }
 
 html {
@@ -36,7 +38,7 @@ body {
 	color: var(--text);
 	font-family: monospace;
 	margin-top: 30px;
-	font-size: 14px;
+	font-size: var(--font-size);
 	height: calc(100% - 88px);
 	min-width: 1150px;
 }

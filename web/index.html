@@ -68,17 +68,17 @@
 							</button>
 							<select id="sFileSelect">
 								<option value="">None</option>
-								<option value="Samples/1.asm">1. Introduction</option>
-								<option value="Samples/2.asm">2. MOV ADD</option>
-								<option value="Samples/3.asm">3. Arithmetic</option>
-								<option value="Samples/4.asm">4. Bitwise operators</option>
-								<option value="Samples/5.asm">5. Loops</option>
-								<option value="Samples/Test1.asm">Test 1</option>
-								<option value="Samples/6.asm">6. Function call</option>
-								<option value="Samples/7.asm">7. Data bytes</option>
-								<!-- <option value="Samples/8.asm">5</option>
-								<option value="Samples/9.asm">5</option>
-								<option value="Samples/10.asm">5</option> -->
+								<option value="Samples/Introduction.asm">1. Hello</option>
+								<option value="Samples/MOV_ADD.asm">2. I like to MOV IT</option>
+								<option value="Samples/Arithmetic.asm">3. Be my +1</option>
+								<option value="Samples/Bitwise.asm">4. NOT OR AND</option>
+								<option value="Samples/Loops.asm">5. I'm dizzy</option>
+								<option value="Samples/Test1.asm">6. Loop at me</option>
+								<option value="Samples/Functions.asm">7. You called?</option>
+								<option value="Samples/DB.asm">8. I remember</option>
+								<option value="Samples/Outputs.asm">9. Get OUT</option>
+								<option value="Samples/shifting.asm">10. Loading</option>
+								<!-- <option value="Samples/10.asm">5</option> -->
 								<!-- <option value="Samples/Test2.asm">Test 1</option> -->
 								<option value="Samples/test.asm">test.asm</option>
 								<option value="Samples/first.asm">first.asm</option>
@@ -107,7 +107,7 @@
 					</div>
 					<textarea
 						id="taASM"
-						style="display: inline-block; width: calc(100% - 43px); font-size: 14px"
+						style="display: inline-block; width: calc(100% - 43px)"
 					></textarea>
 					<div style="padding-bottom: 5px"><label id="error"></label></div>
 					<div style="padding-bottom: 5px"><label id="tag_err"></label></div>
@@ -335,7 +335,7 @@
 						<div class="inline-block" id="dSchemeContainer"></div>
 						<div class="inline-block">
 							<label>Font: </label>
-							<input id="iFontSize" type="number" value="14" />
+							<input id="iFontSize" type="number" value="14" onchange="change_font_size()" />
 						</div>
 					</div>
 				</div>
