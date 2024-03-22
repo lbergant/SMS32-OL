@@ -600,13 +600,13 @@ class Simulator {
 				this.updatte_SR(target_register.get());
 				break;
 			case 0x9a: // ROL
-				tmp = (operands[0] & 0x80) > 0 ? 0x01 : 0x00;
-				target_register.set((operands[0] << 1) | tmp);
+				tmp = (operands[0] & 0x80) > 0 ? (operands[0] << 1) | 0x01 : (operands[0] << 1) & 0xFE;
+				target_register.set(tmp);
 				this.updatte_SR(target_register.get());
 				break;
 			case 0x9b: // ROR
-				tmp = (operands[0] & 0x01) > 0 ? 0x80 : 0x00;
-				target_register.set((operands[0] >> 1) | tmp);
+				tmp = (operands[0] & 0x01) > 0 ? (operands[0] >> 1) | 0x80 : (operands[0] >> 1) & 0x7F;
+				target_register.set(tmp);
 				this.updatte_SR(target_register.get());
 				break;
 			// AND
