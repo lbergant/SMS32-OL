@@ -84,7 +84,7 @@ class Command {
 	parse_command(line) {
 		line = line.trim(); // clean line
 		this.type = CommandType.unidentified; // upgrade a type to command type
-		let com_ops = line.split(" "); // devide command and operands
+		let com_ops = line.split(/\s+/); // devide command and operands
 
 		let com = com_ops[0];
 		let ops = "";
@@ -250,7 +250,8 @@ class Assembler {
 		let error_lines = new Array();
 		for (let i = 0; i < this.commands.length; i++) {
 			for (let j = 0; j < this.commands[i].operands.length; j++) {
-				if (this.commands[i].operands[j].value == -1) error_lines.push(this.commands[i].operands[j].op);
+				if (this.commands[i].operands[j].value == -1)
+					error_lines.push(this.commands[i].operands[j].op);
 			}
 		}
 

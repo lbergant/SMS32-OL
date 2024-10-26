@@ -30,6 +30,7 @@ class GeneralRegister extends Register {
 	}
 
 	set(value) {
+		// TODO ALso set Z here?
 		if (value > 127) {
 			value -= 256;
 			if (this.asm) this.asm.SR.set_O();
@@ -542,11 +543,12 @@ class Simulator {
 	}
 
 	updatte_SR(val) {
+		// TODO Can this be moved in to register
 		this.SR.clear();
 
-		if (val == 0){
+		if (val == 0) {
 			this.SR.set_Z();
-		}else if(val < 0){
+		} else if (val < 0) {
 			this.SR.set_O();
 		}
 	}
@@ -600,12 +602,18 @@ class Simulator {
 				this.updatte_SR(target_register.get());
 				break;
 			case 0x9a: // ROL
-				tmp = (operands[0] & 0x80) > 0 ? (operands[0] << 1) | 0x01 : (operands[0] << 1) & 0xFE;
+				tmp =
+					(operands[0] & 0x80) > 0
+						? (operands[0] << 1) | 0x01
+						: (operands[0] << 1) & 0xfe;
 				target_register.set(tmp);
 				this.updatte_SR(target_register.get());
 				break;
 			case 0x9b: // ROR
-				tmp = (operands[0] & 0x01) > 0 ? (operands[0] >> 1) | 0x80 : (operands[0] >> 1) & 0x7F;
+				tmp =
+					(operands[0] & 0x01) > 0
+						? (operands[0] >> 1) | 0x80
+						: (operands[0] >> 1) & 0x7f;
 				target_register.set(tmp);
 				this.updatte_SR(target_register.get());
 				break;
@@ -672,8 +680,7 @@ class Simulator {
 			case 0xca:
 				this.ram.set(this.SP.get(), this.IP.get() + 2);
 				this.SP.increment(-1);
-				if (operands[0] < 0) 
-					operands[0] += 256;
+				if (operands[0] < 0) operands[0] += 256;
 				target_register.set(operands[0]);
 				break;
 			// RET, IRET
