@@ -17,19 +17,14 @@ and RAM contents are made visible.
 The simulator is programmed in 8086 like assembly code. This
 is assembled into machine code that is NOT the same as 8086 code.
 
-<!-- It is possible to control simulated traffic lights, seven
-segment displays, a heater and thermostat, a stepper motor, a
-lift and a snake in a maze. -->
+It is possible to control simulated traffic lights, seven
+segment displays and a stepper motor.
 
 CALL and RET are available. Serious programming
 problems like multiplexing, procedures, parameter passing and
 recursion can be tackled.
 
 There is on-line help linked.
-
-# Disclaimer
-
-This software is in beta version. This means not all functions and GUI elements are available.
 
 # Author
 

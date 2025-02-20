@@ -1,0 +1,18 @@
+abstract: "This project contains web-ported assembler and simultor for SMS32 microprocessor."
+authors:
+  - family-names: Bergant
+    given-names: Luka
+cff-version: 1.2.0
+date-released: "2025-02-20"
+keywords:
+  - research
+  - simulation
+  - "web based learning"
+  - "experimental learning"
+  - simulator
+  - "microprocessor SMS32"
+license: GPL-3.0
+message: "If you use this software, please cite it using these metadata."
+repository-code: "https://github.com/lbergant/SMS32-OL"
+title: "SMS32 online simulator"
+version: 1.0
