@@ -26,7 +26,7 @@ textarea {
 	resize: none;
 	white-space: pre;
 	overflow-x: auto;
-	font-size:var(--font-size);
+	font-size: var(--font-size);
 }
 
 html {
@@ -207,5 +207,5 @@ h2 {
 	overflow: hidden;
 	position: relative;
 	height: calc(100% - 150px);
-	width: 24px;
+	width: 22px;
 }

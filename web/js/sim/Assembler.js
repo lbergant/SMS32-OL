@@ -78,7 +78,7 @@ class Command {
 	}
 
 	/***
-	 * Extract command, op1, op2 from line that is not a comment or tag
+	 * Extracts command, op1, op2 from line that is not a comment or tag
 	 * @param line Line to be processed
 	 */
 	parse_command(line) {
@@ -261,6 +261,7 @@ class Assembler {
 	/***
 	 * Removes comment from line, if line is just a comment true is returned else false
 	 * @param line Line to be evaluated and comment removed
+	 * @returns True if line is comment only
 	 */
 	remove_comment(line) {
 		let comment_positon = line.search(";"); // search for comment
@@ -282,6 +283,7 @@ class Assembler {
 	/***
 	 * Checks if line is a tag (no starting tab)
 	 * @param line Line to be evaluated
+	 * @returns True if line is a tag
 	 */
 	check_if_tag(line) {
 		let is_tag = !line.search("\t") == 0; // check if line starts with \t

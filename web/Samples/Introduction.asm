@@ -3,12 +3,17 @@
 ; =========================================================
 ; In this lesson we will begin to learn about learning 
 ; in assembly language. 
-
+;
+; Command descriptions can be found in the top right
+; corner under the "Docs" link
+;
 ; 1. Try to ASSEMBLE and RUN this example
 ; 2. Reset the simulation by pressing RESET
 ; 3. Get familiar with STEP by step execution.
 ; 4. See how the values in registers are changeing after 
 ;    every step is executed
+; 5. Now change the numeric values and see how the program
+;    changes
 ; =========================================================
 
     MOV AL,2    ; Value 2 is written to register AL (AL = 2)
